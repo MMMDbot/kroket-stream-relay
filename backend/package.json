@@ -1,0 +1,14 @@
+{
+  "name": "kroket-stream-relay-backend",
+  "version": "0.0.1",
+  "description": "Encoding and relaying of HLS and RTMP video streams",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "sqr",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
