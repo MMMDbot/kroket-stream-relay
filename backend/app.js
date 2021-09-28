@@ -1,7 +1,6 @@
 const express = require('express')
 const app = express()
 const routes = require('./routes/routes')
-const router = routes.router
 
 // BodyParser
 app.use(express.json())
@@ -18,7 +17,7 @@ app.get('/test', (req, res) => {
     res.json({ message: 'Welcome to the application.' })
 })
 
-const server = app.listen(3000, () => {
+const server = app.listen(3001, () => {
     const host = server.address().address
     const port = server.address().port
 
