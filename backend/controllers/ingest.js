@@ -14,4 +14,16 @@ function createIngestFolder() {
     })
 }
 
-module.exports = createIngestFolder
+function deleteIngestFolder(id) {
+    const foldername = path.join(__dirname + '/../public/streams/' + id)
+
+    fs.rmdir(foldername, { recursive: true }, (err) => {
+        if (err) {
+            console.log('error')
+            throw err
+        }
+        console.log(`${foldername} is deleted!`)
+    })
+}
+
+module.exports = { createIngestFolder, deleteIngestFolder }
