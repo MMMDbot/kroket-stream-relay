@@ -34,7 +34,11 @@ router.get('/users', async (req, res) => {
 router.get('/user/:id', async (req, res) => {
     const { id } = req.params
     const { rows } = await db.getUser(id)
-    res.json(rows)
+    if (rows.length > 0) {
+        res.json(rows[0])
+    } else {
+        res.json({ message: 'User not found' })
+    }
 })
 
 module.exports = router
