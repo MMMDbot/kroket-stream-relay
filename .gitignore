@@ -1,3 +1,4 @@
+
 # Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,node,react
 # Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,node,react
 
@@ -139,11 +140,11 @@ thumb
 sketch
 
 ### VisualStudioCode ###
-.vscode/*
-!.vscode/settings.json
+.vscode/
+<!-- !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
-!.vscode/extensions.json
+!.vscode/extensions.json -->
 *.code-workspace
 
 # Local History for Visual Studio Code
@@ -156,5 +157,6 @@ sketch
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,node,react
 
-# DB data for Postgres Docker image
+
 /DB_DATA
+__pycache__/
