@@ -18,6 +18,20 @@ services:
     networks:
       - redis
 
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - './DB_DATA:/var/lib/postgresql/data'
+    ports:
+      - '5432:5432'
+
+  adminer:
+    image: adminer
+    ports:
+      - '8080:8080'
+
 networks:
   redis:
     external: true

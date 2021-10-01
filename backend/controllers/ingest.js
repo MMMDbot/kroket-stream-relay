@@ -12,6 +12,7 @@ function createIngestFolder() {
             return console.error(err)
         }
     })
+    return { message: `${id} directory created!` }
 }
 
 function deleteIngestFolder(id) {
@@ -22,8 +23,8 @@ function deleteIngestFolder(id) {
             console.log('error')
             throw err
         }
-        console.log(`${foldername} is deleted!`)
     })
+    return { message: `${id} directory deleted!` }
 }
 
 module.exports = { createIngestFolder, deleteIngestFolder }
