@@ -7,6 +7,7 @@ const router = new Router()
 //const router = express.Router()
 const {
     ingest,
+    relay,
     createIngestFolder,
     deleteIngestFolder,
 } = require('../controllers/ingest')
@@ -24,14 +25,20 @@ router.post('/ingest', (req, res) => {
     res.json('done')
 })
 
+router.post('/relay', (req, res) => {
+    const { id, server, streamKey } = req.body
+    const relayStream = relay(id, server, streamKey)
+    res.json({ id: id, server: server, streamkey: streamKey })
+})
+
 router.post('/task', (req, res) => {
     const task = ingest('asdf')
     res.json(task)
 })
 
 router.post('/delete', (req, res) => {
-    const deleteIngest = deleteIngestFolder(req.body.id)
-    res.json(deleteIngest)
+    const deletedFolder = deleteIngestFolder(req.body.id)
+    res.json(deletedFolder)
 })
 
 router.get('/users', async (req, res) => {

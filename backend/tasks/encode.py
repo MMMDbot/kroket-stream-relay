@@ -94,6 +94,33 @@ def streamHLS(id):
         raise e
 
 
+def relay(id, server, streamKey):
+    VIDEO_URL = "https://d1qvkrpvk32u24.cloudfront.net/RL/smil:EU-e9817a36-e54a-484a-95dd-4eefcfad87bc.smil/chunklist_b2048000.m3u8"
+    RTMP_SERVER = "rtmp://publish.dailymotion.com/publish-dm/x7t01a2?auth=dIJL_2c32466412bd2c7dd5ba696eae070e1f3481b6e2"
+
+    current_directory = "/home/square/kroket-stream-relay/backend/public/streams/"
+    playlist_path = os.path.join(current_directory, id, "stream.m3u8")
+    chunk_path = os.path.join(current_directory, id, "data%02d.ts")
+    target = server + streamKey
+
+    try:
+        stream1 = ffmpeg.input(playlist_path)
+        stream = ffmpeg.output(
+            stream1,
+            target,
+            format="flv",
+            codec="copy",
+        )
+        subp = ffmpeg.run(
+            stream, cmd="/usr/bin/ffmpeg", capture_stdout=True, capture_stderr=True
+        )
+
+    except ffmpeg.Error as e:
+        print("stdout:", e.stdout.decode("utf8"))
+        print("stderr:", e.stderr.decode("utf8"))
+        raise e
+
+
 def secondTask(arg):
     print("hola")
     time.sleep(1)
@@ -105,13 +132,27 @@ def secondTask(arg):
 
 def startQueue(id):
     redis_conn = Redis("localhost", 6379)
-    q = Queue("default", connection=redis_conn)  # no args implies the default queue
+    q = Queue("ingest", connection=redis_conn)  # no args implies the default queue
 
     # Delay execution of count_words_at_url('http://nvie.com')
     # job = q.enqueue(createDir, arg)
     # job = q.enqueue(streamVideo)
     # job = q.enqueue(streamVideo)
     job = q.enqueue(streamHLS, id, job_timeout=-1)
+    print(job.result)  # => None
+    time.sleep(5)
+    print(job.result)
+
+
+def startRelay(id, server, streamKey):
+    redis_conn = Redis("localhost", 6379)
+    q = Queue("relay", connection=redis_conn)  # no args implies the default queue
+
+    # Delay execution of count_words_at_url('http://nvie.com')
+    # job = q.enqueue(createDir, arg)
+    # job = q.enqueue(streamVideo)
+    # job = q.enqueue(streamVideo)
+    job = q.enqueue(relay, id, server, streamKey, job_timeout=-1)
     print(job.result)  # => None
     time.sleep(5)
     print(job.result)
