@@ -1,4 +1,5 @@
 from rq import Queue
+from rq.command import send_stop_job_command
 from redis import Redis
 import os
 import time
@@ -49,8 +50,8 @@ def streamVideo():
         raise e
 
 
-def streamHLS(id):
-    VIDEO_URL = "https://d1qvkrpvk32u24.cloudfront.net/RL/smil:EU-e9817a36-e54a-484a-95dd-4eefcfad87bc.smil/chunklist_b2048000.m3u8"
+def streamHLS(id, origin):
+    VIDEO_URL = origin
     RTMP_SERVER = "rtmp://publish.dailymotion.com/publish-dm/x7t01a2?auth=dIJL_2c32466412bd2c7dd5ba696eae070e1f3481b6e2"
 
     current_directory = "/home/square/kroket-stream-relay/backend/public/streams/"
@@ -84,9 +85,7 @@ def streamHLS(id):
             bufsize="3M",
             channel_layout="stereo",
         )
-        subp = ffmpeg.run(
-            stream, cmd="/usr/bin/ffmpeg", capture_stdout=True, capture_stderr=True
-        )
+        subp = ffmpeg.run(stream, capture_stdout=True, capture_stderr=True)
 
     except ffmpeg.Error as e:
         print("stdout:", e.stdout.decode("utf8"))
@@ -95,7 +94,7 @@ def streamHLS(id):
 
 
 def relay(id, server, streamKey):
-    VIDEO_URL = "https://d1qvkrpvk32u24.cloudfront.net/RL/smil:EU-e9817a36-e54a-484a-95dd-4eefcfad87bc.smil/chunklist_b2048000.m3u8"
+    VIDEO_URL = "https://d1qvkrpvk32u24.cloudfront.net/RL/smil:EU-a62d3276-f807-46e3-97b8-af4501d7f17a.smil/playlist.m3u8"
     RTMP_SERVER = "rtmp://publish.dailymotion.com/publish-dm/x7t01a2?auth=dIJL_2c32466412bd2c7dd5ba696eae070e1f3481b6e2"
 
     current_directory = "/home/square/kroket-stream-relay/backend/public/streams/"
@@ -111,9 +110,7 @@ def relay(id, server, streamKey):
             format="flv",
             codec="copy",
         )
-        subp = ffmpeg.run(
-            stream, cmd="/usr/bin/ffmpeg", capture_stdout=True, capture_stderr=True
-        )
+        subp = ffmpeg.run(stream, capture_stdout=True, capture_stderr=True)
 
     except ffmpeg.Error as e:
         print("stdout:", e.stdout.decode("utf8"))
@@ -130,7 +127,7 @@ def secondTask(arg):
     return "completado"
 
 
-def startQueue(id):
+def startQueue(id, origin):
     redis_conn = Redis("localhost", 6379)
     q = Queue("ingest", connection=redis_conn)  # no args implies the default queue
 
@@ -138,13 +135,13 @@ def startQueue(id):
     # job = q.enqueue(createDir, arg)
     # job = q.enqueue(streamVideo)
     # job = q.enqueue(streamVideo)
-    job = q.enqueue(streamHLS, id, job_timeout=-1)
+    job = q.enqueue(streamHLS, id, origin, job_id=id, job_timeout=-1)
     print(job.result)  # => None
     time.sleep(5)
     print(job.result)
 
 
-def startRelay(id, server, streamKey):
+def startRelay(id, relayId, server, streamKey):
     redis_conn = Redis("localhost", 6379)
     q = Queue("relay", connection=redis_conn)  # no args implies the default queue
 
@@ -152,7 +149,12 @@ def startRelay(id, server, streamKey):
     # job = q.enqueue(createDir, arg)
     # job = q.enqueue(streamVideo)
     # job = q.enqueue(streamVideo)
-    job = q.enqueue(relay, id, server, streamKey, job_timeout=-1)
+    job = q.enqueue(relay, id, server, streamKey, job_id=relayId, job_timeout=-1)
     print(job.result)  # => None
     time.sleep(5)
     print(job.result)
+
+
+def stop(id):
+    redis_conn = Redis("localhost", 6379)
+    send_stop_job_command(redis_conn, id)

@@ -41,16 +41,16 @@ function deleteIngestFolder(id) {
  * Starts the execution of the Python script that encodes the video stream.
  * @param  {String} id  Id of the folder where the HLS streaming will save the playlist and chunks.
  */
-function ingest(id) {
+function ingest(id, origin) {
     let options = {
         mode: 'text',
         pythonPath:
             '/home/square/.local/share/virtualenvs/backend-uA8zwRa8/bin/python3.9',
         pythonOptions: ['-u'], // get print results in real-time
-        args: [id],
+        args: ['ingest', id, origin],
     }
 
-    const scriptPath = path.join(__dirname + '/../tasks/initIngest.py')
+    const scriptPath = path.join(__dirname + '/../tasks/initTask.py')
 
     PythonShell.run(scriptPath, options, function (err, results) {
         if (err) throw err
@@ -66,15 +66,16 @@ function ingest(id) {
  * @param  {String} streamKey
  */
 function relay(id, server, streamKey) {
+    const relayId = id + '-' + nanoid(4)
     let options = {
         mode: 'text',
         pythonPath:
             '/home/square/.local/share/virtualenvs/backend-uA8zwRa8/bin/python3.9',
         pythonOptions: ['-u'], // get print results in real-time
-        args: [id, server, streamKey],
+        args: ['relay', id, relayId, server, streamKey],
     }
 
-    const scriptPath = path.join(__dirname + '/../tasks/initRelay.py')
+    const scriptPath = path.join(__dirname + '/../tasks/initTask.py')
 
     PythonShell.run(scriptPath, options, function (err, results) {
         if (err) throw err
@@ -83,4 +84,28 @@ function relay(id, server, streamKey) {
     })
 }
 
-module.exports = { ingest, relay, createIngestFolder, deleteIngestFolder }
+/**
+ * Stops the worker that is currently executing a job
+ * @param  {String} id      Id of the folder where the HLS streaming will save the playlist and chunks.
+ * @param  {String} server
+ * @param  {String} streamKey
+ */
+function stop(id) {
+    let options = {
+        mode: 'text',
+        pythonPath:
+            '/home/square/.local/share/virtualenvs/backend-uA8zwRa8/bin/python3.9',
+        pythonOptions: ['-u'], // get print results in real-time
+        args: ['stop', id],
+    }
+
+    const scriptPath = path.join(__dirname + '/../tasks/initTask.py')
+
+    PythonShell.run(scriptPath, options, function (err, results) {
+        if (err) throw err
+        // results is an array consisting of messages collected during execution
+        console.log('results: %j', results)
+    })
+}
+
+module.exports = { ingest, stop, relay, createIngestFolder, deleteIngestFolder }

@@ -8,6 +8,7 @@ const router = new Router()
 const {
     ingest,
     relay,
+    stop,
     createIngestFolder,
     deleteIngestFolder,
 } = require('../controllers/ingest')
@@ -20,7 +21,8 @@ router.get('/test', (req, res) => {
 
 router.post('/ingest', (req, res) => {
     const id = createIngestFolder()
-    const task = ingest(id)
+    const { origin } = req.body
+    const task = ingest(id, origin)
     console.log(ingest)
     res.json('done')
 })
@@ -39,6 +41,12 @@ router.post('/task', (req, res) => {
 router.post('/delete', (req, res) => {
     const deletedFolder = deleteIngestFolder(req.body.id)
     res.json(deletedFolder)
+})
+
+router.post('/stop/:id', (req, res) => {
+    const { id } = req.params
+    const task = stop(id)
+    res.json(task)
 })
 
 router.get('/users', async (req, res) => {
