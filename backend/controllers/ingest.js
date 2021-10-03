@@ -1,4 +1,8 @@
-const { nanoid } = require('nanoid')
+const { customAlphabet } = require('nanoid')
+const alphabet =
+    '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
+const nanoid = customAlphabet(alphabet, 9)
+const nanoid4 = customAlphabet(alphabet, 4)
 const fs = require('fs')
 const path = require('path')
 const { PythonShell } = require('python-shell')
@@ -8,7 +12,7 @@ const { PythonShell } = require('python-shell')
  * @return {String} The ID Generated.
  */
 function createIngestFolder() {
-    const id = nanoid(9)
+    const id = nanoid()
     console.log(id)
     const foldername = path.join(__dirname + '/../public/streams/' + id)
 
@@ -66,7 +70,7 @@ function ingest(id, origin) {
  * @param  {String} streamKey
  */
 function relay(id, server, streamKey) {
-    const relayId = id + '-' + nanoid(4)
+    const relayId = id + '-' + nanoid4()
     let options = {
         mode: 'text',
         pythonPath:
