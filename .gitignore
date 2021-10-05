@@ -157,6 +157,5 @@ sketch
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,node,react
 
-
 /DB_DATA
 __pycache__/

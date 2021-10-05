@@ -50,8 +50,12 @@ router.post('/stop/:id', (req, res) => {
 })
 
 router.get('/users', async (req, res) => {
-    const { rows } = await db.getUsers()
-    res.json(rows)
+    try {
+        const { rows } = await db.getUsers()
+        res.json(rows)
+    } catch (error) {
+        res.json(error.severity)
+    }
 })
 
 router.get('/user/:id', async (req, res) => {
@@ -62,6 +66,17 @@ router.get('/user/:id', async (req, res) => {
     } else {
         res.json({ message: 'User not found' })
     }
+})
+
+router.get('/organizations', async (req, res) => {
+    const { rows } = await db.getOrganizations()
+    res.json(rows)
+})
+
+router.post('/organization/add', async (req, res) => {
+    const { orgname, address, phone } = req.body
+    const result = await db.addOrganization(orgname, address, phone)
+    res.json({ mesage: 'Organization added' })
 })
 
 module.exports = router
