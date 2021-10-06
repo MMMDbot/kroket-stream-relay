@@ -21,4 +21,9 @@ module.exports = {
             'INSERT INTO organizations (orgname, address, phone) VALUES ($1, $2, $3)',
             [orgname, address, phone]
         ),
+    addUser: (username, password_hash, email, full_name, organization_id) =>
+        pool.query(
+            'INSERT INTO users (username, password_hash, email, full_name, organization_id) VALUES ($1, $2, $3, $4, $5)',
+            [username, password_hash, email, full_name, organization_id]
+        ),
 }

@@ -68,6 +68,24 @@ router.get('/user/:id', async (req, res) => {
     }
 })
 
+router.post('/user/add', async (req, res) => {
+    const { username, password_hash, email, full_name, organization_id } =
+        req.body
+    try {
+        const result = await db.addUser(
+            username,
+            password_hash,
+            email,
+            full_name,
+            organization_id
+        )
+        res.json({ result })
+    } catch (error) {
+        console.log(error)
+        res.json(error)
+    }
+})
+
 router.get('/organizations', async (req, res) => {
     const { rows } = await db.getOrganizations()
     res.json(rows)
