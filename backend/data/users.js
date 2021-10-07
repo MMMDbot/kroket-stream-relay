@@ -26,4 +26,7 @@ module.exports = {
             'INSERT INTO users (username, password_hash, email, full_name, organization_id) VALUES ($1, $2, $3, $4, $5)',
             [username, password_hash, email, full_name, organization_id]
         ),
+    getIngests: () => pool.query('SELECT * FROM ingests ORDER BY id ASC'),
+    getRelays: () => pool.query('SELECT * FROM relays ORDER BY id ASC'),
+    getTargets: () => pool.query('SELECT * FROM targets ORDER BY id ASC'),
 }

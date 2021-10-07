@@ -97,4 +97,19 @@ router.post('/organization/add', async (req, res) => {
     res.json({ mesage: 'Organization added' })
 })
 
+router.get('/ingests', async (req, res) => {
+    const { rows } = await db.getIngests()
+    res.json(rows)
+})
+
+router.get('/relays', async (req, res) => {
+    const { rows } = await db.getRelays()
+    res.json(rows)
+})
+
+router.get('/targets', async (req, res) => {
+    const { rows } = await db.getTargets()
+    res.json(rows)
+})
+
 module.exports = router
