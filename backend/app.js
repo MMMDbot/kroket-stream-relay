@@ -1,6 +1,8 @@
 const express = require('express')
 const app = express()
 const routes = require('./routes/routes')
+const auth = require('./routes/auth')
+const dashboard = require('./routes/dashboard')
 
 // BodyParser
 app.use(express.json())
@@ -11,6 +13,12 @@ app.use(express.static('public'))
 
 // Prefix middleware
 app.use('/api', routes)
+
+// Authentication routes
+app.use('/auth', auth)
+
+// Dashboard routes
+app.use('/dashboard', dashboard)
 
 // Simple test route
 app.get('/test', (req, res) => {
