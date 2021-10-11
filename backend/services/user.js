@@ -2,6 +2,7 @@ const db = require('../data/users')
 const bcrypt = require('bcrypt')
 const jwtGenerator = require('./jwtGenerator')
 const { generateError } = require('../services/errors')
+require('dotenv').config()
 
 /**
  * Register a new user
@@ -38,12 +39,12 @@ async function registerUser(
             full_name,
             organization_id
         )
+        console.log(newUser.rows[0])
         const jwtToken = jwtGenerator(newUser.rows[0].id)
-        console.log(jwtToken)
         return jwtToken
     } catch (error) {
         return generateError(500)
     }
 }
 
-module.exports = { registerUser }
+module.exports = registerUser

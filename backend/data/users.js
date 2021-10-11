@@ -14,7 +14,7 @@ module.exports = {
     getUser: (id) => pool.query('SELECT * FROM users WHERE id = $1', [id]),
     addUser: (username, password_hash, email, full_name, organization_id) =>
         pool.query(
-            'INSERT INTO users (username, password_hash, email, full_name, organization_id) VALUES ($1, $2, $3, $4, $5)',
+            'INSERT INTO users (username, password_hash, email, full_name, organization_id) VALUES ($1, $2, $3, $4, $5) RETURNING *',
             [username, password_hash, email, full_name, organization_id]
         ),
     getOrganizations: () =>
