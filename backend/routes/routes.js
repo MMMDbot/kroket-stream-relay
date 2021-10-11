@@ -11,7 +11,7 @@ const {
     stop,
     createIngestFolder,
     deleteIngestFolder,
-} = require('../controllers/ingest')
+} = require('../services/ingest')
 const db = require('../data/users')
 
 // Simple test route

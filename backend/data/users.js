@@ -54,4 +54,6 @@ module.exports = {
             'INSERT INTO targets (server, stream_key, description, public_url, platform, user_id) VALUES ($1, $2, $3, $4, $5, $6)',
             [server, stream_key, description, public_url, platform, user_id]
         ),
+    checkUsername: (username) =>
+        pool.query('SELECT * FROM users WHERE username = $1', [username]),
 }
