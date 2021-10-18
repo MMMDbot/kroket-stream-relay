@@ -41,7 +41,11 @@ router.get('/', (req, res) => {
 
 router.get('/check-session', (req, res) => {
     if (req.session.username) {
-        res.send({ loggedIn: true, username: req.session.username })
+        res.send({
+            loggedIn: true,
+            username: req.session.username,
+            userid: req.session.userid,
+        })
     } else {
         res.send({ loggedIn: false })
     }
@@ -53,9 +57,10 @@ router.post('/login', async (req, res) => {
 
     try {
         const log = await users.loginUser(username, password)
-        console.log(log)
+        const user = await users.getUserbyUsername(username)
         if (log) {
             sess.username = username
+            sess.userid = user.id
             res.send(sess)
         } else {
             res.json({ message: 'Incorrect user or password' })

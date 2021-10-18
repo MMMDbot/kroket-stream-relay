@@ -184,4 +184,9 @@ router.post('/target/add', async (req, res) => {
     res.json({ mesage: 'Target added' })
 })
 
+router.get('/count', (req, res) => {
+    const count = Math.floor(Math.random() * 100)
+    res.json(count)
+})
+
 module.exports = router
