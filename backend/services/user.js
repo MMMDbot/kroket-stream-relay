@@ -47,4 +47,27 @@ async function registerUser(
     }
 }
 
-module.exports = registerUser
+async function loginUser(username, password) {
+    try {
+        const user = await db.getUserByUsername(username)
+        const match = await bcrypt.compare(password, user.rows[0].password_hash)
+        return match
+    } catch (error) {
+        return console.error(error)
+    }
+}
+
+async function getUserbyUsername(username) {
+    try {
+        const { rows } = await db.getUserByUsername(username)
+        if (rows.length > 0) {
+            return rows[0]
+        } else {
+            return { message: 'User not found' }
+        }
+    } catch (error) {
+        return console.error(error)
+    }
+}
+
+module.exports = { registerUser, loginUser, getUserbyUsername }

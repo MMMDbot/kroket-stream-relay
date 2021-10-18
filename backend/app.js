@@ -1,12 +1,23 @@
 const express = require('express')
 const app = express()
+const cors = require('cors')
 const routes = require('./routes/routes')
 const auth = require('./routes/auth')
 const dashboard = require('./routes/dashboard')
+const auth_session = require('./routes/auth-session')
 
 // BodyParser
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+
+// CORS for calls from React app
+app.use(
+    cors({
+        origin: ['http://localhost:3000'],
+        methods: ['GET', 'POST'],
+        credentials: true,
+    })
+)
 
 // Serving static files so we can view HTML
 app.use(express.static('public'))
@@ -16,6 +27,9 @@ app.use('/api', routes)
 
 // Authentication routes
 app.use('/auth', auth)
+
+// Session-based authentication routes
+app.use('/auth-session', auth_session)
 
 // Dashboard routes
 app.use('/dashboard', dashboard)

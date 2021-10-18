@@ -12,6 +12,8 @@ const pool = new Pool({
 module.exports = {
     getUsers: () => pool.query('SELECT * FROM users ORDER BY id ASC'),
     getUser: (id) => pool.query('SELECT * FROM users WHERE id = $1', [id]),
+    getUserByUsername: (username) =>
+        pool.query('SELECT * FROM users WHERE username = $1', [username]),
     addUser: (username, password_hash, email, full_name, organization_id) =>
         pool.query(
             'INSERT INTO users (username, password_hash, email, full_name, organization_id) VALUES ($1, $2, $3, $4, $5) RETURNING *',
