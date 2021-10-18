@@ -10,15 +10,13 @@ export default function ProfilePage() {
         state: { loading },
     } = useUser()
     const { dispatch } = useUser()
-
-    const requestOptions = {
-        method: 'GET',
-        credentials: 'include',
-    }
-
     const history = useHistory()
 
     useEffect(() => {
+        const requestOptions = {
+            method: 'GET',
+            credentials: 'include',
+        }
         fetch(
             'http://localhost:3001/auth-session/check-session',
             requestOptions
@@ -43,7 +41,7 @@ export default function ProfilePage() {
                     history.push('/login')
                 }
             })
-    }, [])
+    }, [dispatch, history])
 
     if (loading) {
         return <div>Loading....</div>

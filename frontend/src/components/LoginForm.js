@@ -1,20 +1,15 @@
 import React from 'react'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import LoginStatus from './LoginStatus'
 import { useUser } from './context/UserState'
-import Header from './Header'
 import { useHistory } from 'react-router-dom'
 
 export default function LoginForm() {
     const [name, setName] = useState('')
     const [password, setPassword] = useState('')
 
-    const {
-        state: { username, userId, loggedIn, loading },
-    } = useUser()
     const { dispatch } = useUser()
 
     const history = useHistory()
@@ -50,7 +45,6 @@ export default function LoginForm() {
     }
     return (
         <div>
-            <LoginStatus />
             <Form>
                 <Form.Group className="mb-3" controlId="formBasicUsername">
                     <Form.Label>Username</Form.Label>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useUser } from './context/UserState'
 
 function StateTest() {
@@ -20,7 +20,7 @@ function StateSetter() {
     const { dispatch } = useUser()
 
     const {
-        state: { count, loggedIn, username },
+        state: { loggedIn },
     } = useUser()
 
     useEffect(() => {
@@ -46,7 +46,7 @@ function StateSetter() {
                     })
                 })
         }
-    }, [])
+    }, [dispatch, loggedIn])
     return (
         <div>
             <button onClick={() => dispatch({ type: 'increment' })}>

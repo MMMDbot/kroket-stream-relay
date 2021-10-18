@@ -1,21 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { withRouter, useHistory } from 'react-router-dom'
 import { useUser } from './context/UserState'
-import Header from './Header'
-import { StateTest, StateSetter } from './StateTest'
 
 import Table from 'react-bootstrap/Table'
 
 function Profile() {
     const {
-        state: { username, userId, loggedIn, loading },
+        state: { username, userId, loggedIn },
     } = useUser()
-    const { dispatch } = useUser()
 
     const [user, setUser] = useState('')
     const [loadingData, setLoadingData] = useState(true)
-
-    const history = useHistory()
 
     useEffect(() => {
         const requestOptions = {
@@ -28,7 +22,7 @@ function Profile() {
                 setUser(data)
                 setLoadingData(false)
             })
-    }, [loggedIn])
+    }, [loggedIn, userId])
 
     if (loadingData) {
         return <div>Loading...</div>
@@ -63,4 +57,4 @@ function Profile() {
     }
 }
 
-export default withRouter(Profile)
+export default Profile
