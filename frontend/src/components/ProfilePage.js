@@ -7,7 +7,7 @@ import { useHistory } from 'react-router-dom'
 
 export default function ProfilePage() {
     const {
-        state: { loading },
+        state: { loggedIn, loading },
     } = useUser()
     const { dispatch } = useUser()
     const history = useHistory()
@@ -17,31 +17,33 @@ export default function ProfilePage() {
             method: 'GET',
             credentials: 'include',
         }
-        fetch(
-            'http://localhost:3001/auth-session/check-session',
-            requestOptions
-        )
-            .then((response) => response.json())
-            .then((data) => {
-                console.log(data)
-                if (data.loggedIn) {
-                    dispatch({
-                        type: 'logUser',
-                        payload: {
-                            loggedIn: data.loggedIn,
-                            username: data.username,
-                            userId: data.userid,
-                            loading: false,
-                        },
-                    })
-                } else {
-                    dispatch({
-                        type: 'logOut',
-                    })
-                    history.push('/login')
-                }
-            })
-    }, [dispatch, history])
+        if (!loggedIn) {
+            fetch(
+                'http://localhost:3001/auth-session/check-session',
+                requestOptions
+            )
+                .then((response) => response.json())
+                .then((data) => {
+                    console.log(data)
+                    if (data.loggedIn) {
+                        dispatch({
+                            type: 'logUser',
+                            payload: {
+                                loggedIn: data.loggedIn,
+                                username: data.username,
+                                userId: data.userid,
+                                loading: false,
+                            },
+                        })
+                    } else {
+                        dispatch({
+                            type: 'logOut',
+                        })
+                        history.push('/login')
+                    }
+                })
+        }
+    }, [dispatch, history, loggedIn])
 
     if (loading) {
         return <div>Loading....</div>
