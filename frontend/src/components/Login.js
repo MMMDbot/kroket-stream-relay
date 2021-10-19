@@ -3,17 +3,26 @@ import Header from './Header'
 import Footer from './Footer'
 import LoginForm from './LoginForm'
 import LoginStatus from './LoginStatus'
+import ReactLoading from 'react-loading'
 
 import { useUser } from './context/UserState'
 import { useHistory } from 'react-router-dom'
 
+import { useAuth } from '../utils/useAuth'
+
 export default function Login() {
-    const { dispatch } = useUser()
+    /*     const { dispatch } = useUser()
     const history = useHistory()
 
-    const [loginLoading, setLoginLoading] = useState(true)
+    const [loginLoading, setLoginLoading] = useState(true) */
 
-    useEffect(() => {
+    const {
+        state: { loading },
+    } = useUser()
+
+    useAuth('/login')
+
+    /* useEffect(() => {
         const requestOptions = {
             method: 'GET',
             credentials: 'include',
@@ -44,9 +53,13 @@ export default function Login() {
                 }
             })
     }, [dispatch, history])
-
-    if (loginLoading) {
-        return <div>Loading....</div>
+ */
+    if (loading) {
+        return (
+            <div>
+                <ReactLoading type="spin" color="#000" />
+            </div>
+        )
     } else {
         return (
             <div>

@@ -39,7 +39,7 @@ function userReducer(state, action) {
                 loggedIn: false,
                 username: '',
                 userId: 0,
-                loading: true,
+                loading: false,
             }
         }
         default: {

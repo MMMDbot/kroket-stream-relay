@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useUser } from './context/UserState'
+import ReactLoading from 'react-loading'
 
 import Table from 'react-bootstrap/Table'
 
@@ -25,7 +26,11 @@ function Profile() {
     }, [loggedIn, userId])
 
     if (loadingData) {
-        return <div>Loading...</div>
+        return (
+            <div>
+                <ReactLoading type="spin" color="#000" />
+            </div>
+        )
     } else {
         return (
             <div>

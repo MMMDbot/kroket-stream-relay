@@ -4,6 +4,7 @@ import Footer from './Footer'
 import Profile from './Profile'
 import { useUser } from './context/UserState'
 import { useHistory } from 'react-router-dom'
+import ReactLoading from 'react-loading'
 
 export default function ProfilePage() {
     const {
@@ -46,7 +47,11 @@ export default function ProfilePage() {
     }, [dispatch, history, loggedIn])
 
     if (loading) {
-        return <div>Loading....</div>
+        return (
+            <div>
+                <ReactLoading type="spin" color="#000" />
+            </div>
+        )
     } else {
         return (
             <div>

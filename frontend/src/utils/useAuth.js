@@ -1,20 +1,16 @@
-import React, { useEffect } from 'react'
-import Header from './Header'
-import Footer from './Footer'
-import LoginStatus from './LoginStatus'
-import ReactLoading from 'react-loading'
-
-import { useUser } from './context/UserState'
+import { useEffect } from 'react'
+import { useUser } from '../components/context/UserState'
 import { useHistory } from 'react-router-dom'
-import { useAuth } from '../utils/useAuth'
 
-export default function Home() {
+function useAuth(redirect) {
+    const { dispatch } = useUser()
+    const history = useHistory()
+
     const {
-        state: { loading },
+        state: { loggedIn },
     } = useUser()
 
-    useAuth('/login')
-    /* useEffect(() => {
+    const auth = useEffect(() => {
         const requestOptions = {
             method: 'GET',
             credentials: 'include',
@@ -41,25 +37,13 @@ export default function Home() {
                         dispatch({
                             type: 'logOut',
                         })
-                        history.push('/login')
+                        history.push(redirect)
                     }
                 })
         }
-    }, [dispatch, history, loggedIn]) */
+    }, [dispatch, history, loggedIn, redirect])
 
-    if (loading) {
-        return (
-            <div>
-                <ReactLoading type="spin" color="#000" />
-            </div>
-        )
-    } else {
-        return (
-            <div>
-                <Header />
-                <LoginStatus />
-                <Footer />
-            </div>
-        )
-    }
+    return auth
 }
+
+export { useAuth }

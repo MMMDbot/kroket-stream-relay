@@ -2,6 +2,11 @@ import React from 'react'
 import { useState } from 'react'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
+import Card from 'react-bootstrap/Card'
+import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { useUser } from './context/UserState'
 import { useHistory } from 'react-router-dom'
@@ -9,6 +14,7 @@ import { useHistory } from 'react-router-dom'
 export default function LoginForm() {
     const [name, setName] = useState('')
     const [password, setPassword] = useState('')
+    const [loginError, setLoginError] = useState('')
 
     const { dispatch } = useUser()
 
@@ -45,38 +51,67 @@ export default function LoginForm() {
     }
     return (
         <div>
-            <Form>
-                <Form.Group className="mb-3" controlId="formBasicUsername">
-                    <Form.Label>Username</Form.Label>
-                    <Form.Control
-                        type="username"
-                        placeholder="Enter username"
-                        onChange={(e) => {
-                            setName(e.target.value)
-                        }}
-                    />
-                    <Form.Text className="text-muted">
-                        We'll never share your email with anyone else.
-                    </Form.Text>
-                </Form.Group>
+            <Container className="pt-4">
+                <Row>
+                    <Col md={3} lg={4}></Col>
+                    <Col md={6} lg={4}>
+                        <Card>
+                            <Card.Body>
+                                <Form>
+                                    <Form.Group
+                                        className="mb-3"
+                                        controlId="formBasicUsername"
+                                    >
+                                        <Form.Label>Username</Form.Label>
+                                        <Form.Control
+                                            type="username"
+                                            placeholder="Enter username"
+                                            onChange={(e) => {
+                                                setName(e.target.value)
+                                            }}
+                                        />
+                                        <Form.Text className="text-muted">
+                                            We'll never share your email with
+                                            anyone else.
+                                        </Form.Text>
+                                    </Form.Group>
 
-                <Form.Group className="mb-3" controlId="formBasicPassword">
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control
-                        type="password"
-                        placeholder="Password"
-                        onChange={(e) => {
-                            setPassword(e.target.value)
-                        }}
-                    />
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                    <Form.Check type="checkbox" label="Check me out" />
-                </Form.Group>
-                <Button variant="primary" type="button" onClick={login}>
-                    Login
-                </Button>
-            </Form>
+                                    <Form.Group
+                                        className="mb-3"
+                                        controlId="formBasicPassword"
+                                    >
+                                        <Form.Label>Password</Form.Label>
+                                        <Form.Control
+                                            type="password"
+                                            placeholder="Password"
+                                            onChange={(e) => {
+                                                setPassword(e.target.value)
+                                            }}
+                                        />
+                                    </Form.Group>
+                                    <Form.Group
+                                        className="mb-3"
+                                        controlId="formBasicCheckbox"
+                                    >
+                                        <Form.Check
+                                            type="checkbox"
+                                            label="Check me out"
+                                        />
+                                    </Form.Group>
+                                    <Button
+                                        variant="primary"
+                                        type="button"
+                                        onClick={login}
+                                    >
+                                        Login
+                                    </Button>
+                                </Form>
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                    <Col md={3} lg={4}></Col>
+                </Row>
+            </Container>
         </div>
     )
 }
