@@ -6,6 +6,7 @@ import Card from 'react-bootstrap/Card'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
+import Alert from 'react-bootstrap/Alert'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { useUser } from './context/UserState'
@@ -14,13 +15,16 @@ import { useHistory } from 'react-router-dom'
 export default function LoginForm() {
     const [name, setName] = useState('')
     const [password, setPassword] = useState('')
-    const [loginError, setLoginError] = useState('')
+    const [isFormLoading, setFormLoading] = useState(false)
+    const [formError, setFormError] = useState(false)
 
     const { dispatch } = useUser()
 
     const history = useHistory()
 
-    const login = () => {
+    const login = (e) => {
+        e.preventDefault()
+        setFormLoading(true)
         const requestOptions = {
             method: 'POST',
             credentials: 'include',
@@ -46,6 +50,8 @@ export default function LoginForm() {
                     history.push('/')
                 } else {
                     console.log(data.message)
+                    setFormError(true)
+                    setFormLoading(false)
                 }
             })
     }
@@ -57,7 +63,18 @@ export default function LoginForm() {
                     <Col md={6} lg={4}>
                         <Card>
                             <Card.Body>
-                                <Form>
+                                {formError ? (
+                                    <Alert
+                                        variant="danger"
+                                        onClose={() => setFormError(false)}
+                                        dismissible
+                                    >
+                                        Incorrect user or password
+                                    </Alert>
+                                ) : (
+                                    ''
+                                )}
+                                <Form onSubmit={login}>
                                     <Form.Group
                                         className="mb-3"
                                         controlId="formBasicUsername"
@@ -100,10 +117,10 @@ export default function LoginForm() {
                                     </Form.Group>
                                     <Button
                                         variant="primary"
-                                        type="button"
-                                        onClick={login}
+                                        disabled={isFormLoading}
+                                        type="submit"
                                     >
-                                        Login
+                                        {isFormLoading ? 'Loading…' : 'Login'}
                                     </Button>
                                 </Form>
                             </Card.Body>

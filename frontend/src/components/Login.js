@@ -12,15 +12,16 @@ import { useAuth } from '../utils/useAuth'
 
 export default function Login() {
     /*     const { dispatch } = useUser()
-    const history = useHistory()
 
     const [loginLoading, setLoginLoading] = useState(true) */
 
     const {
-        state: { loading },
+        state: { loggedIn, loading },
     } = useUser()
 
     useAuth('/login')
+
+    const history = useHistory()
 
     /* useEffect(() => {
         const requestOptions = {
@@ -54,6 +55,10 @@ export default function Login() {
             })
     }, [dispatch, history])
  */
+    if (loggedIn) {
+        history.push('/')
+    }
+
     if (loading) {
         return (
             <div>
