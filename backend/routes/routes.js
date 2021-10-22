@@ -3,6 +3,7 @@ const cors = require('cors')
 // Added for express-promise-router
 const Router = require('express-promise-router')
 const router = new Router()
+const genThumbnail = require('simple-thumbnail')
 // Without express-promise-router
 //const router = express.Router()
 const {
@@ -188,5 +189,13 @@ router.get('/count', (req, res) => {
     const count = Math.floor(Math.random() * 100)
     res.json(count)
 })
-
+router.get('/thumbnail', (req, res) => {
+    genThumbnail(
+        'https://d1qvkrpvk32u24.cloudfront.net/RL/smil:EU-3019a4ce-2b76-4b01-8b0c-701257d4bac7.smil/playlist.m3u8',
+        res,
+        '630x354'
+    )
+        .then(() => console.log('done!'))
+        .catch((err) => console.error(err))
+})
 module.exports = router

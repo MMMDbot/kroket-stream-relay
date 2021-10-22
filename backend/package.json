@@ -20,6 +20,7 @@
     "nanoid": "^3.1.28",
     "pg": "^8.7.1",
     "python-shell": "^3.0.0",
-    "redis": "^3.1.2"
+    "redis": "^3.1.2",
+    "simple-thumbnail": "^1.6.5"
   }
 }
