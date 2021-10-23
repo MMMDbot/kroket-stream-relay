@@ -33,7 +33,7 @@ function Profile() {
         )
     } else {
         return (
-            <div>
+            <div className="p-4">
                 <Table striped bordered hover variant="dark" size="sm">
                     <thead>
                         <tr>

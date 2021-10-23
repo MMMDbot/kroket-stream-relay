@@ -5,6 +5,9 @@ const routes = require('./routes/routes')
 const auth = require('./routes/auth')
 const dashboard = require('./routes/dashboard')
 const auth_session = require('./routes/auth-session')
+const io = require('socket.io')(8080, {
+    cors: { origin: ['http://localhost:3000'] },
+})
 
 // BodyParser
 app.use(express.json())
@@ -44,4 +47,21 @@ const server = app.listen(3001, () => {
     const port = server.address().port
 
     console.log('Listening on %s port %s', host, port)
+})
+
+// SOCKET IO TEST AREA
+// tread carefully
+//
+io.on('connection', (socket) => {
+    console.log(socket.id)
+})
+
+app.get('/socket/online', (req, res) => {
+    io.emit('receive-message', 'online')
+    res.json({ message: 'Event emitted' })
+})
+
+app.get('/socket/offline', (req, res) => {
+    io.emit('receive-message', 'offline')
+    res.json({ message: 'Event emitted' })
 })

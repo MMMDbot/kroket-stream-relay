@@ -185,10 +185,15 @@ router.post('/target/add', async (req, res) => {
     res.json({ mesage: 'Target added' })
 })
 
+//
+// Testing Area -- beware --
+//
+
 router.get('/count', (req, res) => {
     const count = Math.floor(Math.random() * 100)
     res.json(count)
 })
+
 router.get('/thumbnail', (req, res) => {
     genThumbnail(
         'https://d1qvkrpvk32u24.cloudfront.net/RL/smil:EU-3019a4ce-2b76-4b01-8b0c-701257d4bac7.smil/playlist.m3u8',
@@ -198,4 +203,5 @@ router.get('/thumbnail', (req, res) => {
         .then(() => console.log('done!'))
         .catch((err) => console.error(err))
 })
+
 module.exports = router
