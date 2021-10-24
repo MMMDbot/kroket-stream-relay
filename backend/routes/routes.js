@@ -4,6 +4,7 @@ const cors = require('cors')
 const Router = require('express-promise-router')
 const router = new Router()
 const genThumbnail = require('simple-thumbnail')
+const session = require('express-session')
 // Without express-promise-router
 //const router = express.Router()
 const {
@@ -14,18 +15,51 @@ const {
     deleteIngestFolder,
 } = require('../services/ingest')
 const db = require('../data/users')
+const redis = require('redis')
+const connectRedis = require('connect-redis')
+
+const RedisStore = connectRedis(session)
+
+const redisClient = redis.createClient({
+    host: 'localhost',
+    port: 6379,
+})
+
+router.use(
+    session({
+        store: new RedisStore({ client: redisClient }),
+        secret: process.env.JWTSECRET,
+        saveUninitialized: true,
+        resave: false,
+        cookie: {
+            httpOnly: true,
+            maxAge: 1000 * 60 * 10,
+        },
+    })
+)
 
 // Simple test route
 router.get('/test', (req, res) => {
     res.json({ message: 'Welcome to the application inside routes.' })
 })
 
-router.post('/ingest', (req, res) => {
+router.post('/ingest', async (req, res) => {
     const id = createIngestFolder()
-    const { origin } = req.body
+    const { origin, description } = req.body
+    if (!origin || !description) {
+        res.json('Error')
+    }
+    console.log(req.session.userid)
     const task = ingest(id, origin)
+    const result = await db.addIngest(
+        id,
+        id,
+        description,
+        req.session.userid,
+        origin
+    )
     console.log(ingest)
-    res.json('done')
+    res.json({ streamId: id })
 })
 
 router.post('/relay', (req, res) => {

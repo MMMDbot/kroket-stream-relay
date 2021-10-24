@@ -30,10 +30,10 @@ module.exports = {
         ),
     getIngests: () => pool.query('SELECT * FROM ingests ORDER BY id ASC'),
     getIngest: (id) => pool.query('SELECT * FROM ingests WHERE id = $1', [id]),
-    addIngest: (folder, job_id, description, user_id) =>
+    addIngest: (folder, job_id, description, user_id, origin) =>
         pool.query(
-            'INSERT INTO ingests (folder, job_id, description, user_id) VALUES ($1, $2, $3, $4)',
-            [folder, job_id, description, user_id]
+            'INSERT INTO ingests (folder, job_id, description, user_id, origin) VALUES ($1, $2, $3, $4, $5)',
+            [folder, job_id, description, user_id, origin]
         ),
     getRelays: () => pool.query('SELECT * FROM relays ORDER BY id ASC'),
     getRelay: (id) => pool.query('SELECT * FROM relay WHERE id = $1', [id]),

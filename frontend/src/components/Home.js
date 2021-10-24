@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import Header from './Header'
 import Footer from './Footer'
 import LoginStatus from './LoginStatus'
+import IngestForm from './IngestForm'
 import ReactLoading from 'react-loading'
 
 import { useUser } from './context/UserState'
-import { useHistory } from 'react-router-dom'
 import { useAuth } from '../utils/useAuth'
 
 export default function Home() {
@@ -57,6 +57,7 @@ export default function Home() {
         return (
             <div>
                 <Header />
+                <IngestForm />
                 <LoginStatus />
                 <Footer />
             </div>
