@@ -44,6 +44,7 @@ router.get('/test', (req, res) => {
 })
 
 router.post('/ingest', async (req, res) => {
+    const ingest = await ingest(id, origin)
     const id = createIngestFolder()
     const { origin, description } = req.body
     if (!origin || !description) {

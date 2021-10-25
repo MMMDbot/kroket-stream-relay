@@ -1,27 +1,30 @@
 {
-  "name": "kroket-stream-relay-backend",
-  "version": "0.0.1",
-  "description": "Encoding and relaying of HLS and RTMP video streams",
-  "main": "app.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "sqr",
-  "license": "MIT",
-  "dependencies": {
-    "bcrypt": "^5.0.1",
-    "connect-redis": "^6.0.0",
-    "cors": "^2.8.5",
-    "dotenv": "^10.0.0",
-    "express": "^4.17.1",
-    "express-promise-router": "^4.1.0",
-    "express-session": "^1.17.2",
-    "jsonwebtoken": "^8.5.1",
-    "nanoid": "^3.1.28",
-    "pg": "^8.7.1",
-    "python-shell": "^3.0.0",
-    "redis": "^3.1.2",
-    "simple-thumbnail": "^1.6.5",
-    "socket.io": "^4.3.1"
-  }
+    "name": "kroket-stream-relay-backend",
+    "version": "0.0.1",
+    "description": "Encoding and relaying of HLS and RTMP video streams",
+    "main": "app.js",
+    "scripts": {
+        "test": "jest"
+    },
+    "author": "sqr",
+    "license": "MIT",
+    "dependencies": {
+        "bcrypt": "^5.0.1",
+        "connect-redis": "^6.0.0",
+        "cors": "^2.8.5",
+        "dotenv": "^10.0.0",
+        "express": "^4.17.1",
+        "express-promise-router": "^4.1.0",
+        "express-session": "^1.17.2",
+        "jsonwebtoken": "^8.5.1",
+        "nanoid": "^3.1.28",
+        "pg": "^8.7.1",
+        "python-shell": "^3.0.0",
+        "redis": "^3.1.2",
+        "simple-thumbnail": "^1.6.5",
+        "socket.io": "^4.3.1"
+    },
+    "devDependencies": {
+        "jest": "^27.3.1"
+    }
 }

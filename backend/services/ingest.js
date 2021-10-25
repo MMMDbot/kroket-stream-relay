@@ -6,6 +6,25 @@ const nanoid4 = customAlphabet(alphabet, 4)
 const fs = require('fs')
 const path = require('path')
 const { PythonShell } = require('python-shell')
+const { originParser } = require('./urlParser')
+
+/**
+ * Handles business logic for ingesting a stream
+ * @param  {String} description
+ * @param  {String} origin
+ */
+async function ingest(description, origin) {
+    // Handle origin url
+    const parsedOrigin = originParser(origin)
+    console.log(parsedOrigin)
+    // Create Ingest Folder, return ID of the stream
+    // Get user ID from the session
+    // Start Encode
+    // Retry several times if it fails
+    // Return success or fail
+    // Add ingest to DB if encoding has started
+    // Return ID to as 'streamId'
+}
 
 /**
  * Generates ID and creates Ingest folder in ../public/streams.
@@ -52,7 +71,7 @@ function deleteIngestFolder(id) {
  * Starts the execution of the Python script that encodes the video stream.
  * @param  {String} id  Id of the folder where the HLS streaming will save the playlist and chunks.
  */
-function ingest(id, origin) {
+function encodeIngest(id, origin) {
     let options = {
         mode: 'text',
         pythonPath:
