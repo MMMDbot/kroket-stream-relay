@@ -21,6 +21,13 @@ function createIngestFolder() {
             return console.error(err)
         }
     })
+    const manifestname = path.join(__dirname + '/../public/streams/stream.m3u8')
+    const manifestdestination = path.join(foldername + '/stream.m3u8')
+    fs.copyFile(manifestname, manifestdestination, (err) => {
+        if (err) {
+            return console.error(err)
+        }
+    })
     return id
 }
 
