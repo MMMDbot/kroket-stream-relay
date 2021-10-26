@@ -43,7 +43,11 @@ export default function IngestForm() {
                     if (data.streamId) {
                         history.push(`/stream/${data.streamId}`)
                     } else {
-                        setErrorMessage('Server error processing ingest.')
+                        setErrorMessage(
+                            data.message
+                                ? data.message
+                                : 'Server error processing ingest.'
+                        )
                         setFormError(true)
                         setFormLoading(false)
                     }

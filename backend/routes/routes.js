@@ -44,14 +44,22 @@ router.get('/test', (req, res) => {
 })
 
 router.post('/ingest', async (req, res) => {
-    const ingest = await ingest(id, origin)
-    const id = createIngestFolder()
+    const userid = req.session.userid
     const { origin, description } = req.body
+    try {
+        const id = await ingest(description, origin, userid)
+        res.json(id)
+    } catch (error) {
+        console.log(error)
+        res.json({ message: error.message })
+    }
+    //const id = createIngestFolder()
+    /* const { origin, description } = req.body
     if (!origin || !description) {
         res.json('Error')
     }
     console.log(req.session.userid)
-    const task = ingest(id, origin)
+    const task = encodeIngest(id, origin)
     const result = await db.addIngest(
         id,
         id,
@@ -60,7 +68,7 @@ router.post('/ingest', async (req, res) => {
         origin
     )
     console.log(ingest)
-    res.json({ streamId: id })
+    res.json({ streamId: id }) */
 })
 
 router.post('/relay', (req, res) => {

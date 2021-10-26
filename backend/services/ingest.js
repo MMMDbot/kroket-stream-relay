@@ -7,23 +7,44 @@ const fs = require('fs')
 const path = require('path')
 const { PythonShell } = require('python-shell')
 const { originParser } = require('./urlParser')
+const db = require('../data/users')
 
 /**
  * Handles business logic for ingesting a stream
- * @param  {String} description
- * @param  {String} origin
+ * @param  {String} description Title of the broadcast
+ * @param  {String} origin HLS url that will be encoded
+ * @param  {Number} userid The user id from the req.session object
  */
-async function ingest(description, origin) {
+async function ingest(description, origin, userid) {
+    // Get user ID from the session
+    if (userid === undefined) {
+        throw new Error('Not logged in.')
+    }
     // Handle origin url
     const parsedOrigin = originParser(origin)
     console.log(parsedOrigin)
     // Create Ingest Folder, return ID of the stream
-    // Get user ID from the session
+    const id = createIngestFolder()
     // Start Encode
-    // Retry several times if it fails
+    const encode = encodeIngest(id, parsedOrigin)
+    console.log(encode)
     // Return success or fail
     // Add ingest to DB if encoding has started
-    // Return ID to as 'streamId'
+    try {
+        const result = await db.addIngest(
+            id,
+            id,
+            description,
+            userid,
+            parsedOrigin
+        )
+    } catch (error) {
+        return {
+            message: 'Database Error',
+        }
+    }
+    // Return ID as 'streamId'
+    return { streamId: id }
 }
 
 /**
@@ -86,6 +107,7 @@ function encodeIngest(id, origin) {
         if (err) throw err
         // results is an array consisting of messages collected during execution
         console.log('results: %j', results)
+        return results
     })
 }
 
