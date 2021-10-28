@@ -7,6 +7,8 @@ name = "pypi"
 redis = "*"
 rq = "*"
 ffmpeg-python = "*"
+yt-dlp = "*"
+tenacity = "*"
 
 [dev-packages]
 

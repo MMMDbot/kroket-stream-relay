@@ -4,6 +4,23 @@ from redis import Redis
 import os
 import time
 import ffmpeg
+import yt_dlp
+from tenacity import retry, stop_after_attempt, retry_if_exception_type
+
+
+def yt(url):
+    ydl_opts = {
+        "format": "best/bestvideo+bestaudio",
+        "forceurl": "true",
+        "simulate": "true",
+        "quiet": "true",
+    }
+    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+        info = ydl.extract_info(url, process=False)
+    #    info_json = json.dumps(ydl.sanitize_info(info))
+    #    info2_json = json.loads(info_json)
+    # print(info2_json["formats"][-1]["url"])
+    return info["formats"][-1]["url"]
 
 
 def createDir(dir):
@@ -50,9 +67,41 @@ def streamVideo():
         raise e
 
 
+class Error(Exception):
+    """Base class for other exceptions"""
+
+    pass
+
+
+class YtdlpError(Error):
+    """Raised when the input value is too small"""
+
+    pass
+
+
+@retry(retry=retry_if_exception_type(YtdlpError))
+def retryTest():
+    t = time.perf_counter()
+    time.sleep(7)
+    elapsed_time = time.perf_counter() - t
+    if elapsed_time > 8:
+        print(elapsed_time)
+        raise YtdlpError
+    else:
+        raise Error
+
+
+# @retry(stop=stop_after_attempt(4))
+@retry(retry=retry_if_exception_type(YtdlpError))
 def streamHLS(id, origin):
     VIDEO_URL = origin
     RTMP_SERVER = "rtmp://publish.dailymotion.com/publish-dm/x7t01a2?auth=dIJL_2c32466412bd2c7dd5ba696eae070e1f3481b6e2"
+
+    try:
+        hls_playlist = yt(origin)
+    except Error:
+        print("ytdlperror")
+        raise YtdlpError
 
     current_directory = "/home/square/kroket-stream-relay/backend/public/streams/"
     playlist_path = os.path.join(current_directory, id, "stream.m3u8")
@@ -60,8 +109,8 @@ def streamHLS(id, origin):
 
     try:
         stream_map = None
-        stream1 = ffmpeg.input(VIDEO_URL, re=None)
-        stream2 = ffmpeg.input("mosca_66.png")
+        stream1 = ffmpeg.input(hls_playlist, re=None)
+        stream2 = ffmpeg.input("mosca_76.png")
         stream_ol = ffmpeg.overlay(stream1, stream2, x="main_w-overlay_w-50", y="50")
         a1 = stream1.audio
         stream = ffmpeg.output(
@@ -90,6 +139,7 @@ def streamHLS(id, origin):
     except ffmpeg.Error as e:
         print("stdout:", e.stdout.decode("utf8"))
         print("stderr:", e.stderr.decode("utf8"))
+        print(e)
         raise e
 
 
