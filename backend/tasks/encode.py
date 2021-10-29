@@ -14,6 +14,7 @@ from tenacity import (
     Retrying,
     RetryError,
 )
+import sys
 
 
 def yt(url):
@@ -25,7 +26,7 @@ def yt(url):
     }
     try:
         for attempt in Retrying(
-            stop=stop_after_attempt(6), wait=wait_random(min=5, max=10)
+            stop=stop_after_attempt(2), wait=wait_random(min=5, max=10)
         ):
             with attempt:
                 with yt_dlp.YoutubeDL(ydl_opts) as ydl:
@@ -35,7 +36,8 @@ def yt(url):
                     # print(info2_json["formats"][-1]["url"])
                     return info["formats"][-1]["url"]
     except RetryError:
-        raise Error
+        print("hola")
+        raise YtdlpError
 
 
 def createDir(dir):
@@ -91,11 +93,17 @@ class Error(Exception):
 class YtdlpError(Error):
     """Raised when converting YouTube URL to HLS playlist is not successful"""
 
+    def __str__(self):
+        return "Yt-dlp error!"
+
     pass
 
 
 class LongEncodeError(Error):
     """Raised when FFMPEG encoding has been running for more than 1 hour"""
+
+    def __str__(self):
+        return "Long Encode Error!"
 
     pass
 
@@ -103,24 +111,22 @@ class LongEncodeError(Error):
 class ShortEncodeError(Error):
     """Raised when FFMPEG encoding has been running for less than 1 hour"""
 
+    def __str__(self):
+        return "Short Encode Error!"
+
     pass
 
 
 class EncodingCatastrophe(Error):
     """Raised when more than 10 retries have been made in less than an hour"""
 
+    def __str__(self):
+        return "Catastrophic encoding error!"
+
     pass
 
 
-def return_attempt_number(retry_state):
-    """return the result of the last call attempt"""
-    return retry_state.attempt_number
-
-
-@retry(
-    retry=retry_if_exception_type(YtdlpError),
-    after=return_attempt_number,
-)
+@retry(retry=retry_if_exception_type(YtdlpError))
 def retryTest():
     t = time.perf_counter()
     time.sleep(2)
@@ -135,7 +141,10 @@ def retryTest():
 
 # @retry(stop=stop_after_attempt(4))
 @retry(
-    retry=retry_unless_exception_type(EncodingCatastrophe),
+    retry=(
+        retry_unless_exception_type(EncodingCatastrophe)
+        & retry_unless_exception_type(YtdlpError)
+    ),
     wait=wait_random(min=5, max=10),
 )
 def streamHLS(id, origin):
@@ -144,9 +153,9 @@ def streamHLS(id, origin):
 
     try:
         hls_playlist = yt(origin)
-    except Error:
-        print("ytdlperror")
-        raise EncodingCatastrophe
+    except YtdlpError as e:
+        print(e)
+        raise YtdlpError from None
 
     current_directory = "/home/square/kroket-stream-relay/backend/public/streams/"
     playlist_path = os.path.join(current_directory, id, "stream.m3u8")
