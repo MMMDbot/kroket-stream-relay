@@ -5,7 +5,15 @@ import os
 import time
 import ffmpeg
 import yt_dlp
-from tenacity import retry, stop_after_attempt, retry_if_exception_type
+from tenacity import (
+    retry,
+    stop_after_attempt,
+    retry_if_exception_type,
+    wait_random,
+    retry_unless_exception_type,
+    Retrying,
+    RetryError,
+)
 
 
 def yt(url):
@@ -15,12 +23,19 @@ def yt(url):
         "simulate": "true",
         "quiet": "true",
     }
-    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-        info = ydl.extract_info(url, process=False)
-    #    info_json = json.dumps(ydl.sanitize_info(info))
-    #    info2_json = json.loads(info_json)
-    # print(info2_json["formats"][-1]["url"])
-    return info["formats"][-1]["url"]
+    try:
+        for attempt in Retrying(
+            stop=stop_after_attempt(6), wait=wait_random(min=5, max=10)
+        ):
+            with attempt:
+                with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                    info = ydl.extract_info(url, process=False)
+                    #    info_json = json.dumps(ydl.sanitize_info(info))
+                    #    info2_json = json.loads(info_json)
+                    # print(info2_json["formats"][-1]["url"])
+                    return info["formats"][-1]["url"]
+    except RetryError:
+        raise Error
 
 
 def createDir(dir):
@@ -74,25 +89,55 @@ class Error(Exception):
 
 
 class YtdlpError(Error):
-    """Raised when the input value is too small"""
+    """Raised when converting YouTube URL to HLS playlist is not successful"""
 
     pass
 
 
-@retry(retry=retry_if_exception_type(YtdlpError))
+class LongEncodeError(Error):
+    """Raised when FFMPEG encoding has been running for more than 1 hour"""
+
+    pass
+
+
+class ShortEncodeError(Error):
+    """Raised when FFMPEG encoding has been running for less than 1 hour"""
+
+    pass
+
+
+class EncodingCatastrophe(Error):
+    """Raised when more than 10 retries have been made in less than an hour"""
+
+    pass
+
+
+def return_attempt_number(retry_state):
+    """return the result of the last call attempt"""
+    return retry_state.attempt_number
+
+
+@retry(
+    retry=retry_if_exception_type(YtdlpError),
+    after=return_attempt_number,
+)
 def retryTest():
     t = time.perf_counter()
-    time.sleep(7)
+    time.sleep(2)
     elapsed_time = time.perf_counter() - t
-    if elapsed_time > 8:
+    if elapsed_time < 18:
         print(elapsed_time)
+        print(retryTest.retry.statistics["attempt_number"])
         raise YtdlpError
     else:
         raise Error
 
 
 # @retry(stop=stop_after_attempt(4))
-@retry(retry=retry_if_exception_type(YtdlpError))
+@retry(
+    retry=retry_unless_exception_type(EncodingCatastrophe),
+    wait=wait_random(min=5, max=10),
+)
 def streamHLS(id, origin):
     VIDEO_URL = origin
     RTMP_SERVER = "rtmp://publish.dailymotion.com/publish-dm/x7t01a2?auth=dIJL_2c32466412bd2c7dd5ba696eae070e1f3481b6e2"
@@ -101,16 +146,17 @@ def streamHLS(id, origin):
         hls_playlist = yt(origin)
     except Error:
         print("ytdlperror")
-        raise YtdlpError
+        raise EncodingCatastrophe
 
     current_directory = "/home/square/kroket-stream-relay/backend/public/streams/"
     playlist_path = os.path.join(current_directory, id, "stream.m3u8")
     chunk_path = os.path.join(current_directory, id, "data%02d.ts")
 
+    time_start = time.perf_counter()
     try:
         stream_map = None
         stream1 = ffmpeg.input(hls_playlist, re=None)
-        stream2 = ffmpeg.input("mosca_76.png")
+        stream2 = ffmpeg.input("mosca_66.png")
         stream_ol = ffmpeg.overlay(stream1, stream2, x="main_w-overlay_w-50", y="50")
         a1 = stream1.audio
         stream = ffmpeg.output(
@@ -137,10 +183,22 @@ def streamHLS(id, origin):
         subp = ffmpeg.run(stream, capture_stdout=True, capture_stderr=True)
 
     except ffmpeg.Error as e:
-        print("stdout:", e.stdout.decode("utf8"))
-        print("stderr:", e.stderr.decode("utf8"))
-        print(e)
-        raise e
+        elapsed_time = time.perf_counter() - time_start
+        if elapsed_time > 3600:
+            print(elapsed_time)
+            raise LongEncodeError
+        elif streamHLS.retry.statistics["attempt_number"] > 10:
+            raise EncodingCatastrophe
+        else:
+            print(streamHLS.retry.statistics["attempt_number"])
+            print(elapsed_time)
+            print("stdout:", e.stdout.decode("utf8"))
+            print("stderr:", e.stderr.decode("utf8"))
+            print(e)
+            raise ShortEncodeError
+
+
+streamHLS("fff", "https://www.youtube.com/watch?v=5qap5aO4i9")
 
 
 def relay(id, server, streamKey):
