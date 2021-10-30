@@ -4,6 +4,7 @@ const alphabet =
 const nanoid = customAlphabet(alphabet, 9)
 const nanoid4 = customAlphabet(alphabet, 4)
 const fs = require('fs')
+const util = require('util')
 const path = require('path')
 const { PythonShell } = require('python-shell')
 const { originParser } = require('./urlParser')
@@ -20,15 +21,27 @@ async function ingest(description, origin, userid) {
     if (userid === undefined) {
         throw new Error('Not logged in.')
     }
-    // Handle origin url
-    const parsedOrigin = originParser(origin)
-    console.log(parsedOrigin)
-    // Create Ingest Folder, return ID of the stream
-    const id = createIngestFolder()
-    // Start Encode
-    const encode = encodeIngest(id, parsedOrigin)
-    console.log(encode)
-    // Return success or fail
+    try {
+        // Handle origin url
+        const parsedOrigin = originParser(origin)
+        console.log(parsedOrigin)
+    } catch (error) {
+        return {
+            message: 'Error parsing URL',
+        }
+    }
+    try {
+        // Create Ingest Folder, return ID of the stream
+        const id = createIngestFolder()
+        // Start Encode
+        const encode = encodeIngest(id, parsedOrigin)
+        console.log(encode)
+        // Return success or fail
+    } catch (error) {
+        return {
+            message: 'Error creating encoding folder or manifest',
+        }
+    }
     // Add ingest to DB if encoding has started
     try {
         const result = await db.addIngest(
@@ -53,21 +66,39 @@ async function ingest(description, origin, userid) {
  */
 function createIngestFolder() {
     const id = nanoid()
-    console.log(id)
+    const makeDir = util.promisify(fs.mkdir)
+    const copyFile = util.promisify(fs.copyFile)
     const foldername = path.join(__dirname + '/../public/streams/' + id)
-
-    fs.mkdir(foldername, (err) => {
-        if (err) {
-            return console.error(err)
-        }
-    })
     const manifestname = path.join(__dirname + '/../public/streams/stream.m3u8')
     const manifestdestination = path.join(foldername + '/stream.m3u8')
-    fs.copyFile(manifestname, manifestdestination, (err) => {
-        if (err) {
-            return console.error(err)
+
+    console.log(id)
+
+    const createDirectory = async (foldername) => {
+        try {
+            await makeDir(foldername)
+            console.log('Directory created')
+            console.log('Copying manifest...')
+        } catch (error) {
+            console.log('Error creating directory: ' + error)
         }
-    })
+        await copyManifest(manifestname, manifestdestination)
+    }
+
+    const copyManifest = async (manifestname, manifestdestination) => {
+        try {
+            await copyFile(manifestname, manifestdestination)
+            console.log('Placeholder manifest copied')
+        } catch (error) {
+            console.log('Error copying placeholder manifest')
+        }
+    }
+
+    try {
+        createDirectory(foldername)
+    } catch (error) {
+        console.log(error)
+    }
     return id
 }
 
