@@ -15,35 +15,31 @@ const db = require('../data/users')
  * @param  {String} description Title of the broadcast
  * @param  {String} origin HLS url that will be encoded
  * @param  {Number} userid The user id from the req.session object
+ * @return {JSON}   Id of the stream or error message if something fails
  */
 async function ingest(description, origin, userid) {
     // Get user ID from the session
     if (userid === undefined) {
         throw new Error('Not logged in.')
     }
+    // Set id here so we can reassign it inside the try block
+    let id
     try {
-        // Handle origin url
+        // Check that the origin is a valid URL and parse it
         const parsedOrigin = originParser(origin)
-        console.log(parsedOrigin)
-    } catch (error) {
-        return {
-            message: 'Error parsing URL',
+        console.log('Parsed origin is: ' + parsedOrigin)
+        // Create Ingest Folder and get back the id
+        const ingestResult = await createIngestFolder()
+        if (ingestResult.message) {
+            return ingestResult
+        } else {
+            id = ingestResult
         }
-    }
-    try {
-        // Create Ingest Folder, return ID of the stream
-        const id = createIngestFolder()
+        console.log(id)
         // Start Encode
         const encode = encodeIngest(id, parsedOrigin)
-        console.log(encode)
         // Return success or fail
-    } catch (error) {
-        return {
-            message: 'Error creating encoding folder or manifest',
-        }
-    }
-    // Add ingest to DB if encoding has started
-    try {
+        // Add ingest to DB if encoding has started
         const result = await db.addIngest(
             id,
             id,
@@ -52,8 +48,9 @@ async function ingest(description, origin, userid) {
             parsedOrigin
         )
     } catch (error) {
+        console.log(error)
         return {
-            message: 'Database Error',
+            message: error.message,
         }
     }
     // Return ID as 'streamId'
@@ -64,7 +61,7 @@ async function ingest(description, origin, userid) {
  * Generates ID and creates Ingest folder in ../public/streams.
  * @return {String} The ID Generated.
  */
-function createIngestFolder() {
+async function createIngestFolder() {
     const id = nanoid()
     const makeDir = util.promisify(fs.mkdir)
     const copyFile = util.promisify(fs.copyFile)
@@ -74,32 +71,26 @@ function createIngestFolder() {
 
     console.log(id)
 
-    const createDirectory = async (foldername) => {
+    const createDirectory = async (foldername, id) => {
         try {
             await makeDir(foldername)
             console.log('Directory created')
             console.log('Copying manifest...')
+            await copyManifest(manifestname, manifestdestination)
+            return id
         } catch (error) {
-            console.log('Error creating directory: ' + error)
+            console.log('Server filesystem Error')
+            return { message: 'Server filesystem error. Please try again.' }
         }
-        await copyManifest(manifestname, manifestdestination)
     }
 
     const copyManifest = async (manifestname, manifestdestination) => {
-        try {
-            await copyFile(manifestname, manifestdestination)
-            console.log('Placeholder manifest copied')
-        } catch (error) {
-            console.log('Error copying placeholder manifest')
-        }
+        await copyFile(manifestname, manifestdestination)
+        console.log('Placeholder manifest copied')
     }
+    const result = await createDirectory(foldername, id)
 
-    try {
-        createDirectory(foldername)
-    } catch (error) {
-        console.log(error)
-    }
-    return id
+    return result
 }
 
 /**
