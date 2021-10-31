@@ -9,6 +9,7 @@ rq = "*"
 ffmpeg-python = "*"
 yt-dlp = "*"
 tenacity = "*"
+requests = "*"
 
 [dev-packages]
 
