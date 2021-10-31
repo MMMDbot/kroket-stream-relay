@@ -93,6 +93,22 @@ router.post('/stop/:id', (req, res) => {
     res.json(task)
 })
 
+router.get('/setoffline/:id', async (req, res) => {
+    try {
+        const { id } = req.params
+        const status = false
+        const { rows } = await db.setIngest(status, id)
+        if (rows.length > 0) {
+            res.json({ message: `Streaming ${rows[0].job_id} set as offline` })
+        } else {
+            res.json({ message: 'Cant update ingest in database' })
+        }
+    } catch (error) {
+        console.log(error)
+        res.json(error.severity)
+    }
+})
+
 router.get('/users', async (req, res) => {
     try {
         const { rows } = await db.getUsers()
@@ -156,9 +172,9 @@ router.get('/ingests', async (req, res) => {
     res.json(rows)
 })
 
-router.get('/ingest/:id', async (req, res) => {
-    const { id } = req.params
-    const { rows } = await db.getIngest(id)
+router.get('/ingest/:job_id', async (req, res) => {
+    const { job_id } = req.params
+    const { rows } = await db.getIngestByJobId(job_id)
     if (rows.length === 1) {
         res.json(rows[0])
     } else {

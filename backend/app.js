@@ -65,3 +65,19 @@ app.get('/socket/offline', (req, res) => {
     io.emit('receive-message', 'offline')
     res.json({ message: 'Event emitted' })
 })
+
+app.get('/socket/ingest/:job_id/:status', (req, res) => {
+    const { job_id, status } = req.params
+    if (status === 'online') {
+        io.emit(job_id, 'Online')
+        res.json({ message: 'Ingest Online event emitted' })
+    } else if (status === 'offline') {
+        io.emit(job_id, 'Offline')
+        res.json({ message: 'Ingest Offline event emitted' })
+    } else {
+        res.json({
+            message:
+                'Error sending ingest status. Only online or offline supported.',
+        })
+    }
+})

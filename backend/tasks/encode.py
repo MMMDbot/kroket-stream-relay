@@ -1,5 +1,6 @@
 from rq import Queue
 from rq.command import send_stop_job_command
+from rq.job import Job
 from redis import Redis
 import os
 import time
@@ -253,9 +254,12 @@ def startQueue(id, origin):
     # job = q.enqueue(streamVideo)
     # job = q.enqueue(streamVideo)
     job = q.enqueue(streamHLS, id, origin, job_id=id, job_timeout=-1)
-    print(job.result)  # => None
-    time.sleep(5)
     print(job.result)
+    print(job.exc_info)  # => None
+    time.sleep(11)
+    job_status = Job.fetch(id, connection=redis_conn)
+    print(job_status.result)
+    print(job_status.exc_info)
 
 
 def startRelay(id, relayId, server, streamKey):
@@ -268,6 +272,7 @@ def startRelay(id, relayId, server, streamKey):
     # job = q.enqueue(streamVideo)
     job = q.enqueue(relay, id, server, streamKey, job_id=relayId, job_timeout=-1)
     print(job.result)  # => None
+
     time.sleep(5)
     print(job.result)
 

@@ -28,12 +28,19 @@ module.exports = {
             'INSERT INTO organizations (orgname, address, phone) VALUES ($1, $2, $3)',
             [orgname, address, phone]
         ),
-    getIngests: () => pool.query('SELECT * FROM ingests ORDER BY id ASC'),
+    getIngests: () => pool.query('SELECT * FROM ingests ORDER BY id DESC'),
     getIngest: (id) => pool.query('SELECT * FROM ingests WHERE id = $1', [id]),
+    getIngestByJobId: (job_id) =>
+        pool.query('SELECT * FROM ingests WHERE job_id = $1', [job_id]),
     addIngest: (folder, job_id, description, user_id, origin) =>
         pool.query(
             'INSERT INTO ingests (folder, job_id, description, user_id, origin, active) VALUES ($1, $2, $3, $4, $5, $6)',
             [folder, job_id, description, user_id, origin, true]
+        ),
+    setIngest: (active, id) =>
+        pool.query(
+            'UPDATE ingests SET active = $1, stopped_at = CURRENT_TIMESTAMP WHERE job_id = $2 RETURNING job_id',
+            [active, id]
         ),
     getRelays: () => pool.query('SELECT * FROM relays ORDER BY id ASC'),
     getRelay: (id) => pool.query('SELECT * FROM relay WHERE id = $1', [id]),
