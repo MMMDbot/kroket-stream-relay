@@ -183,8 +183,14 @@ router.get('/ingest/:job_id', async (req, res) => {
 })
 
 router.post('/ingest/add', async (req, res) => {
-    const { folder, job_id, description, user_id } = req.body
-    const result = await db.addIngest(folder, job_id, description, user_id)
+    const { folder, job_id, description, user_id, origin } = req.body
+    const result = await db.addIngest(
+        folder,
+        job_id,
+        description,
+        user_id,
+        origin
+    )
     res.json({ mesage: 'Ingest added' })
 })
 
@@ -242,6 +248,12 @@ router.post('/target/add', async (req, res) => {
         user_id
     )
     res.json({ mesage: 'Target added' })
+})
+
+router.get('/ingests/org', async (req, res) => {
+    const { userid } = req.session
+    const { rows } = await db.getUserOrgIngests(userid)
+    res.json(rows)
 })
 
 //
