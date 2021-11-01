@@ -48,6 +48,14 @@ export default function Header() {
                                 Streams
                             </NavLink>
                         </li>
+                        <li>
+                            <NavLink
+                                className="nav-link px-2 text-white"
+                                to="/targets"
+                            >
+                                Targets
+                            </NavLink>
+                        </li>
                     </ul>
 
                     <div className="text-end">

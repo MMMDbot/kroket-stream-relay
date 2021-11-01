@@ -237,17 +237,25 @@ router.get('/target/:id', async (req, res) => {
 })
 
 router.post('/target/add', async (req, res) => {
-    const { server, stream_key, description, public_url, platform, user_id } =
-        req.body
-    const result = await db.addTarget(
-        server,
-        stream_key,
-        description,
-        public_url,
-        platform,
-        user_id
-    )
-    res.json({ mesage: 'Target added' })
+    const userid = req.session.userid
+    if (!userid) {
+        res.json({ message: 'Not logged in' })
+    }
+    const { server, stream_key, description, public_url, platform } = req.body
+    try {
+        const result = await db.addTarget(
+            server,
+            stream_key,
+            description,
+            public_url,
+            platform,
+            userid
+        )
+        console.log(result)
+        res.json({ success: true, message: 'Target added' })
+    } catch (error) {
+        res.json({ message: error.message })
+    }
 })
 
 router.get('/ingests/org', async (req, res) => {

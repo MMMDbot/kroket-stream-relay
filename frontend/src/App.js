@@ -6,6 +6,7 @@ import Login from './components/Login'
 import ProfilePage from './components/ProfilePage'
 import Streams from './components/Streams'
 import Stream from './components/Stream'
+import TargetPage from './components/TargetPage'
 
 import { StateTest, StateSetter } from './components/StateTest'
 
@@ -21,6 +22,9 @@ function App() {
             </Route>
             <Route exact path="/streams">
                 <Streams />
+            </Route>
+            <Route exact path="/targets">
+                <TargetPage />
             </Route>
             <Route path="/stream/:id">
                 <Stream />
