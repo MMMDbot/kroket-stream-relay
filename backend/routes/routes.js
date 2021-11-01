@@ -264,6 +264,12 @@ router.get('/ingests/org', async (req, res) => {
     res.json(rows)
 })
 
+router.get('/targets/org', async (req, res) => {
+    const { userid } = req.session
+    const { rows } = await db.getUserOrgTargets(userid)
+    res.json(rows)
+})
+
 //
 // Testing Area -- beware --
 //

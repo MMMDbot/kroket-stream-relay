@@ -56,6 +56,11 @@ module.exports = {
         ),
     getTargets: () => pool.query('SELECT * FROM targets ORDER BY id ASC'),
     getTarget: (id) => pool.query('SELECT * FROM relay WHERE id = $1', [id]),
+    getUserOrgTargets: (id) =>
+        pool.query(
+            'select t.* from Targets t, Users u where u.id=t.user_id and u.organization_id in (select organization_id from Users where u.id=$1)',
+            [id]
+        ),
     addTarget: (
         server,
         stream_key,
