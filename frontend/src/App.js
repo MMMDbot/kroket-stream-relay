@@ -7,6 +7,7 @@ import ProfilePage from './components/ProfilePage'
 import Streams from './components/Streams'
 import Stream from './components/Stream'
 import TargetPage from './components/TargetPage'
+import MultiSelect from './components/MultiSelect'
 
 import { StateTest, StateSetter } from './components/StateTest'
 
@@ -34,6 +35,9 @@ function App() {
             </Route>
             <Route exact path="/profile">
                 <ProfilePage />
+            </Route>
+            <Route exact path="/multiselect">
+                <MultiSelect />
             </Route>
         </Switch>
     )
