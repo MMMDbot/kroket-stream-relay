@@ -210,12 +210,14 @@ router.get('/relay/:id', async (req, res) => {
 })
 
 router.post('/relay/add', async (req, res) => {
-    const { ingest_id, target_id, description, user_id, job_id } = req.body
+    const userid = req.session.userid
+    const { ingest_id, target_id, description, ingest_jobid } = req.body
+    const job_id = relay(ingest_jobid)
     const result = await db.addRelay(
         ingest_id,
         target_id,
         description,
-        user_id,
+        userid,
         job_id
     )
     res.json({ mesage: 'Relay added' })
@@ -223,6 +225,23 @@ router.post('/relay/add', async (req, res) => {
 
 router.get('/targets', async (req, res) => {
     const { rows } = await db.getTargets()
+    res.json(rows)
+})
+
+router.get('/targets/active', async (req, res) => {
+    const { rows } = await db.getAllActiveTargets()
+    res.json(rows)
+})
+
+router.get('/targets/org', async (req, res) => {
+    const { userid } = req.session
+    const { rows } = await db.getUserOrgTargets(userid)
+    res.json(rows)
+})
+
+router.get('/targets/org/active', async (req, res) => {
+    const { userid } = req.session
+    const { rows } = await db.getUserOrgActiveTargets(userid)
     res.json(rows)
 })
 
@@ -261,12 +280,6 @@ router.post('/target/add', async (req, res) => {
 router.get('/ingests/org', async (req, res) => {
     const { userid } = req.session
     const { rows } = await db.getUserOrgIngests(userid)
-    res.json(rows)
-})
-
-router.get('/targets/org', async (req, res) => {
-    const { userid } = req.session
-    const { rows } = await db.getUserOrgTargets(userid)
     res.json(rows)
 })
 

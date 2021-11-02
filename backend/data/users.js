@@ -56,9 +56,18 @@ module.exports = {
         ),
     getTargets: () => pool.query('SELECT * FROM targets ORDER BY id ASC'),
     getTarget: (id) => pool.query('SELECT * FROM relay WHERE id = $1', [id]),
+    getAllActiveTargets: () =>
+        pool.query(
+            'SELECT t.* FROM targets t, relays r WHERE t.id = r.target_id and r.active = true'
+        ),
     getUserOrgTargets: (id) =>
         pool.query(
             'select t.* from Targets t, Users u where u.id=t.user_id and u.organization_id in (select organization_id from Users where u.id=$1)',
+            [id]
+        ),
+    getUserOrgActiveTargets: (id) =>
+        pool.query(
+            'with org_targets as (select t.* from Targets t, Users u where u.id=t.user_id and u.organization_id in (select organization_id from Users where u.id=$1)) SELECT t.* FROM org_targets t, relays r WHERE t.id = r.target_id and r.active = true',
             [id]
         ),
     addTarget: (
