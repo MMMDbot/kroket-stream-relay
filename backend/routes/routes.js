@@ -240,10 +240,27 @@ router.get('/targets/org', async (req, res) => {
     res.json(rows)
 })
 
-router.get('/targets/org/active', async (req, res) => {
+router.get('/targets/org/active', authSession, async (req, res) => {
     const { userid } = req.session
     const { rows } = await db.getUserOrgActiveTargets(userid)
     res.json(rows)
+})
+
+router.get('/targets/org/available', authSession, async (req, res) => {
+    const { userid } = req.session
+    const totalTargets = (await db.getUserOrgTargets(userid)).rows
+    const activeTargets = (await db.getUserOrgActiveTargets(userid)).rows
+    const targetFilter = activeTargets.map((itemY) => {
+        return itemY.id
+    })
+    const availableTargets = totalTargets.filter(
+        (itemX) => !targetFilter.includes(itemX.id)
+    )
+    res.json({
+        totalTargets: totalTargets,
+        activeTargets: activeTargets,
+        availableTargets: availableTargets,
+    })
 })
 
 router.get('/target/:id', async (req, res) => {
