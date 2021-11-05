@@ -17,6 +17,7 @@ const {
 const db = require('../data/users')
 const redis = require('redis')
 const connectRedis = require('connect-redis')
+const authSession = require('../middlewares/auth-session')
 
 const RedisStore = connectRedis(session)
 
@@ -277,7 +278,7 @@ router.post('/target/add', async (req, res) => {
     }
 })
 
-router.get('/ingests/org', async (req, res) => {
+router.get('/ingests/org', authSession, async (req, res) => {
     const { userid } = req.session
     const { rows } = await db.getUserOrgIngests(userid)
     res.json(rows)
