@@ -1,7 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Select from 'react-select'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
+
+import AsyncSelect from 'react-select/async'
 
 export default function MultiSelect() {
     const options = [
@@ -10,6 +12,34 @@ export default function MultiSelect() {
         { value: 'vanilla', label: 'Vanilla' },
     ]
     const [selection, setSelection] = useState([])
+    const [opciones, setOpciones] = useState([])
+
+    /*     const requestOptions = {
+        method: 'GET',
+        credentials: 'include',
+    }
+    const promiseOptions = fetch(
+        'http://localhost:3001/api/multiselect',
+        requestOptions
+    )
+        .then((response) => response.json())
+        .then((data) => {
+            console.log(data)
+            return data
+        }) */
+
+    useEffect(() => {
+        const requestOptions = {
+            method: 'GET',
+            credentials: 'include',
+        }
+        fetch('http://localhost:3001/api/multiselect', requestOptions)
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data)
+                setOpciones(data)
+            })
+    }, [])
 
     const submitRelays = (e) => {
         e.preventDefault()
@@ -18,9 +48,10 @@ export default function MultiSelect() {
 
     return (
         <Form onSubmit={submitRelays}>
-            <Select
+            <AsyncSelect
                 isMulti
-                options={options}
+                cacheOptions
+                loadOptions={opciones}
                 onChange={(e) => {
                     setSelection(e)
                 }}

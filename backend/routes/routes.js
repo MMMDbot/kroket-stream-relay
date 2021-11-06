@@ -320,4 +320,13 @@ router.get('/thumbnail', (req, res) => {
         .catch((err) => console.error(err))
 })
 
+router.get('/multiselect', (req, res) => {
+    const options = [
+        { value: 'chocolate', label: 'Chocolate' },
+        { value: 'strawberry', label: 'Strawberry' },
+        { value: 'vanilla', label: 'Vanilla' },
+    ]
+    res.json(options)
+})
+
 module.exports = router
