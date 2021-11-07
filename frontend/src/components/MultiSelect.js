@@ -14,30 +14,39 @@ export default function MultiSelect() {
     const [selection, setSelection] = useState([])
     const [opciones, setOpciones] = useState([])
 
-    /*     const requestOptions = {
-        method: 'GET',
-        credentials: 'include',
-    }
-    const promiseOptions = fetch(
-        'http://localhost:3001/api/multiselect',
-        requestOptions
-    )
-        .then((response) => response.json())
-        .then((data) => {
-            console.log(data)
-            return data
-        }) */
+    const groupedOptions = [
+        {
+            label: 'YouTube',
+            options: opciones,
+        },
+        {
+            label: 'Dailymotion',
+            options: opciones,
+        },
+        {
+            label: 'Twitter',
+            options: opciones,
+        },
+    ]
 
     useEffect(() => {
         const requestOptions = {
             method: 'GET',
             credentials: 'include',
         }
-        fetch('http://localhost:3001/api/multiselect', requestOptions)
+        fetch('http://localhost:3001/api/targets/org/available', requestOptions)
             .then((response) => response.json())
             .then((data) => {
                 console.log(data)
-                setOpciones(data)
+                const preformatArray = data.availableTargets
+                const reformatArray = preformatArray.map((obj) => {
+                    obj.label = obj.description
+                    obj.value = obj.description
+                    return obj
+                })
+                console.log('Reformat Array is : ')
+                console.log(reformatArray)
+                setOpciones(data.availableTargets)
             })
     }, [])
 
@@ -48,10 +57,9 @@ export default function MultiSelect() {
 
     return (
         <Form onSubmit={submitRelays}>
-            <AsyncSelect
+            <Select
                 isMulti
-                cacheOptions
-                loadOptions={opciones}
+                options={groupedOptions}
                 onChange={(e) => {
                     setSelection(e)
                 }}
