@@ -320,13 +320,61 @@ router.get('/thumbnail', (req, res) => {
         .catch((err) => console.error(err))
 })
 
-router.get('/multiselect', (req, res) => {
-    const options = [
-        { value: 'chocolate', label: 'Chocolate' },
-        { value: 'strawberry', label: 'Strawberry' },
-        { value: 'vanilla', label: 'Vanilla' },
+router.get('/multiselect', authSession, async (req, res) => {
+    const { userid } = req.session
+    const totalTargets = (await db.getUserOrgTargets(userid)).rows
+    const activeTargets = (await db.getUserOrgActiveTargets(userid)).rows
+    const targetFilter = activeTargets.map((itemY) => {
+        return itemY.id
+    })
+    const availableTargets = totalTargets.filter(
+        (itemX) => !targetFilter.includes(itemX.id)
+    )
+    const reformatArray = availableTargets.map((obj) => {
+        obj.label = obj.description
+        obj.value = obj.id
+        return obj
+    })
+
+    let groupedOptions = [
+        {
+            label: 'Twitter',
+            options: [],
+        },
+        { label: 'YouTube', options: [] },
+        {
+            label: 'Facebook',
+            options: [],
+        },
+        {
+            label: 'Twitch',
+            options: [],
+        },
+        {
+            label: 'Dailymotion',
+            options: [],
+        },
+        {
+            label: 'Custom',
+            options: [],
+        },
     ]
-    res.json(options)
+    reformatArray.forEach((element) => {
+        if (element.platform === 'twitter') {
+            groupedOptions[0].options.push(element)
+        } else if (element.platform === 'youtube') {
+            groupedOptions[1].options.push(element)
+        } else if (element.platform === 'facebook') {
+            groupedOptions[2].options.push(element)
+        } else if (element.platform === 'twitch') {
+            groupedOptions[3].options.push(element)
+        } else if (element.platform === 'dailymotion') {
+            groupedOptions[4].options.push(element)
+        } else if (element.platform === 'custom') {
+            groupedOptions[4].options.push(element)
+        }
+    })
+    res.json(groupedOptions)
 })
 
 module.exports = router

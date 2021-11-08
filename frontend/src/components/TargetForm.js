@@ -163,9 +163,11 @@ export default function IngestForm() {
                                         <option value="facebook">
                                             Facebook
                                         </option>
+                                        <option value="twitch">Twitch</option>
                                         <option value="dailymotion">
                                             Dailymotion
                                         </option>
+
                                         <option value="custom">
                                             Other Platform
                                         </option>
