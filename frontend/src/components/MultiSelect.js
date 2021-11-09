@@ -8,7 +8,6 @@ import { validateRelayForm } from '../utils/validate'
 export default function MultiSelect() {
     const [selection, setSelection] = useState([])
     const [options, setOptions] = useState([])
-    const [oldTargets, setOldTargets] = useState([])
 
     useEffect(() => {
         const requestOptions = {
@@ -21,25 +20,21 @@ export default function MultiSelect() {
                 console.log(data)
                 setOptions(data)
             })
-        fetch('http://localhost:3001/api/targets/org/available', requestOptions)
-            .then((response) => response.json())
-            .then((data) => {
-                setOldTargets(data)
-            })
     }, [])
 
-    async function validateRelay(oldTargets) {
-        const res = await validateRelayForm(oldTargets)
+    async function validateRelay(selection) {
+        const res = await validateRelayForm(selection)
         return res
     }
 
     const submitRelays = (e) => {
         e.preventDefault()
-        validateRelay(oldTargets).then((valid) => {
+        validateRelay(selection).then((valid) => {
+            console.log(valid)
             if (valid) {
-                console.log('No changes. Form is valid')
+                console.log('Form is valid')
             } else {
-                console.log('Changes. Form is not valid')
+                console.log('Form is not valid')
             }
         })
     }

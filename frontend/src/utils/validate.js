@@ -6,11 +6,19 @@ function validateIngestForm(origin) {
     }
 }
 
-function arraysEqual(a1, a2) {
-    return JSON.stringify(a1) === JSON.stringify(a2)
+function selectionInAvailable(selectionIds, availableTargetsIds) {
+    let result = false
+    for (let i = 0; i < selectionIds.length; i++) {
+        if (availableTargetsIds.includes(selectionIds[i])) {
+            result = true
+        } else {
+            result = false
+        }
+    }
+    return result
 }
 
-async function validateRelayForm(oldTargets) {
+async function validateRelayForm(selection) {
     const requestOptions = {
         method: 'GET',
         credentials: 'include',
@@ -20,11 +28,12 @@ async function validateRelayForm(oldTargets) {
         requestOptions
     )
     const newTargetsJSON = await newTargets.json()
-    const newTargetsIds = newTargetsJSON.map((element) => element.id)
-    console.log(newTargetsIds)
+    const availableTargetsIds = newTargetsJSON.map((element) => element.id)
+    console.log(availableTargetsIds)
 
-    const oldTargetsIds = oldTargets.map((element) => element.id)
-    return arraysEqual(oldTargetsIds, newTargetsIds)
+    const selectionIds = selection.map((element) => element.id)
+    console.log(selectionIds)
+    return selectionInAvailable(selectionIds, availableTargetsIds)
 }
 
 export { validateIngestForm, validateRelayForm }
