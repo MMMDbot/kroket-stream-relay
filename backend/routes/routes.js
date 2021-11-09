@@ -256,11 +256,7 @@ router.get('/targets/org/available', authSession, async (req, res) => {
     const availableTargets = totalTargets.filter(
         (itemX) => !targetFilter.includes(itemX.id)
     )
-    res.json({
-        totalTargets: totalTargets,
-        activeTargets: activeTargets,
-        availableTargets: availableTargets,
-    })
+    res.json(availableTargets)
 })
 
 router.get('/target/:id', async (req, res) => {
