@@ -6,6 +6,10 @@ function validateIngestForm(origin) {
     }
 }
 
+function arraysEqual(a1, a2) {
+    return JSON.stringify(a1) === JSON.stringify(a2)
+}
+
 async function validateRelayForm(oldTargets) {
     const requestOptions = {
         method: 'GET',
@@ -20,6 +24,7 @@ async function validateRelayForm(oldTargets) {
     console.log(newTargetsIds)
 
     const oldTargetsIds = oldTargets.map((element) => element.id)
+    return arraysEqual(oldTargetsIds, newTargetsIds)
 }
 
 export { validateIngestForm, validateRelayForm }

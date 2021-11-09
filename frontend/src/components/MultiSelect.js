@@ -24,15 +24,24 @@ export default function MultiSelect() {
         fetch('http://localhost:3001/api/targets/org/available', requestOptions)
             .then((response) => response.json())
             .then((data) => {
-                setOldTargets(data.map((element) => element.id))
+                setOldTargets(data)
             })
     }, [])
 
+    async function validateRelay(oldTargets) {
+        const res = await validateRelayForm(oldTargets)
+        return res
+    }
+
     const submitRelays = (e) => {
         e.preventDefault()
-        validateRelayForm(selection)
-        console.log(oldTargets)
-        console.log(selection)
+        validateRelay(oldTargets).then((valid) => {
+            if (valid) {
+                console.log('No changes. Form is valid')
+            } else {
+                console.log('Changes. Form is not valid')
+            }
+        })
     }
 
     return (
