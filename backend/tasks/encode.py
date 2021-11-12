@@ -272,8 +272,7 @@ def startRelay(id, relayId, server, streamKey):
     # job = q.enqueue(streamVideo)
     job = q.enqueue(relay, id, server, streamKey, job_id=relayId, job_timeout=-1)
     print(job.result)  # => None
-
-    time.sleep(5)
+    # time.sleep(5)
     print(job.result)
 
 

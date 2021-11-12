@@ -141,7 +141,6 @@ function encodeIngest(id, origin) {
  */
 function relay(id, server, streamKey) {
     const relayId = id + '-' + nanoid4()
-    return relayId
     let options = {
         mode: 'text',
         pythonPath:
@@ -157,6 +156,7 @@ function relay(id, server, streamKey) {
         // results is an array consisting of messages collected during execution
         console.log('results: %j', results)
     })
+    return relayId
 }
 
 /**
