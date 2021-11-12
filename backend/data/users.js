@@ -47,6 +47,11 @@ module.exports = {
             'UPDATE ingests SET active = $1, stopped_at = CURRENT_TIMESTAMP WHERE job_id = $2 RETURNING job_id',
             [active, id]
         ),
+    setRelay: (active, id) =>
+        pool.query(
+            'UPDATE relays SET active = $1, stopped_at = CURRENT_TIMESTAMP WHERE job_id = $2 RETURNING job_id',
+            [active, id]
+        ),
     getRelays: () => pool.query('SELECT * FROM relays ORDER BY id ASC'),
     getRelay: (id) => pool.query('SELECT * FROM relay WHERE id = $1', [id]),
     addRelay: (ingest_id, target_id, description, user_id, job_id) =>

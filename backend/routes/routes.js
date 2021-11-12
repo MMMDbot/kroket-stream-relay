@@ -110,6 +110,22 @@ router.get('/setoffline/:id', async (req, res) => {
     }
 })
 
+router.get('/setoffline/relay/:id', async (req, res) => {
+    try {
+        const { id } = req.params
+        const status = false
+        const { rows } = await db.setRelay(status, id)
+        if (rows.length > 0) {
+            res.json({ message: `Streaming ${rows[0].job_id} set as offline` })
+        } else {
+            res.json({ message: 'Cant update ingest in database' })
+        }
+    } catch (error) {
+        console.log(error)
+        res.json(error.severity)
+    }
+})
+
 router.get('/users', async (req, res) => {
     try {
         const { rows } = await db.getUsers()
