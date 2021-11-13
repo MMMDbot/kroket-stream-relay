@@ -58,6 +58,45 @@ async function ingest(description, origin, userid) {
 }
 
 /**
+ * Handles business logic for relaying a stream
+ * @param  {String} ingest  Ingest that will be used as a base for relaying
+ * @param  {String} targets Array of targets where the relays will encode
+ * @param  {Number} userid  The user id from the req.session object
+ * @return {JSON}           Id of the stream or error message if something fails
+ */
+async function relay(ingest, targets, userid) {
+    // Get user ID from the session
+    if (userid === undefined) {
+        throw new Error('Not logged in.')
+    }
+    // Generate new Job Id
+    const jobId = ingest + '-' + nanoid4()
+    try {
+        // targets is an Array, so we have to loop over it and encode each relay separately
+        for (target in targets) {
+            // Start Encode
+            const encode = encodeRelay(id, parsedOrigin)
+        }
+        // Return success or fail
+        // Add relay to DB if encoding has started
+        const result = await db.addRelay(
+            ingest_id,
+            target_id,
+            description,
+            userid,
+            jobId
+        )
+    } catch (error) {
+        console.log(error)
+        return {
+            message: error.message,
+        }
+    }
+    // Return ID as 'streamId'
+    return { streamId: id }
+}
+
+/**
  * Generates ID and creates Ingest folder in ../public/streams.
  * @return {String} The ID Generated.
  */
@@ -135,18 +174,18 @@ function encodeIngest(id, origin) {
 
 /**
  * Starts the execution of the Python script that relays the video stream WITHOUT reencoding
- * @param  {String} id      Id of the folder where the HLS streaming will save the playlist and chunks.
+ * @param  {String} ingestId    Id of the folder where the HLS streaming will save the playlist and chunks.
+ * @param  {String} relayId     Id of the relay
  * @param  {String} server
  * @param  {String} streamKey
  */
-function relay(id, server, streamKey) {
-    const relayId = id + '-' + nanoid4()
+function encodeRelay(ingestId, relayId, server, streamKey) {
     let options = {
         mode: 'text',
         pythonPath:
             '/home/square/.local/share/virtualenvs/backend-uA8zwRa8/bin/python3.9',
         pythonOptions: ['-u'], // get print results in real-time
-        args: ['relay', id, relayId, server, streamKey],
+        args: ['relay', ingestId, relayId, server, streamKey],
     }
 
     const scriptPath = path.join(__dirname + '/../tasks/initTask.py')
@@ -183,4 +222,10 @@ function stop(id) {
     })
 }
 
-module.exports = { ingest, stop, relay, createIngestFolder, deleteIngestFolder }
+module.exports = {
+    ingest,
+    stop,
+    relay,
+    createIngestFolder,
+    deleteIngestFolder,
+}
