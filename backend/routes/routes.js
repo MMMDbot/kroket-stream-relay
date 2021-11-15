@@ -227,6 +227,14 @@ router.get('/relay/:id', async (req, res) => {
     }
 })
 
+router.get('/ingestrelays/:id', async (req, res) => {
+    const { id } = req.params
+    const ingest = await db.getIngestByJobId(id)
+    const ingestId = ingest.rows[0].id
+    const { rows } = await db.getIngestRelays(ingestId)
+    res.json(rows)
+})
+
 router.post('/relay/add', async (req, res) => {
     const userid = req.session.userid
     const { ingest_id, target_id, description, ingest_jobid } = req.body
