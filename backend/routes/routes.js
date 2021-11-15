@@ -72,10 +72,11 @@ router.post('/ingest', async (req, res) => {
     res.json({ streamId: id }) */
 })
 
-router.post('/relay', (req, res) => {
-    const { id, server, streamKey } = req.body
-    const relayStream = relay(id, server, streamKey)
-    res.json({ id: relayStream, server: server, streamkey: streamKey })
+router.post('/relay', async (req, res) => {
+    const userId = req.session.userid
+    const { ingestId, targets } = req.body
+    const relayIds = await relay(ingestId, targets, userId)
+    res.json(relayIds)
 })
 
 router.post('/task', (req, res) => {

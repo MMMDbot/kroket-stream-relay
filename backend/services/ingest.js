@@ -69,31 +69,43 @@ async function relay(ingest, targets, userid) {
     if (userid === undefined) {
         throw new Error('Not logged in.')
     }
-    // Generate new Job Id
-    const jobId = ingest + '-' + nanoid4()
+    // Generate empty array to hold all Job Ids
+    let jobIds = []
+    // Get Ingest id from the job id
+    const { rows } = await db.getIngestByJobId(ingest)
+    const ingest_id = rows[0].id
+    const description = 'test description'
     try {
         // targets is an Array, so we have to loop over it and encode each relay separately
-        for (target in targets) {
+        for (t in targets) {
+            const jobId = ingest + '-' + nanoid4()
+            jobIds.push(jobId)
+            const target = targets[t]
             // Start Encode
-            const encode = encodeRelay(id, parsedOrigin)
+            const encode = encodeRelay(
+                ingest,
+                jobId,
+                target.server,
+                target.stream_key
+            )
+            // Add relay to DB if encoding has started
+            const result = await db.addRelay(
+                ingest_id,
+                target.id,
+                description,
+                userid,
+                jobId
+            )
         }
-        // Return success or fail
-        // Add relay to DB if encoding has started
-        const result = await db.addRelay(
-            ingest_id,
-            target_id,
-            description,
-            userid,
-            jobId
-        )
     } catch (error) {
         console.log(error)
         return {
             message: error.message,
         }
     }
-    // Return ID as 'streamId'
-    return { streamId: id }
+    // Return IDs as 'JobIds' array
+    console.log(jobIds)
+    return jobIds
 }
 
 /**

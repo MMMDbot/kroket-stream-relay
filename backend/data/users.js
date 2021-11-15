@@ -56,7 +56,7 @@ module.exports = {
     getRelay: (id) => pool.query('SELECT * FROM relay WHERE id = $1', [id]),
     addRelay: (ingest_id, target_id, description, user_id, job_id) =>
         pool.query(
-            'INSERT INTO relays (ingest_id, target_id, description, user_id, job_id) VALUES ($1, $2, $3, $4, $5)',
+            'INSERT INTO relays (ingest_id, target_id, description, user_id, job_id, active) VALUES ($1, $2, $3, $4, $5, true)',
             [ingest_id, target_id, description, user_id, job_id]
         ),
     getTargets: () => pool.query('SELECT * FROM targets ORDER BY id ASC'),

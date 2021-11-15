@@ -16,6 +16,7 @@ from tenacity import (
     RetryError,
 )
 import sys
+from errorHandlers import ingest_error_handler, relay_error_handler
 
 
 def yt(url):
@@ -229,11 +230,13 @@ def relay(id, server, streamKey):
             codec="copy",
         )
         subp = ffmpeg.run(stream, capture_stdout=True, capture_stderr=True)
+        # Trigger errorHandler here in case stream ends successfuly to bring relay back to original status
+        relay_error_handler(id)
 
     except ffmpeg.Error as e:
         print("stdout:", e.stdout.decode("utf8"))
         print("stderr:", e.stderr.decode("utf8"))
-        raise e
+        raise EncodingCatastrophe
 
 
 def secondTask(arg):
@@ -279,3 +282,8 @@ def startRelay(id, relayId, server, streamKey):
 def stop(id):
     redis_conn = Redis("localhost", 6379)
     send_stop_job_command(redis_conn, id)
+    # If stream is manually stopped, trigger error handler to update DB
+    if len(id) == 9:
+        ingest_error_handler(id)
+    elif len(id) == 14:
+        relay_error_handler(id)

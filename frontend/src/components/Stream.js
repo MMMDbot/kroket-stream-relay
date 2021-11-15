@@ -20,7 +20,7 @@ export default function Stream() {
                     <Col></Col>
                     <Col sm={12} md={10} lg={8}>
                         <StreamPlayer streamId={id} />
-                        <MultiSelect />
+                        <MultiSelect streamId={id} />
                         <Relays />
                     </Col>
                     <Col></Col>

@@ -1,9 +1,14 @@
 import requests
 
 
-def ingest_error_handler(job, exc_type, exc_value, traceback):
-    url_db = "http://localhost:3001/api/setoffline/" + job.id
-    url_socket = "http://localhost:3001/socket/ingest/" + job.id + "/offline"
+def ingest_error_handler(job):
+    try:
+        job_id = job.id
+    except Exception as e:
+        job_id = job
+
+    url_db = "http://localhost:3001/api/setoffline/" + job_id
+    url_socket = "http://localhost:3001/socket/ingest/" + job_id + "/offline"
 
     r_db = requests.get(url=url_db)
     r_socket = requests.get(url=url_socket)
@@ -18,9 +23,14 @@ def ingest_error_handler(job, exc_type, exc_value, traceback):
     print(r_socket_message)
 
 
-def relay_error_handler(job, exc_type, exc_value, traceback):
-    url_db = "http://localhost:3001/api/setoffline/relay/" + job.id
-    url_socket = "http://localhost:3001/socket/relay/" + job.id + "/offline"
+def relay_error_handler(job):
+    try:
+        job_id = job.id
+    except Exception as e:
+        job_id = job
+
+    url_db = "http://localhost:3001/api/setoffline/relay/" + job_id
+    url_socket = "http://localhost:3001/socket/relay/" + job_id + "/offline"
 
     r_db = requests.get(url=url_db)
     r_socket = requests.get(url=url_socket)

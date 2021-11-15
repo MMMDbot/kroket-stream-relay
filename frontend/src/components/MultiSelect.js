@@ -5,7 +5,7 @@ import Form from 'react-bootstrap/Form'
 
 import { validateRelayForm } from '../utils/validate'
 
-export default function MultiSelect() {
+export default function MultiSelect(props) {
     const [selection, setSelection] = useState([])
     const [options, setOptions] = useState([])
 
@@ -33,6 +33,29 @@ export default function MultiSelect() {
             console.log(valid)
             if (valid) {
                 console.log('Form is valid')
+                console.log('Result of the form is:')
+                console.log(selection)
+                console.log('Ingest ID is:')
+                console.log(props.streamId)
+                const requestOptions = {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        ingestId: props.streamId,
+                        targets: selection,
+                    }),
+                }
+
+                fetch('http://localhost:3001/api/relay', requestOptions)
+                    .then((response) => response.json())
+                    .then((data) => {
+                        if (data.id) {
+                            console.log(data)
+                        } else {
+                            console.log('Error executing relay function.')
+                        }
+                    })
             } else {
                 console.log('Form is not valid')
             }
