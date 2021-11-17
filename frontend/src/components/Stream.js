@@ -5,6 +5,7 @@ import Footer from './Footer'
 import StreamPlayer from './StreamPlayer'
 import Relays from './Targets'
 import MultiSelect from './MultiSelect'
+import StreamRelays from './StreamRelays'
 
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
@@ -21,7 +22,7 @@ export default function Stream() {
                     <Col sm={12} md={10} lg={8}>
                         <StreamPlayer streamId={id} />
                         <MultiSelect streamId={id} />
-                        <Relays />
+                        <StreamRelays streamId={id} />
                     </Col>
                     <Col></Col>
                 </Row>
@@ -30,3 +31,4 @@ export default function Stream() {
         </div>
     )
 }
+//<Relays />
