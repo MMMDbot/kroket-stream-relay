@@ -233,7 +233,7 @@ router.get('/ingestrelays/:id', async (req, res) => {
     const ingestId = ingest.rows[0].id
     const { rows: relays } = await db.getIngestRelays(ingestId)
     console.log(relays)
-    res.json(relays)
+    res.json(relays.sort((a, b) => b.active - a.active))
 })
 
 router.post('/relay/add', async (req, res) => {

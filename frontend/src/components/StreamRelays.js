@@ -16,7 +16,6 @@ export default function StreamRelays(props) {
         )
             .then((response) => response.json())
             .then((data) => {
-                console.log(data)
                 setRelays(data)
             })
     }, [])

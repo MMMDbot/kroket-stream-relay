@@ -55,7 +55,7 @@ export default function IngestForm() {
         }
     }
     return (
-        <div>
+        <div style={{ height: '100vh' }}>
             <Container className="pt-4">
                 <Row>
                     <Col md={2}></Col>
