@@ -4,6 +4,7 @@ import RelayPlatform from './RelayPlatform'
 import RelayStatus from './RelayStatus'
 
 export default function Relay(props) {
+    const address = props.relay.server + props.relay.stream_key
     return (
         <div className="p-2">
             <Card
@@ -17,10 +18,7 @@ export default function Relay(props) {
                 <Card.Body>
                     <Card.Title>{props.relay.target_description}</Card.Title>
                     <Card.Text>
-                        <ul>
-                            <li>Server: {props.relay.server}</li>
-                            <li>Stream Key: {props.relay.stream_key}</li>
-                        </ul>
+                        <a href={address}>{address}</a>
                     </Card.Text>
                 </Card.Body>
             </Card>

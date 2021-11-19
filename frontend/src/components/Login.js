@@ -6,7 +6,7 @@ import LoginStatus from './LoginStatus'
 import ReactLoading from 'react-loading'
 
 import { useUser } from './context/UserState'
-import { useHistory } from 'react-router-dom'
+import { useHistory, Redirect } from 'react-router-dom'
 
 import { useAuth } from '../utils/useAuth'
 
@@ -56,7 +56,7 @@ export default function Login() {
     }, [dispatch, history])
  */
     if (loggedIn) {
-        history.push('/')
+        return <Redirect push to="/" />
     }
 
     if (loading) {

@@ -18,10 +18,8 @@ export default function StreamCard(props) {
                         </a>
                     </Card.Title>
                     <Card.Text>
-                        <ul>
-                            <li>Started {props.created_at}</li>
-                            <li>Created by user {props.user_id}</li>
-                        </ul>
+                        Started {props.created_at}
+                        Created by user {props.user_id}
                     </Card.Text>
                 </Card.Body>
             </Card>
