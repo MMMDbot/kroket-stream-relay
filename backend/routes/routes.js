@@ -89,7 +89,7 @@ router.post('/delete', (req, res) => {
     res.json(deletedFolder)
 })
 
-router.post('/stop/:id', (req, res) => {
+router.get('/stop/:id', (req, res) => {
     const { id } = req.params
     const task = stop(id)
     res.json(task)

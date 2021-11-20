@@ -21,7 +21,7 @@ export default function StreamRelays(props) {
     }, [])
 
     const relaysList = relays.map((relay) => (
-        <Relay key={relay.id} relay={relay} />
+        <Relay key={relay.id} relay={relay} streamId={props.streamId} />
     ))
     return (
         <div>

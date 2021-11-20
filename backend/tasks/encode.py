@@ -1,6 +1,7 @@
 from rq import Queue
 from rq.command import send_stop_job_command
 from rq.job import Job
+from rq.exceptions import NoSuchJobError, InvalidJobOperation
 from redis import Redis
 import os
 import time
@@ -281,7 +282,10 @@ def startRelay(id, relayId, server, streamKey):
 
 def stop(id):
     redis_conn = Redis("localhost", 6379)
-    send_stop_job_command(redis_conn, id)
+    try:
+        send_stop_job_command(redis_conn, id)
+    except (NoSuchJobError, InvalidJobOperation) as e:
+        print(e)
     # If stream is manually stopped, trigger error handler to update DB
     if len(id) == 9:
         ingest_error_handler(id)
