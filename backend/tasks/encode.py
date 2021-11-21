@@ -234,7 +234,7 @@ def relay(ingestId, relayId, server, streamKey):
             format="flv",
             codec="copy",
         )
-        subp = ffmpeg.run(stream, capture_stdout=True, capture_stderr=True)
+        subp = ffmpeg.run(stream)
         # Trigger errorHandler here in case stream ends successfuly to bring relay back to original status
         relay_error_handler(relayId)
 

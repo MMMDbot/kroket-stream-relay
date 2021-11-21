@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import ReactPlayer from 'react-player'
 import { io } from 'socket.io-client'
 import Button from 'react-bootstrap/Button'
+import StatusBadge from './StatusBadge'
 
 export default function StreamPlayer(props) {
     // Test Stream
@@ -15,27 +16,6 @@ export default function StreamPlayer(props) {
     socket.on(props.streamId, (status) => {
         setStreamStatus(status)
     })
-
-    useEffect(() => {
-        const requestOptions = {
-            method: 'GET',
-            credentials: 'include',
-        }
-        fetch(
-            `http://localhost:3001/api/ingest/${props.streamId}`,
-            requestOptions
-        )
-            .then((response) => response.json())
-            .then((data) => {
-                if (data.active) {
-                    setStreamStatus('Online')
-                    setButtonDisabled(false)
-                } else {
-                    setStreamStatus('Offline')
-                    setButtonDisabled(true)
-                }
-            })
-    }, [props.streamId])
 
     const stopStream = () => {
         const requestOptions = {
@@ -73,7 +53,7 @@ export default function StreamPlayer(props) {
                 height="100%"
             />
             The stream id is {props.streamId} | Stream is currently{' '}
-            {streamStatus}{' '}
+            {props.status} <StatusBadge active={props.active} />
             <Button
                 variant="danger"
                 disabled={buttonDisabled}

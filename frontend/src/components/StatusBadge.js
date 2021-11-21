@@ -1,7 +1,7 @@
 import React from 'react'
 import Badge from 'react-bootstrap/Badge'
 
-export default function RelayStatus(props) {
+export default function StatusBadge(props) {
     return (
         <span>
             <Badge pill bg={props.active ? 'danger' : 'secondary'}>

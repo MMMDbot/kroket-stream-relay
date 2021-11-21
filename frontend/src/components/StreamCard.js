@@ -1,5 +1,6 @@
 import React from 'react'
 import Card from 'react-bootstrap/Card'
+import StatusBadge from './StatusBadge'
 
 export default function StreamCard(props) {
     return (
@@ -12,6 +13,7 @@ export default function StreamCard(props) {
                     />
                 </a>
                 <Card.Body>
+                    <StatusBadge active={props.active} />
                     <Card.Title>
                         <a href={`/stream/${props.job_id}`}>
                             <strong>{props.description}</strong>

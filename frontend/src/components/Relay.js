@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
 import RelayPlatform from './RelayPlatform'
-import RelayStatus from './RelayStatus'
+import RelayStatus from './StatusBadge'
 
 export default function Relay(props) {
     const [status, setStatus] = useState(props.relay.active)

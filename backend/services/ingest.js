@@ -232,6 +232,9 @@ function stop(id) {
         // results is an array consisting of messages collected during execution
         console.log('results: %j', results)
     })
+    if (id.length === 9) {
+        deleteIngestFolder(id)
+    }
 }
 
 module.exports = {

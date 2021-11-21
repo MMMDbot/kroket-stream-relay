@@ -42,6 +42,7 @@ export default function Streams() {
             description={number.description}
             created_at={number.created_at}
             user_id={number.user_id}
+            active={number.active}
         />
     ))
     if (loading) {

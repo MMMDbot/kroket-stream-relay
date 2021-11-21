@@ -1,18 +1,35 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import Header from './Header'
 import Footer from './Footer'
 import StreamPlayer from './StreamPlayer'
-import Relays from './Targets'
 import MultiSelect from './MultiSelect'
-import StreamRelays from './StreamRelays'
 
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 
 export default function Stream() {
+    const [active, setActive] = useState(false)
+
     const { id } = useParams()
+
+    useEffect(() => {
+        const requestOptions = {
+            method: 'GET',
+            credentials: 'include',
+        }
+        fetch(`http://localhost:3001/api/ingest/${id}`, requestOptions)
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.active) {
+                    setActive(true)
+                } else {
+                    setActive(false)
+                }
+            })
+    }, [])
+
     return (
         <div>
             <Header />
@@ -20,8 +37,8 @@ export default function Stream() {
                 <Row className="p-4">
                     <Col></Col>
                     <Col sm={12} md={10} lg={8}>
-                        <StreamPlayer streamId={id} />
-                        <MultiSelect streamId={id} />
+                        <StreamPlayer streamId={id} active={active} />
+                        <MultiSelect streamId={id} active={active} />
                     </Col>
                     <Col></Col>
                 </Row>
