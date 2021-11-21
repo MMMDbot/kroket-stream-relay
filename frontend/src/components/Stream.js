@@ -22,7 +22,6 @@ export default function Stream() {
                     <Col sm={12} md={10} lg={8}>
                         <StreamPlayer streamId={id} />
                         <MultiSelect streamId={id} />
-                        <StreamRelays streamId={id} />
                     </Col>
                     <Col></Col>
                 </Row>

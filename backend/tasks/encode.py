@@ -169,7 +169,9 @@ def streamHLS(id, origin):
     time_start = time.perf_counter()
     try:
         stream_map = None
-        stream1 = ffmpeg.input(hls_playlist, re=None)
+        # Trying to fix playback issue 'Skipping fragments ahead' by removing re=None
+        # stream1 = ffmpeg.input(hls_playlist re=None)
+        stream1 = ffmpeg.input(hls_playlist)
         stream2 = ffmpeg.input("mosca_66.png")
         stream_ol = ffmpeg.overlay(stream1, stream2, x="main_w-overlay_w-50", y="50")
         a1 = stream1.audio
@@ -215,13 +217,13 @@ def streamHLS(id, origin):
 # streamHLS("fff", "https://www.youtube.com/watch?v=5qap5aO4i9")
 
 
-def relay(id, server, streamKey):
+def relay(ingestId, relayId, server, streamKey):
     VIDEO_URL = "https://d1qvkrpvk32u24.cloudfront.net/RL/smil:EU-a62d3276-f807-46e3-97b8-af4501d7f17a.smil/playlist.m3u8"
     RTMP_SERVER = "rtmp://publish.dailymotion.com/publish-dm/x7t01a2?auth=dIJL_2c32466412bd2c7dd5ba696eae070e1f3481b6e2"
 
     current_directory = "/home/square/kroket-stream-relay/backend/public/streams/"
-    playlist_path = os.path.join(current_directory, id, "stream.m3u8")
-    chunk_path = os.path.join(current_directory, id, "data%02d.ts")
+    playlist_path = os.path.join(current_directory, ingestId, "stream.m3u8")
+    chunk_path = os.path.join(current_directory, ingestId, "data%02d.ts")
     target = server + streamKey
 
     try:
@@ -234,11 +236,12 @@ def relay(id, server, streamKey):
         )
         subp = ffmpeg.run(stream, capture_stdout=True, capture_stderr=True)
         # Trigger errorHandler here in case stream ends successfuly to bring relay back to original status
-        relay_error_handler(id)
+        relay_error_handler(relayId)
 
     except ffmpeg.Error as e:
         print("stdout:", e.stdout.decode("utf8"))
         print("stderr:", e.stderr.decode("utf8"))
+        relay_error_handler(relayId)
         raise EncodingCatastrophe
 
 
@@ -268,7 +271,7 @@ def startQueue(id, origin):
     print(job_status.exc_info)
 
 
-def startRelay(id, relayId, server, streamKey):
+def startRelay(ingestId, relayId, server, streamKey):
     redis_conn = Redis("localhost", 6379)
     q = Queue("relay", connection=redis_conn)  # no args implies the default queue
 
@@ -276,7 +279,9 @@ def startRelay(id, relayId, server, streamKey):
     # job = q.enqueue(createDir, arg)
     # job = q.enqueue(streamVideo)
     # job = q.enqueue(streamVideo)
-    job = q.enqueue(relay, id, server, streamKey, job_id=relayId, job_timeout=-1)
+    job = q.enqueue(
+        relay, ingestId, relayId, server, streamKey, job_id=relayId, job_timeout=-1
+    )
     print(job.result)  # => None
     # time.sleep(5)
     print(job.result)

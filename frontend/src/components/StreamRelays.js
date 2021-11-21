@@ -18,7 +18,7 @@ export default function StreamRelays(props) {
             .then((data) => {
                 setRelays(data)
             })
-    }, [])
+    }, [props.reloader.value])
 
     const relaysList = relays.map((relay) => (
         <Relay key={relay.id} relay={relay} streamId={props.streamId} />

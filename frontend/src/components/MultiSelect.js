@@ -2,12 +2,16 @@ import React, { useState, useEffect } from 'react'
 import Select from 'react-select'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
+import StreamRelays from './StreamRelays'
 
 import { validateRelayForm } from '../utils/validate'
 
 export default function MultiSelect(props) {
     const [selection, setSelection] = useState([])
     const [options, setOptions] = useState([])
+    const [reload, setReload] = useState({ value: false })
+
+    console.log(selection)
 
     useEffect(() => {
         const requestOptions = {
@@ -30,7 +34,6 @@ export default function MultiSelect(props) {
     const submitRelays = (e) => {
         e.preventDefault()
         validateRelay(selection).then((valid) => {
-            console.log(valid)
             if (valid) {
                 console.log('Form is valid')
                 console.log('Result of the form is:')
@@ -52,6 +55,10 @@ export default function MultiSelect(props) {
                     .then((data) => {
                         if (data.id) {
                             console.log(data)
+                            setReload({ value: !reload.value })
+                            console.log('reload is')
+                            console.log(reload)
+                            setSelection([])
                         } else {
                             console.log('Error executing relay function.')
                         }
@@ -61,17 +68,27 @@ export default function MultiSelect(props) {
             }
         })
     }
+    const reloaderTrue = (e) => {
+        e.preventDefault()
+        setReload({ value: 'true' })
+    }
 
     return (
-        <Form onSubmit={submitRelays}>
-            <Select
-                isMulti
-                options={options}
-                onChange={(e) => {
-                    setSelection(e)
-                }}
-            />
-            <Button type="submit">Start relays 🎃</Button>
-        </Form>
+        <div>
+            <Form onSubmit={submitRelays}>
+                <Select
+                    value={selection}
+                    isMulti
+                    isClearable
+                    options={options}
+                    onChange={(e) => {
+                        setSelection(e)
+                    }}
+                />
+                <Button type="submit">Start relays 🎃</Button>
+                <Button onClick={reloaderTrue}>set Reloader</Button>
+            </Form>
+            <StreamRelays streamId={props.streamId} reloader={reload} />
+        </div>
     )
 }

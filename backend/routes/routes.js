@@ -92,7 +92,7 @@ router.post('/delete', (req, res) => {
 router.get('/stop/:id', (req, res) => {
     const { id } = req.params
     const task = stop(id)
-    res.json(task)
+    res.json('stopped')
 })
 
 router.get('/setoffline/:id', async (req, res) => {
@@ -119,7 +119,7 @@ router.get('/setoffline/relay/:id', async (req, res) => {
         if (rows.length > 0) {
             res.json({ message: `Streaming ${rows[0].job_id} set as offline` })
         } else {
-            res.json({ message: 'Cant update ingest in database' })
+            res.json({ message: `Cant update ${id} relay in database` })
         }
     } catch (error) {
         console.log(error)

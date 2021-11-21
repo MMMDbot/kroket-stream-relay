@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import ReactPlayer from 'react-player'
 import { io } from 'socket.io-client'
+import Button from 'react-bootstrap/Button'
 
 export default function StreamPlayer(props) {
     // Test Stream
@@ -8,6 +9,7 @@ export default function StreamPlayer(props) {
     // Real Stream
     // `http://localhost:3001/streams/${props.streamId}/stream.m3u8`
     const [streamStatus, setStreamStatus] = useState('...')
+    const [buttonDisabled, setButtonDisabled] = useState(true)
 
     const socket = io('http://localhost:8080')
     socket.on(props.streamId, (status) => {
@@ -27,11 +29,29 @@ export default function StreamPlayer(props) {
             .then((data) => {
                 if (data.active) {
                     setStreamStatus('Online')
+                    setButtonDisabled(false)
                 } else {
                     setStreamStatus('Offline')
+                    setButtonDisabled(true)
                 }
             })
     }, [props.streamId])
+
+    const stopStream = () => {
+        const requestOptions = {
+            method: 'GET',
+            credentials: 'include',
+        }
+        fetch(
+            `http://localhost:3001/api/stop/${props.streamId}`,
+            requestOptions
+        )
+            .then((response) => response.json())
+            .then((data) => {
+                setButtonDisabled(true)
+                console.log(data)
+            })
+    }
 
     return (
         <div>
@@ -42,7 +62,7 @@ export default function StreamPlayer(props) {
                         attributes: { controls: 1, preload: 'none' },
                         forceHLS: true,
                         hlsOptions: {
-                            debug: true,
+                            debug: false,
                             manifestLoadingMaxRetry: 10,
                             manifestLoadingRetryDelay: 1000,
                             manifestLoadingMaxRetryTimeout: 5000,
@@ -53,7 +73,14 @@ export default function StreamPlayer(props) {
                 height="100%"
             />
             The stream id is {props.streamId} | Stream is currently{' '}
-            {streamStatus}
+            {streamStatus}{' '}
+            <Button
+                variant="danger"
+                disabled={buttonDisabled}
+                onClick={stopStream}
+            >
+                Stop Stream
+            </Button>
         </div>
     )
 }

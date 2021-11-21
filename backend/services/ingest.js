@@ -105,7 +105,7 @@ async function relay(ingest, targets, userid) {
     }
     // Return IDs as 'JobIds' array
     console.log(jobIds)
-    return jobIds
+    return { id: jobIds }
 }
 
 /**

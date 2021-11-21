@@ -6,7 +6,7 @@ import LoginStatus from './LoginStatus'
 import ReactLoading from 'react-loading'
 
 import { useUser } from './context/UserState'
-import { useHistory, Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 
 import { useAuth } from '../utils/useAuth'
 
@@ -20,8 +20,6 @@ export default function Login() {
     } = useUser()
 
     useAuth('/login')
-
-    const history = useHistory()
 
     /* useEffect(() => {
         const requestOptions = {
