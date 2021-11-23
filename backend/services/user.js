@@ -70,4 +70,11 @@ async function getUserbyUsername(username) {
     }
 }
 
-module.exports = { registerUser, loginUser, getUserbyUsername }
+async function hashPassword(password) {
+    const salt = await bcrypt.genSalt(10)
+    const password_hash = await bcrypt.hash(password, salt)
+
+    return password_hash
+}
+
+module.exports = { registerUser, loginUser, getUserbyUsername, hashPassword }

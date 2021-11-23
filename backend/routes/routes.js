@@ -15,6 +15,7 @@ const {
     deleteIngestFolder,
 } = require('../services/ingest')
 const db = require('../data/users')
+const { hashPassword } = require('../services/user')
 const redis = require('redis')
 const connectRedis = require('connect-redis')
 const authSession = require('../middlewares/auth-session')
@@ -158,6 +159,34 @@ router.post('/user/add', async (req, res) => {
             organization_id
         )
         res.json({ result })
+    } catch (error) {
+        console.log(error)
+        res.json(error)
+    }
+})
+
+router.post('/user/setpw/:id', async (req, res) => {
+    const { password } = req.body
+    const { id } = req.params
+    try {
+        const { rows } = await db.getUser(id)
+        if (rows[0].password_hash === '1') {
+            try {
+                const password_hash = await hashPassword(password)
+                const result = await db.setUserPw(id, password_hash)
+                res.json({
+                    success: true,
+                    message: 'Password updated successfully.',
+                })
+            } catch (error) {
+                console.log(error)
+                res.json(error)
+            }
+        } else {
+            res.json({
+                message: 'ERROR. Password for this user has already been set.',
+            })
+        }
     } catch (error) {
         console.log(error)
         res.json(error)

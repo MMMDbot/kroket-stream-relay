@@ -13,7 +13,6 @@ export default function MultiSelect(props) {
 
     let buttonDisabled = !props.active
 
-    console.log(buttonDisabled)
     useEffect(() => {
         const requestOptions = {
             method: 'GET',
@@ -99,14 +98,21 @@ export default function MultiSelect(props) {
                         setSelection(e)
                     }}
                 />
-                <Button type="submit">Start relays 🎃</Button>
-                <Button
-                    variant="danger"
-                    disabled={buttonDisabled}
-                    onClick={stopStream}
-                >
-                    Stop Stream
-                </Button>
+                <div className="d-grid gap-2 pt-2">
+                    <Button
+                        disabled={selection.length === 0 ? true : false}
+                        type="submit"
+                    >
+                        Start relays 🎃
+                    </Button>
+                    <Button
+                        variant="danger"
+                        disabled={buttonDisabled}
+                        onClick={stopStream}
+                    >
+                        Stop Stream
+                    </Button>
+                </div>
             </Form>
             <StreamRelays streamId={props.streamId} reloader={reload} />
         </div>

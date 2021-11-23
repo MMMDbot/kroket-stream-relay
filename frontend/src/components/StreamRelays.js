@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Relay from './Relay'
-import CardGroup from 'react-bootstrap/CardGroup'
+import Row from 'react-bootstrap/Row'
 
 export default function StreamRelays(props) {
     const [relays, setRelays] = useState([])
@@ -26,7 +26,9 @@ export default function StreamRelays(props) {
     return (
         <div>
             <h1>Relays for stream {props.streamId}</h1>
-            <CardGroup>{relaysList}</CardGroup>
+            <Row sm={1} md={2} lg={2} xl={2} xxl={3} className="g-4">
+                {relaysList}
+            </Row>
         </div>
     )
 }

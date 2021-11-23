@@ -19,6 +19,11 @@ module.exports = {
             'INSERT INTO users (username, password_hash, email, full_name, organization_id) VALUES ($1, $2, $3, $4, $5) RETURNING *',
             [username, password_hash, email, full_name, organization_id]
         ),
+    setUserPw: (id, password_hash) =>
+        pool.query(
+            'UPDATE users SET password_hash = $1 WHERE id = $2 RETURNING *',
+            [password_hash, id]
+        ),
     getOrganizations: () =>
         pool.query('SELECT * FROM organizations ORDER BY id ASC'),
     getOrganization: (id) =>

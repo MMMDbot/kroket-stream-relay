@@ -30,7 +30,7 @@ export default function Relay(props) {
     }
 
     return (
-        <div className="p-2">
+        <div className="">
             <Card
                 border={props.relay.active ? 'danger' : 'secondary'}
                 style={{ width: '16rem' }}

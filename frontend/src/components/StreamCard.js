@@ -3,10 +3,12 @@ import Card from 'react-bootstrap/Card'
 import StatusBadge from './StatusBadge'
 
 export default function StreamCard(props) {
+    const link = props.active ? `/stream/${props.job_id}` : null
+
     return (
         <div className="p-2">
             <Card style={{ width: '12rem' }}>
-                <a href={`/stream/${props.job_id}`}>
+                <a href={link}>
                     <Card.Img
                         variant="top"
                         src="http://localhost:3001/img/play_ph.jpg"
@@ -15,7 +17,7 @@ export default function StreamCard(props) {
                 <Card.Body>
                     <StatusBadge active={props.active} />
                     <Card.Title>
-                        <a href={`/stream/${props.job_id}`}>
+                        <a href={link}>
                             <strong>{props.description}</strong>
                         </a>
                     </Card.Title>
