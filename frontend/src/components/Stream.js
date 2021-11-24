@@ -11,6 +11,7 @@ import Col from 'react-bootstrap/Col'
 
 export default function Stream() {
     const [active, setActive] = useState(false)
+    const [name, setName] = useState('Title')
 
     const { id } = useParams()
 
@@ -24,6 +25,7 @@ export default function Stream() {
             .then((data) => {
                 if (data.active) {
                     setActive(true)
+                    setName(data.description)
                 } else {
                     setActive(false)
                 }
@@ -37,7 +39,11 @@ export default function Stream() {
                 <Row className="p-4">
                     <Col></Col>
                     <Col sm={12} md={10} lg={8}>
-                        <StreamPlayer streamId={id} active={active} />
+                        <StreamPlayer
+                            streamId={id}
+                            active={active}
+                            name={name}
+                        />
                         <MultiSelect streamId={id} active={active} />
                     </Col>
                     <Col></Col>

@@ -8,9 +8,12 @@ export default function StreamPlayer(props) {
     // https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8
     // Real Stream
     // `http://localhost:3001/streams/${props.streamId}/stream.m3u8`
-
     return (
         <div>
+            <h1 style={{ display: 'inline-block' }}>{props.name}</h1>
+            <h6 style={{ display: 'inline-block' }}>
+                <StatusBadge active={props.active} />
+            </h6>
             <ReactPlayer
                 url={`http://localhost:3001/streams/${props.streamId}/stream.m3u8`}
                 config={{
@@ -28,8 +31,6 @@ export default function StreamPlayer(props) {
                 width="100%"
                 height="100%"
             />
-            The stream id is {props.streamId} | Stream is currently{' '}
-            {props.status} <StatusBadge active={props.active} />
         </div>
     )
 }
