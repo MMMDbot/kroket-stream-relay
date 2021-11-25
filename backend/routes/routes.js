@@ -19,6 +19,7 @@ const { hashPassword } = require('../services/user')
 const redis = require('redis')
 const connectRedis = require('connect-redis')
 const authSession = require('../middlewares/auth-session')
+const multer = require('multer')
 
 const RedisStore = connectRedis(session)
 
@@ -426,6 +427,21 @@ router.get('/multiselect', authSession, async (req, res) => {
         }
     })
     res.json(groupedOptions)
+})
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, './public/img/watermarks')
+    },
+    filename: function (req, file, cb) {
+        const uniqueSuffix = '.png'
+        cb(null, file.fieldname + uniqueSuffix)
+    },
+})
+const upload = multer({ storage: storage })
+
+router.post('/watermark', upload.single('wm'), (req, res, next) => {
+    console.log(req.file)
 })
 
 module.exports = router

@@ -17,6 +17,7 @@
         "express-promise-router": "^4.1.0",
         "express-session": "^1.17.2",
         "jsonwebtoken": "^8.5.1",
+        "multer": "^1.4.3",
         "nanoid": "^3.1.28",
         "pg": "^8.7.1",
         "python-shell": "^3.0.0",
