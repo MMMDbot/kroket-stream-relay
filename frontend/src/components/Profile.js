@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useUser } from './context/UserState'
 import ReactLoading from 'react-loading'
+import Watermark from './Watermark'
 
 import Table from 'react-bootstrap/Table'
 
@@ -56,6 +57,7 @@ function Profile() {
                         </tr>
                     </tbody>
                 </Table>
+                <Watermark user={user} />
                 You are authenticated as {username}. Your user ID is {userId}
             </div>
         )

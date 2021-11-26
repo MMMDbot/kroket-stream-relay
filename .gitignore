@@ -159,3 +159,6 @@ sketch
 
 /DB_DATA
 __pycache__/
+
+# Directory with Organizations watermarks
+/backend/public/img/watermarks
