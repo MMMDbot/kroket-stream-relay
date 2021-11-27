@@ -3,11 +3,13 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
+import WatermarkPreview from './WatermarkPreview'
 
 export default function Watermark(props) {
     const submitTarget = (e) => {
         e.preventDefault()
         console.log('holi')
+        console.log(props)
         /*         setFormLoading(true)
         const requestOptions = {
             method: 'POST',
@@ -45,6 +47,9 @@ export default function Watermark(props) {
     return (
         <div>
             {props.user.username}
+            <h2>Current watermark</h2>
+            <WatermarkPreview user={props.user} />
+            <h2>Change watermark</h2>
             <Form onSubmit={submitTarget}>
                 <Row className="align-items-center">
                     <Col md="8" className="my-1">
