@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { useUser } from './context/UserState'
 import ReactLoading from 'react-loading'
 import Watermark from './Watermark'
+import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
 
 import Table from 'react-bootstrap/Table'
 
@@ -34,31 +37,43 @@ function Profile() {
         )
     } else {
         return (
-            <div className="p-4">
-                <Table striped bordered hover variant="dark" size="sm">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Username</th>
-                            <th>Full Name</th>
-                            <th>Email</th>
-                            <th>Organization ID</th>
-                            <th>Registered</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>{user.id}</td>
-                            <td>{user.username}</td>
-                            <td>{user.full_name}</td>
-                            <td>{user.email}</td>
-                            <td>{user.organization_id}</td>
-                            <td>{user.created_at}</td>
-                        </tr>
-                    </tbody>
-                </Table>
-                <Watermark user={user} />
-                You are authenticated as {username}. Your user ID is {userId}
+            <div>
+                <Container>
+                    <Row>
+                        <Col></Col>
+                        <Col xs={6}>
+                            <Watermark user={user} />
+                        </Col>
+                        <Col></Col>
+                    </Row>
+                </Container>
+
+                <div className="p-4">
+                    You are authenticated as {username}. Your user ID is{' '}
+                    {userId}
+                    <Table striped bordered hover variant="dark" size="sm">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Username</th>
+                                <th>Full Name</th>
+                                <th>Email</th>
+                                <th>Organization ID</th>
+                                <th>Registered</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{user.id}</td>
+                                <td>{user.username}</td>
+                                <td>{user.full_name}</td>
+                                <td>{user.email}</td>
+                                <td>{user.organization_id}</td>
+                                <td>{user.created_at}</td>
+                            </tr>
+                        </tbody>
+                    </Table>
+                </div>
             </div>
         )
     }

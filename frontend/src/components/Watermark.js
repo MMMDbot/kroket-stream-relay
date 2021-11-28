@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import Row from 'react-bootstrap/Row'
@@ -7,13 +7,17 @@ import WatermarkPreview from './WatermarkPreview'
 
 export default function Watermark(props) {
     const [watermark, setWatermark] = useState(false)
+    const [isFormLoading, setFormLoading] = useState(false)
+    const imageInputRef = useRef()
 
     const submitTarget = (e) => {
+        e.preventDefault()
+        setFormLoading(true)
+
         var data = new FormData()
         var imagedata = document.querySelector('input[type="file"]').files[0]
         data.append('wm', imagedata)
-        e.preventDefault()
-        console.log(props)
+
         const requestOptions = {
             method: 'POST',
             credentials: 'include',
@@ -27,25 +31,38 @@ export default function Watermark(props) {
                     console.log(data.message)
                     console.log('exito')
                     setWatermark(!watermark)
+                    setFormLoading(false)
+                    imageInputRef.current.value = ''
                 } else {
                     console.log('error')
+                    setFormLoading(false)
                 }
             })
     }
 
     return (
         <div>
-            {props.user.username}
             <h2>Current watermark</h2>
             <WatermarkPreview user={props.user} watermark={watermark} />
             <h2>Change watermark</h2>
+            <h4>(66x66 PNG images only)</h4>
             <Form onSubmit={submitTarget}>
-                <Row className="align-items-center">
-                    <Col md="8" className="my-1">
-                        <Form.Control type="file" id="inputGroupFile01" />
+                <Row>
+                    <Col md="8">
+                        <Form.Control
+                            type="file"
+                            id="inputGroupFile01"
+                            ref={imageInputRef}
+                        />
                     </Col>
-                    <Col xs="auto" className="my-1">
-                        <Button type="submit">Upload Watermark</Button>
+                    <Col md="4">
+                        <div className="d-grid">
+                            <Button type="submit" disabled={isFormLoading}>
+                                {isFormLoading
+                                    ? 'Uploading…'
+                                    : 'Upload watermark'}
+                            </Button>
+                        </div>
                     </Col>
                 </Row>
             </Form>

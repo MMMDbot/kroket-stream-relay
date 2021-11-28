@@ -1,7 +1,4 @@
 import React, { useEffect } from 'react'
-import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
 
 export default function WatermarkPreview(props) {
     console.log(props.watermark)
@@ -24,20 +21,14 @@ export default function WatermarkPreview(props) {
     }, [props.watermark])
     return (
         <div>
-            <Container fluid="md">
-                <Row>
-                    <Col>
-                        <div class="image-watermark">
-                            <canvas
-                                crossOrigin="Anonymous"
-                                width="640"
-                                height="360"
-                                id="canvas"
-                            ></canvas>
-                        </div>
-                    </Col>
-                </Row>
-            </Container>
+            <div class="image-watermark">
+                <canvas
+                    crossOrigin="Anonymous"
+                    width="640"
+                    height="360"
+                    id="canvas"
+                ></canvas>
+            </div>
         </div>
     )
 }
