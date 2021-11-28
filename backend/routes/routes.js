@@ -434,14 +434,16 @@ const storage = multer.diskStorage({
         cb(null, './public/img/watermarks')
     },
     filename: function (req, file, cb) {
+        const userId = req.session.userid
         const uniqueSuffix = '.png'
-        cb(null, file.fieldname + uniqueSuffix)
+        cb(null, userId + uniqueSuffix)
     },
 })
 const upload = multer({ storage: storage })
 
 router.post('/watermark', upload.single('wm'), (req, res, next) => {
     console.log(req.file)
+    res.json({ success: true, message: 'Image uploaded' })
 })
 
 module.exports = router

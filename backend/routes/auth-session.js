@@ -45,6 +45,7 @@ router.get('/check-session', (req, res) => {
             loggedIn: true,
             username: req.session.username,
             userid: req.session.userid,
+            orgid: req.session.orgid,
         })
     } else {
         res.send({ loggedIn: false })
@@ -61,6 +62,7 @@ router.post('/login', async (req, res) => {
         if (log) {
             sess.username = username
             sess.userid = user.id
+            sess.orgid = user.organization_id
             res.send(sess)
         } else {
             res.json({ message: 'Incorrect user or password' })
