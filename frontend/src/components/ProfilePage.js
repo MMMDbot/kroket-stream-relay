@@ -5,6 +5,7 @@ import Profile from './Profile'
 import { useUser } from './context/UserState'
 import { useHistory } from 'react-router-dom'
 import ReactLoading from 'react-loading'
+import Container from 'react-bootstrap/Container'
 
 export default function ProfilePage() {
     const {
@@ -56,7 +57,9 @@ export default function ProfilePage() {
         return (
             <div>
                 <Header />
-                <Profile />
+                <Container className="pt-4" style={{ minHeight: '100vh' }}>
+                    <Profile />
+                </Container>
                 <Footer />
             </div>
         )

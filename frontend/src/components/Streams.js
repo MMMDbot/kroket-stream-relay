@@ -4,6 +4,7 @@ import Header from './Header'
 import Footer from './Footer'
 import StreamCard from './StreamCard'
 import CardGroup from 'react-bootstrap/CardGroup'
+import Container from 'react-bootstrap/Container'
 
 import { useUser } from './context/UserState'
 import { useAuth } from '../utils/useAuth'
@@ -55,7 +56,9 @@ export default function Streams() {
         return (
             <div>
                 <Header />
-                <CardGroup>{listItems}</CardGroup>
+                <Container className="py-4" style={{ minHeight: '100vh' }}>
+                    <CardGroup>{listItems}</CardGroup>
+                </Container>
                 <Footer />
             </div>
         )

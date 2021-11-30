@@ -35,7 +35,7 @@ export default function Stream() {
     return (
         <div>
             <Header />
-            <Container>
+            <Container className="py-4" style={{ minHeight: '100vh' }}>
                 <Row className="p-4">
                     <Col></Col>
                     <Col sm={12} md={10} lg={8}>
