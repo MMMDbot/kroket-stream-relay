@@ -119,6 +119,7 @@ async function createIngestFolder() {
     const foldername = path.join(__dirname + '/../public/streams/' + id)
     const manifestname = path.join(__dirname + '/../public/streams/stream.m3u8')
     const manifestdestination = path.join(foldername + '/stream.m3u8')
+    const thumbnail = path.join(__dirname + '/../public/img/play_ph.jpg')
 
     console.log(id)
 
@@ -127,7 +128,7 @@ async function createIngestFolder() {
             await makeDir(foldername)
             console.log('Directory created')
             console.log('Copying manifest...')
-            await copyManifest(manifestname, manifestdestination)
+            await copyManifest(manifestname, manifestdestination, thumbnail)
             return id
         } catch (error) {
             console.log('Server filesystem Error')
@@ -135,9 +136,15 @@ async function createIngestFolder() {
         }
     }
 
-    const copyManifest = async (manifestname, manifestdestination) => {
+    const copyManifest = async (
+        manifestname,
+        manifestdestination,
+        thumbnail
+    ) => {
         await copyFile(manifestname, manifestdestination)
         console.log('Placeholder manifest copied')
+        await copyFile(thumbnail, manifestdestination)
+        console.log('Placeholder thumbnail copied')
     }
     const result = await createDirectory(foldername, id)
 

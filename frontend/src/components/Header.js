@@ -1,6 +1,7 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { useUser } from './context/UserState'
+import { Redirect } from 'react-router-dom'
 
 export default function Header() {
     const {

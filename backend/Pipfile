@@ -10,6 +10,7 @@ ffmpeg-python = "*"
 yt-dlp = "*"
 tenacity = "*"
 requests = "*"
+rq-scheduler = "*"
 
 [dev-packages]
 

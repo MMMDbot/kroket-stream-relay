@@ -4,6 +4,7 @@ import Footer from './Footer'
 import LoginForm from './LoginForm'
 import LoginStatus from './LoginStatus'
 import ReactLoading from 'react-loading'
+import Container from 'react-bootstrap/Container'
 
 import { useUser } from './context/UserState'
 import { Redirect } from 'react-router-dom'
@@ -67,7 +68,9 @@ export default function Login() {
         return (
             <div>
                 <Header />
-                <LoginForm />
+                <Container className="pt-4" style={{ minHeight: '100vh' }}>
+                    <LoginForm />
+                </Container>
                 <LoginStatus />
                 <Footer />
             </div>

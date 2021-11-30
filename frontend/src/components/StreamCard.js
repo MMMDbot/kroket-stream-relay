@@ -11,7 +11,11 @@ export default function StreamCard(props) {
                 <a href={link}>
                     <Card.Img
                         variant="top"
-                        src="http://localhost:3001/img/play_ph.jpg"
+                        src={
+                            props.active
+                                ? `http://localhost:3001/streams/${props.job_id}/thumbnail.jpeg`
+                                : 'http://localhost:3001/img/thumbnail.jpeg'
+                        }
                     />
                 </a>
                 <Card.Body>
