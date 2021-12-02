@@ -10,11 +10,25 @@ export default function StreamPlayer(props) {
     // `http://localhost:3001/streams/${props.streamId}/stream.m3u8`
     return (
         <div>
-            <h1 style={{ display: 'inline-block' }}>{props.name}</h1>
-            <h6 style={{ display: 'inline-block' }}>
+            <h1
+                style={{
+                    display: 'inline-block',
+                    textTransform: 'capitalize',
+                    paddingBottom: '15px',
+                }}
+            >
+                {props.name}
+            </h1>
+            <h6
+                style={{
+                    display: 'inline-block',
+                    paddingLeft: '10px',
+                }}
+            >
                 <StatusBadge active={props.active} />
             </h6>
             <ReactPlayer
+                className="react-player"
                 url={`http://localhost:3001/streams/${props.streamId}/stream.m3u8`}
                 config={{
                     file: {

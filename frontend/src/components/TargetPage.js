@@ -61,7 +61,11 @@ export default function Home() {
         return (
             <div>
                 <Header />
-                <Container className="py-4" style={{ minHeight: '100vh' }}>
+                <Container
+                    fluid
+                    className="py-4"
+                    style={{ minHeight: '100vh' }}
+                >
                     <Row>
                         <Col md={2}></Col>
                         <Col md={8}>
