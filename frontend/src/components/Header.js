@@ -8,8 +8,8 @@ export default function Header() {
         state: { loggedIn, username },
     } = useUser()
     return (
-        <div>
-            <header className="p-3 bg-dark text-white">
+        <div className="pancake-header">
+            <header className="p-3 pancake-header">
                 <div className="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
                     <a
                         href="/"

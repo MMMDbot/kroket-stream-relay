@@ -61,7 +61,7 @@ export default function LoginForm() {
                 <Row>
                     <Col md={3} lg={4}></Col>
                     <Col md={6} lg={4}>
-                        <Card>
+                        <Card className="card-shadow">
                             <Card.Body>
                                 {formError ? (
                                     <Alert

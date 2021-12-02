@@ -58,3 +58,24 @@ canvas {
 strong {
     text-transform: capitalize;
 }
+
+.container-fluid {
+    background-color: #e9ecef;
+}
+
+footer.page-footer {
+    background-color: rgb(39, 38, 44);
+    border-top: 5px solid rgb(56, 50, 65);
+}
+
+footer a {
+    color: rgb(31, 199, 212);
+}
+.container-fluid-dark {
+    background-color: rgb(39, 38, 44);
+}
+
+header.pancake-header {
+    background-color: rgb(39, 38, 44);
+    border-bottom: 5zpx solid rgb(56, 50, 65);
+}
