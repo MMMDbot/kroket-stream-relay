@@ -7,7 +7,11 @@ export default function Target(props) {
     const address = props.target.server + props.target.stream_key
     return (
         <div>
-            <Card border="secondary" style={{ width: '16rem' }}>
+            <Card
+                className="card-shadow"
+                border="secondary"
+                style={{ width: '18rem', height: '10rem' }}
+            >
                 <Card.Header>
                     <RelayPlatform platform={props.target.platform} />{' '}
                 </Card.Header>

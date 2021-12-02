@@ -14,7 +14,10 @@ export default function StreamCard({
     const timestamp = useTimestamp(created_at)
     return (
         <div className="p-2">
-            <Card style={{ width: '18rem' }}>
+            <Card
+                className="card-shadow"
+                style={{ width: '18rem', height: '18rem' }}
+            >
                 <a href={link}>
                     <Card.Img
                         variant="top"
@@ -31,7 +34,7 @@ export default function StreamCard({
                         <a href={link} title={description}>
                             <strong>
                                 {description.length > 25
-                                    ? `${description.substring(0, 25)}...`
+                                    ? `${description.substring(0, 24)}...`
                                     : description}
                             </strong>
                         </a>
