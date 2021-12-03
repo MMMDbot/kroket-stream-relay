@@ -15,7 +15,7 @@ export default function StreamCard({
     return (
         <div className="p-2">
             <Card
-                className="card-shadow"
+                bsPrefix="card-round card-shadow"
                 style={{ width: '18rem', height: '18rem' }}
             >
                 <a href={link}>

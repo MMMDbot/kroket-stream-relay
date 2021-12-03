@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@600&display=swap');
+
 .App {
     text-align: center;
 }
@@ -54,6 +56,17 @@ canvas {
     -moz-box-shadow: 0px 5px 12px 0px rgba(196, 203, 245, 1);
     box-shadow: 0px 5px 12px 0px rgba(196, 203, 245, 1);
 }
+.card-round {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 16px;
+}
 
 strong {
     text-transform: capitalize;
@@ -78,4 +91,41 @@ footer a {
 header.pancake-header {
     background-color: rgb(39, 38, 44);
     border-bottom: 5zpx solid rgb(56, 50, 65);
+}
+.react-player {
+    cursor: pointer;
+    background: #20002c; /* fallback for old browsers */
+    background: -webkit-radial-gradient(
+        circle,
+        #dae3f1,
+        rgba(196, 203, 245, 1)
+    ); /* Chrome 10-25, Safari 5.1-6 */
+    background: radial-gradient(
+        circle,
+        #dae3f1,
+        rgba(196, 203, 245, 1)
+    ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    line-height: 0;
+    margin-bottom: 1rem;
+}
+
+a.navbar-brand {
+    color: white;
+    font-family: 'Kanit', sans-serif;
+    font-size: 1.35em;
+}
+a.navbar-brand:hover {
+    color: white;
+}
+
+a.nav-link {
+    color: white;
+    font-size: 1.15em;
+}
+a.nav-link:hover {
+    color: lightblue;
+}
+
+button.btn {
+    border-radius: 16px;
 }

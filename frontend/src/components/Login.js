@@ -68,7 +68,11 @@ export default function Login() {
         return (
             <div>
                 <Header />
-                <Container className="pt-4" style={{ minHeight: '100vh' }}>
+                <Container
+                    fluid
+                    className="pt-4"
+                    style={{ minHeight: '100vh' }}
+                >
                     <LoginForm />
                 </Container>
                 <LoginStatus />

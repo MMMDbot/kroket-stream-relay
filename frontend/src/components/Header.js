@@ -2,6 +2,7 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { useUser } from './context/UserState'
 import { Redirect } from 'react-router-dom'
+import Navbar from 'react-bootstrap/Navbar'
 
 export default function Header() {
     const {
@@ -11,49 +12,34 @@ export default function Header() {
         <div className="pancake-header">
             <header className="p-3 pancake-header">
                 <div className="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-                    <a
-                        href="/"
-                        className="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none"
-                    >
-                        <svg
-                            className="bi me-2"
-                            width="40"
-                            height="32"
-                            role="img"
-                            aria-label="Bootstrap"
-                        ></svg>
-                    </a>
-
+                    <Navbar.Brand href="/">
+                        <img
+                            alt=""
+                            src="/kroket.svg"
+                            width="35"
+                            height="35"
+                            className="d-inline-block align-top"
+                        />{' '}
+                        Kroket Stream Studio
+                    </Navbar.Brand>
                     <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                         <li>
-                            <NavLink
-                                className="nav-link px-2 text-white"
-                                to="/"
-                            >
+                            <NavLink className="nav-link" to="/">
                                 Home
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink
-                                className="nav-link px-2 text-white"
-                                to="/dashboard"
-                            >
+                            <NavLink className="nav-link" to="/dashboard">
                                 Dashboard
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink
-                                className="nav-link px-2 text-white"
-                                to="/streams"
-                            >
+                            <NavLink className="nav-link" to="/streams">
                                 Streams
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink
-                                className="nav-link px-2 text-white"
-                                to="/targets"
-                            >
+                            <NavLink className="nav-link" to="/targets">
                                 Targets
                             </NavLink>
                         </li>
@@ -61,10 +47,7 @@ export default function Header() {
 
                     <div className="text-end">
                         {loggedIn ? (
-                            <NavLink
-                                className="nav-link px-2 text-white"
-                                to="/profile"
-                            >
+                            <NavLink className="nav-link" to="/profile">
                                 {username}
                             </NavLink>
                         ) : (
