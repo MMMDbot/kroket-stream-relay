@@ -32,7 +32,7 @@ export default function Relay(props) {
     return (
         <div className="">
             <Card
-                className="card-shadow"
+                bsPrefix="card-round"
                 border={props.relay.active ? 'danger' : 'secondary'}
                 style={{ width: '16rem' }}
             >

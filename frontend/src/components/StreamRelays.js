@@ -24,8 +24,8 @@ export default function StreamRelays(props) {
         <Relay key={relay.id} relay={relay} streamId={props.streamId} />
     ))
     return (
-        <div>
-            <h1>Relays for stream {props.streamId}</h1>
+        <div className="pt-3">
+            <h4>Active destinations for this stream ({props.streamId})</h4>
             <Row sm={1} md={2} lg={2} xl={2} xxl={3} className="g-4">
                 {relaysList}
             </Row>

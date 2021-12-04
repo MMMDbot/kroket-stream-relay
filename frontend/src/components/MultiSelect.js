@@ -88,6 +88,7 @@ export default function MultiSelect(props) {
 
     return (
         <div>
+            <h4>Pick destinations for this stream</h4>
             <Form onSubmit={submitRelays}>
                 <Select
                     value={selection}
@@ -103,7 +104,7 @@ export default function MultiSelect(props) {
                         disabled={selection.length === 0 ? true : false}
                         type="submit"
                     >
-                        Start relays 🎃
+                        Send 🎃
                     </Button>
                     <Button
                         variant="danger"
