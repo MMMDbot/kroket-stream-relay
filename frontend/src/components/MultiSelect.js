@@ -104,7 +104,7 @@ export default function MultiSelect(props) {
                         disabled={selection.length === 0 ? true : false}
                         type="submit"
                     >
-                        Send 🎃
+                        Start
                     </Button>
                     <Button
                         variant="danger"
