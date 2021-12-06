@@ -1,50 +1,16 @@
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { Route, Switch } from 'react-router-dom'
-import Home from './components/Home'
-import Login from './components/Login'
-import ProfilePage from './components/ProfilePage'
-import Streams from './components/Streams'
-import Stream from './components/Stream'
-import TargetPage from './components/TargetPage'
-import MultiSelect from './components/MultiSelect'
-import SetPassword from './components/SetPassword'
+import AuthenticatedApp from './components/AuthenticatedApp'
+import UnAuthenticatedApp from './components/UnAuthenticatedApp'
 
-import { StateTest, StateSetter } from './components/StateTest'
+import { useUser } from './components/context/UserState'
 
 function App() {
-    return (
-        <Switch>
-            <Route exact path="/state">
-                <StateTest />
-                <StateSetter />
-            </Route>
-            <Route exact path="/">
-                <Home />
-            </Route>
-            <Route exact path="/streams">
-                <Streams />
-            </Route>
-            <Route exact path="/targets">
-                <TargetPage />
-            </Route>
-            <Route path="/stream/:id">
-                <Stream />
-            </Route>
-            <Route exact path="/login">
-                <Login />
-            </Route>
-            <Route exact path="/profile">
-                <ProfilePage />
-            </Route>
-            <Route exact path="/multiselect">
-                <MultiSelect />
-            </Route>
-            <Route exact path="/setpw/:id">
-                <SetPassword />
-            </Route>
-        </Switch>
-    )
+    const {
+        state: { loggedIn },
+    } = useUser()
+
+    return <div>{loggedIn ? <AuthenticatedApp /> : <UnAuthenticatedApp />}</div>
 }
 
 export default App

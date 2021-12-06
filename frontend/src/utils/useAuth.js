@@ -15,32 +15,30 @@ function useAuth(redirect) {
             method: 'GET',
             credentials: 'include',
         }
-        if (!loggedIn) {
-            fetch(
-                'http://localhost:3001/auth-session/check-session',
-                requestOptions
-            )
-                .then((response) => response.json())
-                .then((data) => {
-                    console.log(data)
-                    if (data.loggedIn) {
-                        dispatch({
-                            type: 'logUser',
-                            payload: {
-                                loggedIn: data.loggedIn,
-                                username: data.username,
-                                userId: data.userid,
-                                loading: false,
-                            },
-                        })
-                    } else {
-                        dispatch({
-                            type: 'logOut',
-                        })
-                        history.push(redirect)
-                    }
-                })
-        }
+        fetch(
+            'http://localhost:3001/auth-session/check-session',
+            requestOptions
+        )
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data)
+                if (data.loggedIn) {
+                    dispatch({
+                        type: 'logUser',
+                        payload: {
+                            loggedIn: data.loggedIn,
+                            username: data.username,
+                            userId: data.userid,
+                            loading: false,
+                        },
+                    })
+                } else {
+                    dispatch({
+                        type: 'logOut',
+                    })
+                    history.push(redirect)
+                }
+            })
     }, [dispatch, history, loggedIn, redirect])
 
     return auth
