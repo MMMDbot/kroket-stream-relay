@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import ReactLoading from 'react-loading'
 import Header from './Header'
 import Footer from './Footer'
 import StreamCard from './StreamCard'
@@ -8,16 +7,7 @@ import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 
-import { useUser } from './context/UserState'
-import { useAuth } from '../utils/useAuth'
-
 export default function Streams() {
-    const {
-        state: { loading },
-    } = useUser()
-
-    useAuth('/login')
-
     const [streamList, setStreamList] = useState([])
 
     useEffect(() => {
@@ -48,31 +38,20 @@ export default function Streams() {
             active={number.active}
         />
     ))
-    if (loading) {
-        return (
-            <div>
-                <ReactLoading type="spin" color="#000" />
-            </div>
-        )
-    } else {
-        return (
-            <div>
-                <Header />
-                <Container
-                    fluid
-                    className="py-4"
-                    style={{ minHeight: '100vh' }}
-                >
-                    <Row>
-                        <Col md={2}></Col>
-                        <Col md={8}>
-                            <CardGroup>{listItems}</CardGroup>
-                        </Col>
-                        <Col md={2}></Col>
-                    </Row>
-                </Container>
-                <Footer />
-            </div>
-        )
-    }
+
+    return (
+        <div>
+            <Header />
+            <Container fluid className="py-4" style={{ minHeight: '100vh' }}>
+                <Row>
+                    <Col md={2}></Col>
+                    <Col md={8}>
+                        <CardGroup>{listItems}</CardGroup>
+                    </Col>
+                    <Col md={2}></Col>
+                </Row>
+            </Container>
+            <Footer />
+        </div>
+    )
 }

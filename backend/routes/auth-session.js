@@ -28,6 +28,7 @@ router.use(
         secret: process.env.JWTSECRET,
         saveUninitialized: true,
         resave: false,
+        rolling: true,
         cookie: {
             httpOnly: true,
             maxAge: 1000 * 60 * 10,

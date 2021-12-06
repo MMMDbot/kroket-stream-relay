@@ -1,13 +1,14 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { useUser } from './context/UserState'
-import { Redirect } from 'react-router-dom'
 import Navbar from 'react-bootstrap/Navbar'
+import { useAuth } from '../utils/useAuth'
 
 export default function Header() {
     const {
-        state: { loggedIn, username },
+        state: { username },
     } = useUser()
+    useAuth('/login')
     return (
         <div className="pancake-header">
             <header className="p-3 pancake-header">
@@ -46,19 +47,9 @@ export default function Header() {
                     </ul>
 
                     <div className="text-end">
-                        {loggedIn ? (
-                            <NavLink className="nav-link" to="/profile">
-                                {username}
-                            </NavLink>
-                        ) : (
-                            <NavLink
-                                type="button"
-                                className="btn btn-outline-light me-2"
-                                to="/login"
-                            >
-                                Login
-                            </NavLink>
-                        )}
+                        <NavLink className="nav-link" to="/profile">
+                            {username}
+                        </NavLink>
                     </div>
                 </div>
             </header>

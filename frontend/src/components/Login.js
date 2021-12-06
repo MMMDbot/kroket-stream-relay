@@ -1,5 +1,5 @@
 import React from 'react'
-import Header from './Header'
+import UnauthenticatedHeader from './UnauthenticatedHeader'
 import Footer from './Footer'
 import LoginForm from './LoginForm'
 import LoginStatus from './LoginStatus'
@@ -67,7 +67,7 @@ export default function Login() {
     } else {
         return (
             <div>
-                <Header />
+                <UnauthenticatedHeader />
                 <Container
                     fluid
                     className="pt-4"
