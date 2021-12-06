@@ -62,6 +62,9 @@ export default function LoginForm() {
                     <Col md={3} lg={4}></Col>
                     <Col md={6} lg={4}>
                         <Card bsPrefix="card-round card-shadow">
+                            <Card.Header>
+                                <h3 className="text-center">Log in</h3>
+                            </Card.Header>
                             <Card.Body>
                                 {formError ? (
                                     <Alert
@@ -87,12 +90,7 @@ export default function LoginForm() {
                                                 setName(e.target.value)
                                             }}
                                         />
-                                        <Form.Text className="text-muted">
-                                            We'll never share your email with
-                                            anyone else.
-                                        </Form.Text>
                                     </Form.Group>
-
                                     <Form.Group
                                         className="mb-3"
                                         controlId="formBasicPassword"
@@ -104,15 +102,6 @@ export default function LoginForm() {
                                             onChange={(e) => {
                                                 setPassword(e.target.value)
                                             }}
-                                        />
-                                    </Form.Group>
-                                    <Form.Group
-                                        className="mb-3"
-                                        controlId="formBasicCheckbox"
-                                    >
-                                        <Form.Check
-                                            type="checkbox"
-                                            label="Check me out"
                                         />
                                     </Form.Group>
                                     <div className="d-grid gap-2 pt-2">
