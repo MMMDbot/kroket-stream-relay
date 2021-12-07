@@ -13,15 +13,17 @@ export default function Header() {
         <div className="pancake-header">
             <header className="p-3 pancake-header">
                 <div className="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-                    <Navbar.Brand href="/">
-                        <img
-                            alt=""
-                            src="/kroket.svg"
-                            width="35"
-                            height="35"
-                            className="d-inline-block align-top"
-                        />{' '}
-                        Kroket Stream Studio
+                    <Navbar.Brand>
+                        <NavLink to="/">
+                            <img
+                                alt=""
+                                src="/kroket.svg"
+                                width="35"
+                                height="35"
+                                className="d-inline-block align-top"
+                            />{' '}
+                            Kroket Stream Studio
+                        </NavLink>
                     </Navbar.Brand>
                     <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                         <li>

@@ -8,10 +8,8 @@ import Stream from './Stream'
 import TargetPage from './TargetPage'
 import MultiSelect from './MultiSelect'
 import SetPassword from './SetPassword'
-import { useAuth } from '../utils/useAuth'
 
 export default function AuthenticatedApp() {
-    useAuth('/login')
     return (
         <div>
             <Switch>

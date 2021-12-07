@@ -3,7 +3,7 @@ import UnauthenticatedHeader from './UnauthenticatedHeader'
 import Footer from './Footer'
 import LoginForm from './LoginForm'
 import LoginStatus from './LoginStatus'
-import ReactLoading from 'react-loading'
+import Loading from './Loading'
 import Container from 'react-bootstrap/Container'
 
 import { useUser } from './context/UserState'
@@ -61,7 +61,7 @@ export default function Login() {
     if (loading) {
         return (
             <div>
-                <ReactLoading type="spin" color="#000" />
+                <Loading />
             </div>
         )
     } else {

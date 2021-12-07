@@ -1,19 +1,16 @@
 import React from 'react'
 import Header from './Header'
 import Footer from './Footer'
-import LoginStatus from './LoginStatus'
 import IngestForm from './IngestForm'
 import ReactLoading from 'react-loading'
 
 import { useUser } from './context/UserState'
-import { useAuth } from '../utils/useAuth'
 
 export default function Home() {
     const {
         state: { loading },
     } = useUser()
 
-    useAuth('/login')
     /* useEffect(() => {
         const requestOptions = {
             method: 'GET',
@@ -58,7 +55,6 @@ export default function Home() {
             <div>
                 <Header />
                 <IngestForm />
-                <LoginStatus />
                 <Footer />
             </div>
         )

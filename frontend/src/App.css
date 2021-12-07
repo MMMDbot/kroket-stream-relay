@@ -84,7 +84,7 @@ footer a {
 
 header.pancake-header {
     background-color: rgb(39, 38, 44);
-    border-bottom: 5zpx solid rgb(56, 50, 65);
+    border-bottom: 2px solid rgb(56, 50, 65);
 }
 .react-player {
     cursor: pointer;
@@ -103,12 +103,13 @@ header.pancake-header {
     margin-bottom: 1rem;
 }
 
-a.navbar-brand {
+span.navbar-brand a {
     color: white;
     font-family: 'Kanit', sans-serif;
     font-size: 1.35em;
+    text-decoration: none;
 }
-a.navbar-brand:hover {
+span.navbar-brand a:hover {
     color: white;
 }
 
@@ -129,4 +130,11 @@ button.btn {
     -webkit-box-shadow: 0px 5px 12px 0px rgba(146, 1, 0, 0.3);
     -moz-box-shadow: 0px 5px 12px 0px rgba(146, 1, 0, 0.3);
     box-shadow: 0px 5px 12px 0px rgba(146, 1, 0, 0.3);
+}
+
+.spinner-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
