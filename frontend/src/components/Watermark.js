@@ -5,7 +5,7 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import WatermarkPreview from './WatermarkPreview'
 
-export default function Watermark(props) {
+export default function Watermark() {
     const [watermark, setWatermark] = useState(false)
     const [isFormLoading, setFormLoading] = useState(false)
     const imageInputRef = useRef()
@@ -43,7 +43,7 @@ export default function Watermark(props) {
     return (
         <div>
             <h2>Current watermark</h2>
-            <WatermarkPreview user={props.user} watermark={watermark} />
+            <WatermarkPreview watermark={watermark} />
             <h2>Change watermark</h2>
             <h4>(66x66 PNG images only)</h4>
             <Form onSubmit={submitTarget}>

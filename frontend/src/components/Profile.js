@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { useUser } from './context/UserState'
-import ReactLoading from 'react-loading'
 import Watermark from './Watermark'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
@@ -14,7 +13,6 @@ function Profile() {
     } = useUser()
 
     const [user, setUser] = useState('')
-    const [loadingData, setLoadingData] = useState(true)
 
     useEffect(() => {
         const requestOptions = {
@@ -25,58 +23,48 @@ function Profile() {
             .then((response) => response.json())
             .then((data) => {
                 setUser(data)
-                setLoadingData(false)
             })
     }, [loggedIn, userId])
 
-    if (loadingData) {
-        return (
-            <div>
-                <ReactLoading type="spin" color="#000" />
-            </div>
-        )
-    } else {
-        return (
-            <div>
-                <Container>
-                    <Row>
-                        <Col></Col>
-                        <Col xs={6}>
-                            <Watermark user={user} />
-                        </Col>
-                        <Col></Col>
-                    </Row>
-                </Container>
+    return (
+        <div>
+            <Container>
+                <Row>
+                    <Col></Col>
+                    <Col xs={6}>
+                        <Watermark />
+                    </Col>
+                    <Col></Col>
+                </Row>
+            </Container>
 
-                <div className="p-4">
-                    You are authenticated as {username}. Your user ID is{' '}
-                    {userId}
-                    <Table striped bordered hover variant="dark" size="sm">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Username</th>
-                                <th>Full Name</th>
-                                <th>Email</th>
-                                <th>Organization ID</th>
-                                <th>Registered</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>{user.id}</td>
-                                <td>{user.username}</td>
-                                <td>{user.full_name}</td>
-                                <td>{user.email}</td>
-                                <td>{user.organization_id}</td>
-                                <td>{user.created_at}</td>
-                            </tr>
-                        </tbody>
-                    </Table>
-                </div>
+            <div className="p-4">
+                You are authenticated as {username}. Your user ID is {userId}
+                <Table striped bordered hover variant="dark" size="sm">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Username</th>
+                            <th>Full Name</th>
+                            <th>Email</th>
+                            <th>Organization ID</th>
+                            <th>Registered</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{user.id}</td>
+                            <td>{user.username}</td>
+                            <td>{user.full_name}</td>
+                            <td>{user.email}</td>
+                            <td>{user.organization_id}</td>
+                            <td>{user.created_at}</td>
+                        </tr>
+                    </tbody>
+                </Table>
             </div>
-        )
-    }
+        </div>
+    )
 }
 
 export default Profile
