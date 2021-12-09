@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Row from 'react-bootstrap/Row'
 import Target from './Target'
 import { io } from 'socket.io-client'
-import ReactLoading from 'react-loading'
+import Loading from './Loading'
 
 export default function Targets() {
     const [isOnline, setOnline] = useState('offline')
@@ -52,11 +52,7 @@ export default function Targets() {
                 <h2>Targets</h2>
             </Row>
             <Row sm={1} md={2} lg={2} xl={2} xxl={3} className="g-4">
-                {isLoading ? (
-                    <ReactLoading type="spin" color="#000" />
-                ) : (
-                    targetList
-                )}
+                {isLoading ? <Loading height={'200px'} /> : targetList}
             </Row>
         </div>
     )

@@ -6,9 +6,12 @@ import CardGroup from 'react-bootstrap/CardGroup'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
+import IngestForm from './IngestForm'
+import SkeletonCard from './SkeletonCard'
 
 export default function Streams() {
     const [streamList, setStreamList] = useState([])
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         const requestOptions = {
@@ -20,6 +23,7 @@ export default function Streams() {
             .then((data) => {
                 console.log(data)
                 setStreamList(data)
+                setLoading(false)
             })
     }, [])
 
@@ -46,7 +50,12 @@ export default function Streams() {
                 <Row>
                     <Col md={2}></Col>
                     <Col md={8}>
-                        <CardGroup>{listItems}</CardGroup>
+                        <IngestForm />
+                        {loading ? (
+                            <SkeletonCard />
+                        ) : (
+                            <CardGroup>{listItems}</CardGroup>
+                        )}
                     </Col>
                     <Col md={2}></Col>
                 </Row>

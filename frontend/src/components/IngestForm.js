@@ -55,13 +55,12 @@ export default function IngestForm() {
         }
     }
     return (
-        <Container fluid style={{ minHeight: '100vh' }} className="pt-4">
+        <Container>
             <Row>
-                <Col md={2}></Col>
-                <Col md={8}>
-                    <Row className="pb-3">
+                <Col md={12}>
+                    <Row>
                         <Col sm={{ span: 10, offset: 2 }}>
-                            <h3>Start New Ingest</h3>
+                            <h3>Start New Stream</h3>
                         </Col>
                     </Row>
                     <Row className="pb-3">
@@ -138,7 +137,6 @@ export default function IngestForm() {
                         </Form.Group>
                     </Form>
                 </Col>
-                <Col md={2}></Col>
             </Row>
         </Container>
     )

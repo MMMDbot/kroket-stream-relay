@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactLoading from 'react-loading'
 
-export default function Loading() {
+export default function Loading(props) {
     return (
         <div className="container-fluid">
             <div
@@ -9,7 +9,7 @@ export default function Loading() {
                     display: 'flex',
                     justifyContent: 'center',
                     alignItems: 'center',
-                    height: '100vh',
+                    height: props.height ? props.height : '100vh',
                 }}
             >
                 <ReactLoading type="spin" color="#000" />

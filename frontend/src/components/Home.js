@@ -3,6 +3,9 @@ import Header from './Header'
 import Footer from './Footer'
 import IngestForm from './IngestForm'
 import ReactLoading from 'react-loading'
+import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
 
 import { useUser } from './context/UserState'
 
@@ -54,7 +57,19 @@ export default function Home() {
         return (
             <div>
                 <Header />
-                <IngestForm />
+                <Container
+                    fluid
+                    className="py-4"
+                    style={{ minHeight: '100vh' }}
+                >
+                    <Row>
+                        <Col md={2}></Col>
+                        <Col md={8}>
+                            <IngestForm />
+                        </Col>
+                        <Col md={2}></Col>
+                    </Row>
+                </Container>
                 <Footer />
             </div>
         )
