@@ -5,11 +5,17 @@ import App from './App'
 import { BrowserRouter } from 'react-router-dom'
 import { UserProvider } from './components/context/UserState'
 
+import { QueryClient, QueryClientProvider } from 'react-query'
+
+const queryClient = new QueryClient()
+
 ReactDOM.render(
-    <UserProvider>
-        <BrowserRouter>
-            <App />
-        </BrowserRouter>
-    </UserProvider>,
+    <QueryClientProvider client={queryClient}>
+        <UserProvider>
+            <BrowserRouter>
+                <App />
+            </BrowserRouter>
+        </UserProvider>
+    </QueryClientProvider>,
     document.getElementById('root')
 )
