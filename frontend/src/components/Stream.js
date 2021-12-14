@@ -4,6 +4,7 @@ import Header from './Header'
 import Footer from './Footer'
 import StreamPlayer from './StreamPlayer'
 import MultiSelect from './MultiSelect'
+import StatusBadge from './StatusBadge'
 
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
@@ -63,14 +64,30 @@ export default function Stream() {
                                     active={active}
                                     name={name}
                                 />
-                                <div className="float-end">
-                                    <Button
-                                        variant="danger"
-                                        disabled={!active}
-                                        onClick={stopStream}
-                                    >
-                                        Stop Stream
-                                    </Button>
+                                <div className="float-end"></div>
+                                <div className="wrap">
+                                    <div>
+                                        <h2
+                                            style={{
+                                                display: 'inline-block',
+                                                textTransform: 'capitalize',
+                                            }}
+                                        >
+                                            {name}
+                                        </h2>
+                                    </div>
+                                    <div>
+                                        <StatusBadge active={active} />
+                                    </div>
+                                    <div>
+                                        <Button
+                                            variant="danger"
+                                            disabled={!active}
+                                            onClick={stopStream}
+                                        >
+                                            Stop Stream
+                                        </Button>
+                                    </div>
                                 </div>
                             </Card.Body>
                         </Card>

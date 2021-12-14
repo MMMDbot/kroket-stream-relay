@@ -138,3 +138,9 @@ button.btn {
     align-items: center;
     height: 100vh;
 }
+
+.wrap {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}

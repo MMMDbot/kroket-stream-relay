@@ -8,7 +8,7 @@ export default function Target(props) {
     return (
         <div>
             <Card
-                className="card-shadow"
+                bsPrefix="card-round card-shadow"
                 border="secondary"
                 style={{ width: '18rem', height: '10rem' }}
             >
@@ -18,7 +18,11 @@ export default function Target(props) {
                 <Card.Body>
                     <Card.Title>{props.target.description}</Card.Title>
                     <Card.Text>
-                        <a href={address}>{address}</a>
+                        <a href={address}>
+                            {address.length > 54
+                                ? `${address.substring(0, 55)}...`
+                                : address}
+                        </a>
                     </Card.Text>
                 </Card.Body>
             </Card>

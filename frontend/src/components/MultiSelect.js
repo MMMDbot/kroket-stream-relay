@@ -11,8 +11,6 @@ export default function MultiSelect(props) {
     const [options, setOptions] = useState([])
     const [reload, setReload] = useState({ value: false })
 
-    let buttonDisabled = !props.active
-
     useEffect(() => {
         const requestOptions = {
             method: 'GET',
@@ -68,23 +66,6 @@ export default function MultiSelect(props) {
             }
         })
     }
-    const stopStream = () => {
-        const requestOptions = {
-            method: 'GET',
-            credentials: 'include',
-        }
-        fetch(
-            `http://localhost:3001/api/stop/${props.streamId}`,
-            requestOptions
-        )
-            .then((response) => response.json())
-            .then((data) => {
-                //setButtonDisabled(true)
-                buttonDisabled = true
-                console.log(data)
-                setReload({ value: !reload.value })
-            })
-    }
 
     return (
         <div>
@@ -105,13 +86,6 @@ export default function MultiSelect(props) {
                         type="submit"
                     >
                         Start
-                    </Button>
-                    <Button
-                        variant="danger"
-                        disabled={buttonDisabled}
-                        onClick={stopStream}
-                    >
-                        Stop Stream
                     </Button>
                 </div>
             </Form>
