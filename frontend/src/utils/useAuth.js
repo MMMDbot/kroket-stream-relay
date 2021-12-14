@@ -7,7 +7,7 @@ function useAuth(redirect) {
     const { dispatch } = useUser()
     const history = useHistory()
 
-    const { data } = useQuery(
+    useQuery(
         'checkSession',
         () => {
             const requestOptions = {

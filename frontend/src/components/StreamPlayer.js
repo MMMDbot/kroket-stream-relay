@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import ReactPlayer from 'react-player'
-import { io } from 'socket.io-client'
 import StatusBadge from './StatusBadge'
 
 export default function StreamPlayer(props) {

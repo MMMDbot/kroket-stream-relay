@@ -32,7 +32,7 @@ export default function Stream() {
                     setActive(false)
                 }
             })
-    }, [])
+    }, [id])
 
     const stopStream = () => {
         const requestOptions = {

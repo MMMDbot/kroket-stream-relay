@@ -11,6 +11,7 @@ export default function Targets() {
 
     const socket = io('http://localhost:8080')
     socket.on('receive-message', (message) => {
+        console.log(isOnline)
         setOnline(message)
     })
 

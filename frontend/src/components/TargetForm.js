@@ -3,9 +3,7 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
-import { useHistory } from 'react-router-dom'
 import Alert from 'react-bootstrap/Alert'
-import { validateIngestForm } from '../utils/validate'
 
 export default function IngestForm() {
     const [isFormLoading, setFormLoading] = useState(false)
@@ -17,8 +15,6 @@ export default function IngestForm() {
     const [formError, setFormError] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')
     const [formSuccess, setFormSuccess] = useState(false)
-
-    const history = useHistory()
 
     const submitTarget = (e) => {
         e.preventDefault()
