@@ -43,10 +43,8 @@ export default function Stream() {
         fetch(`http://localhost:3001/api/stop/${id}`, requestOptions)
             .then((response) => response.json())
             .then((data) => {
-                //setButtonDisabled(true)
                 setActive(true)
                 console.log(data)
-                //setReload({ value: !reload.value })
             })
     }
 
