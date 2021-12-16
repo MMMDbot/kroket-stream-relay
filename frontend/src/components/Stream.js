@@ -5,6 +5,7 @@ import Footer from './Footer'
 import StreamPlayer from './StreamPlayer'
 import MultiSelect from './MultiSelect'
 import StatusBadge from './StatusBadge'
+import StreamTitle from './StreamTitle'
 
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
@@ -65,17 +66,10 @@ export default function Stream() {
                                 <div className="float-end"></div>
                                 <div className="wrap">
                                     <div>
-                                        <h2
-                                            style={{
-                                                display: 'inline-block',
-                                                textTransform: 'capitalize',
-                                            }}
-                                        >
-                                            {name}
-                                        </h2>
-                                    </div>
-                                    <div>
-                                        <StatusBadge active={active} />
+                                        <StreamTitle
+                                            name={name}
+                                            active={active}
+                                        />
                                     </div>
                                     <div>
                                         <Button
