@@ -32,11 +32,6 @@ export default function Header() {
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink className="nav-link" to="/dashboard">
-                                Dashboard
-                            </NavLink>
-                        </li>
-                        <li>
                             <NavLink className="nav-link" to="/streams">
                                 Streams
                             </NavLink>
@@ -44,6 +39,11 @@ export default function Header() {
                         <li>
                             <NavLink className="nav-link" to="/targets">
                                 Targets
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink className="nav-link" to="/downloader">
+                                Video Downloader
                             </NavLink>
                         </li>
                     </ul>

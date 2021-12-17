@@ -8,6 +8,7 @@ import Stream from './Stream'
 import TargetPage from './TargetPage'
 import MultiSelect from './MultiSelect'
 import SetPassword from './SetPassword'
+import VideoDownloader from './VideoDownloader'
 
 export default function AuthenticatedApp() {
     return (
@@ -36,6 +37,9 @@ export default function AuthenticatedApp() {
                 </Route>
                 <Route exact path="/setpw/:id">
                     <SetPassword />
+                </Route>
+                <Route exact path="/downloader">
+                    <VideoDownloader />
                 </Route>
             </Switch>
         </div>
