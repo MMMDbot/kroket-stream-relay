@@ -1,5 +1,6 @@
 import sys
 from encode import startQueue, startRelay, stop
+from download import getDownloadUrl
 
 if __name__ == "__main__":
     if str(sys.argv[1]) == "ingest":
@@ -10,3 +11,5 @@ if __name__ == "__main__":
         )
     elif str(sys.argv[1]) == "stop":
         stop(str(sys.argv[2]))
+    elif str(sys.argv[1] == "download"):
+        getDownloadUrl(sys.argv[2])
