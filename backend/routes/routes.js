@@ -20,6 +20,7 @@ const redis = require('redis')
 const connectRedis = require('connect-redis')
 const authSession = require('../middlewares/auth-session')
 const multer = require('multer')
+const { downloadVideo } = require('../services/videoDownloader')
 
 const RedisStore = connectRedis(session)
 
@@ -444,6 +445,13 @@ const upload = multer({ storage: storage })
 router.post('/watermark', upload.single('wm'), (req, res, next) => {
     console.log(req.file)
     res.json({ success: true, message: 'Image uploaded' })
+})
+
+router.post('/download', async (req, res) => {
+    const url = req.body.url
+    const results = await downloadVideo(url)
+    const downloadUrl = results.slice(-1)[0]
+    res.json(downloadUrl)
 })
 
 module.exports = router
