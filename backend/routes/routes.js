@@ -451,7 +451,7 @@ router.post('/download', async (req, res) => {
     const url = req.body.url
     const results = await downloadVideo(url)
     const downloadUrl = results.slice(-1)[0]
-    res.json(downloadUrl)
+    res.json({ url: downloadUrl })
 })
 
 module.exports = router
