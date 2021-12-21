@@ -46,6 +46,11 @@ export default function Header() {
                                 Video Downloader
                             </NavLink>
                         </li>
+                        <li>
+                            <NavLink className="nav-link" to="/monitor">
+                                Monitor
+                            </NavLink>
+                        </li>
                     </ul>
 
                     <div className="text-end">

@@ -66,7 +66,7 @@ export default function VideoDownloader() {
                             />
                             <Form.Control
                                 type="text"
-                                placeholder="Press the button to generate video download link"
+                                placeholder="Generated download link will appear here"
                                 value={downloadLink}
                                 readOnly
                             />
