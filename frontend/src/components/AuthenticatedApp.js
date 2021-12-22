@@ -9,6 +9,7 @@ import TargetPage from './TargetPage'
 import MultiSelect from './MultiSelect'
 import SetPassword from './SetPassword'
 import VideoDownloader from './VideoDownloader'
+import Monitor from './Monitor'
 
 export default function AuthenticatedApp() {
     return (
@@ -40,6 +41,9 @@ export default function AuthenticatedApp() {
                 </Route>
                 <Route exact path="/downloader">
                     <VideoDownloader />
+                </Route>
+                <Route exact path="/monitor">
+                    <Monitor />
                 </Route>
             </Switch>
         </div>
