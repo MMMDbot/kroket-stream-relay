@@ -6,6 +6,7 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import { useHistory } from 'react-router-dom'
 import Alert from 'react-bootstrap/Alert'
+import Card from 'react-bootstrap/Card'
 import { validateIngestForm } from '../utils/validate'
 
 export default function IngestForm() {
@@ -55,89 +56,96 @@ export default function IngestForm() {
         }
     }
     return (
-        <Container>
-            <Row>
-                <Col md={12}>
+        <Card bsPrefix="card-shadow card-round mb-4">
+            <Card.Body>
+                <Container>
                     <Row>
-                        <Col sm={{ span: 10, offset: 2 }}>
-                            <h3>Start New Stream</h3>
-                        </Col>
-                    </Row>
-                    <Row className="pb-3">
-                        <Col sm={{ span: 10, offset: 2 }}>
-                            {formError ? (
-                                <Alert
-                                    variant="danger"
-                                    onClose={() => setFormError(false)}
-                                    dismissible
+                        <Col md={12}>
+                            <Row>
+                                <Col sm={{ span: 10, offset: 2 }}>
+                                    <h3>Start New Stream</h3>
+                                </Col>
+                            </Row>
+                            <Row className="pb-3">
+                                <Col sm={{ span: 10, offset: 2 }}>
+                                    {formError ? (
+                                        <Alert
+                                            variant="danger"
+                                            onClose={() => setFormError(false)}
+                                            dismissible
+                                        >
+                                            {errorMessage}
+                                        </Alert>
+                                    ) : (
+                                        ''
+                                    )}
+                                </Col>
+                            </Row>
+                            <Form onSubmit={submitIngest}>
+                                <Form.Group
+                                    as={Row}
+                                    className="mb-3"
+                                    controlId="formHorizontalEmail"
+                                    required
                                 >
-                                    {errorMessage}
-                                </Alert>
-                            ) : (
-                                ''
-                            )}
+                                    <Form.Label column sm={2}>
+                                        Description
+                                    </Form.Label>
+                                    <Col sm={10}>
+                                        <Form.Control
+                                            type="text"
+                                            placeholder="Description"
+                                            onChange={(e) => {
+                                                setDescription(e.target.value)
+                                            }}
+                                            required
+                                        />
+                                    </Col>
+                                </Form.Group>
+
+                                <Form.Group
+                                    as={Row}
+                                    className="mb-3"
+                                    controlId="formHorizontalPassword"
+                                >
+                                    <Form.Label column sm={2}>
+                                        Origin
+                                    </Form.Label>
+                                    <Col sm={10}>
+                                        <Form.Control
+                                            type="text"
+                                            placeholder="Origin"
+                                            onChange={(e) => {
+                                                setOrigin(e.target.value)
+                                            }}
+                                            required
+                                        />
+                                        <Form.Text id="originHelpBlock" muted>
+                                            Origin must be a URL pointing to a
+                                            HLS playlist (.m3u8 file) or a
+                                            YouTube URL. Valid examples:
+                                            https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8
+                                            https://www.youtube.com/watch?v=dQw4w9WgXcQ
+                                        </Form.Text>
+                                    </Col>
+                                </Form.Group>
+                                <Form.Group as={Row} className="mb-3">
+                                    <Col sm={{ span: 10, offset: 2 }}>
+                                        <Button
+                                            type="submit"
+                                            disabled={isFormLoading}
+                                        >
+                                            {isFormLoading
+                                                ? 'Starting ingest...'
+                                                : 'Start Ingest 🚀'}
+                                        </Button>
+                                    </Col>
+                                </Form.Group>
+                            </Form>
                         </Col>
                     </Row>
-                    <Form onSubmit={submitIngest}>
-                        <Form.Group
-                            as={Row}
-                            className="mb-3"
-                            controlId="formHorizontalEmail"
-                            required
-                        >
-                            <Form.Label column sm={2}>
-                                Description
-                            </Form.Label>
-                            <Col sm={10}>
-                                <Form.Control
-                                    type="text"
-                                    placeholder="Description"
-                                    onChange={(e) => {
-                                        setDescription(e.target.value)
-                                    }}
-                                    required
-                                />
-                            </Col>
-                        </Form.Group>
-
-                        <Form.Group
-                            as={Row}
-                            className="mb-3"
-                            controlId="formHorizontalPassword"
-                        >
-                            <Form.Label column sm={2}>
-                                Origin
-                            </Form.Label>
-                            <Col sm={10}>
-                                <Form.Control
-                                    type="text"
-                                    placeholder="Origin"
-                                    onChange={(e) => {
-                                        setOrigin(e.target.value)
-                                    }}
-                                    required
-                                />
-                                <Form.Text id="originHelpBlock" muted>
-                                    Origin must be a URL pointing to a HLS
-                                    playlist (.m3u8 file) or a YouTube URL.
-                                    Valid examples:
-                                    https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8
-                                    https://www.youtube.com/watch?v=dQw4w9WgXcQ
-                                </Form.Text>
-                            </Col>
-                        </Form.Group>
-                        <Form.Group as={Row} className="mb-3">
-                            <Col sm={{ span: 10, offset: 2 }}>
-                                <Button type="submit" disabled={isFormLoading}>
-                                    {isFormLoading
-                                        ? 'Starting ingest...'
-                                        : 'Start Ingest 🚀'}
-                                </Button>
-                            </Col>
-                        </Form.Group>
-                    </Form>
-                </Col>
-            </Row>
-        </Container>
+                </Container>
+            </Card.Body>
+        </Card>
     )
 }

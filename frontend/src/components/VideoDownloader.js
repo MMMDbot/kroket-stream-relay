@@ -6,6 +6,8 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
+import Card from 'react-bootstrap/Card'
+
 //import Alert from 'react-bootstrap/Alert'
 
 export default function VideoDownloader() {
@@ -54,37 +56,56 @@ export default function VideoDownloader() {
                 <Row>
                     <Col md={2}></Col>
                     <Col md={8}>
-                        <h1>Video Downloader</h1>
-                        <Form onSubmit={submitVideoDownload}>
-                            <Form.Control
-                                type="text"
-                                placeholder="Paste the URL of your video here"
-                                onChange={(e) => {
-                                    setOriginUrl(e.target.value)
-                                }}
-                                required
-                            />
-                            <Form.Control
-                                type="text"
-                                placeholder="Generated download link will appear here"
-                                value={downloadLink}
-                                readOnly
-                            />
-                            <Button type="submit" disabled={isFormLoading}>
-                                {isFormLoading
-                                    ? 'Generating download link...'
-                                    : 'Generate Download Link 🚀'}
-                            </Button>
-                            <a
-                                href={downloadLink}
-                                target="_blank"
-                                rel="noreferrer"
-                            >
-                                <Button disabled={!isLinkGenerated}>
-                                    Open in new tab
-                                </Button>
-                            </a>
-                        </Form>
+                        <Card bsPrefix="card-shadow card-round mb-4">
+                            <Card.Body>
+                                <h1>Video Downloader</h1>
+                                <Form onSubmit={submitVideoDownload}>
+                                    <Form.Control
+                                        type="text"
+                                        placeholder="Paste the URL of your video here"
+                                        onChange={(e) => {
+                                            setOriginUrl(e.target.value)
+                                        }}
+                                        required
+                                    />
+                                    <Button
+                                        className="mt-2"
+                                        type="submit"
+                                        disabled={isFormLoading}
+                                    >
+                                        {isFormLoading
+                                            ? 'Generating download link...'
+                                            : 'Generate Download Link 🚀'}
+                                    </Button>
+                                    <div
+                                        className={
+                                            isLinkGenerated
+                                                ? 'pt-4 d-block'
+                                                : 'd-none'
+                                        }
+                                    >
+                                        <Form.Control
+                                            type="text"
+                                            placeholder="Generated download link will appear here"
+                                            value={downloadLink}
+                                            readOnly
+                                        />
+                                        <a
+                                            href={downloadLink}
+                                            target="_blank"
+                                            rel="noreferrer"
+                                        >
+                                            <Button
+                                                disabled={!isLinkGenerated}
+                                                className="mt-2"
+                                            >
+                                                Open link in new tab
+                                            </Button>
+                                        </a>
+                                    </div>
+                                </Form>
+                            </Card.Body>
+                        </Card>
                     </Col>
                     <Col md={2}></Col>
                 </Row>

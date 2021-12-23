@@ -8,7 +8,7 @@ export default function Target(props) {
     return (
         <div>
             <Card
-                bsPrefix="card-round card-shadow"
+                bsPrefix="card-round"
                 border="secondary"
                 style={{ width: '18rem', height: '10rem' }}
             >

@@ -6,6 +6,7 @@ import CardGroup from 'react-bootstrap/CardGroup'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
+import Card from 'react-bootstrap/Card'
 import IngestForm from './IngestForm'
 import SkeletonCard from './SkeletonCard'
 
@@ -51,11 +52,15 @@ export default function Streams() {
                     <Col md={2}></Col>
                     <Col md={8}>
                         <IngestForm />
-                        {loading ? (
-                            <SkeletonCard />
-                        ) : (
-                            <CardGroup>{listItems}</CardGroup>
-                        )}
+                        <Card bsPrefix="card-shadow card-round mb-4">
+                            <Card.Body>
+                                {loading ? (
+                                    <SkeletonCard />
+                                ) : (
+                                    <CardGroup>{listItems}</CardGroup>
+                                )}
+                            </Card.Body>
+                        </Card>
                     </Col>
                     <Col md={2}></Col>
                 </Row>

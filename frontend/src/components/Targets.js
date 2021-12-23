@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Row from 'react-bootstrap/Row'
+import Card from 'react-bootstrap/Card'
 import Target from './Target'
 import { io } from 'socket.io-client'
 import Loading from './Loading'
@@ -49,12 +50,16 @@ export default function Targets() {
 
     return (
         <div>
-            <Row>
-                <h2>Targets</h2>
-            </Row>
-            <Row sm={1} md={2} lg={2} xl={2} xxl={3} className="g-4">
-                {isLoading ? <Loading height={'200px'} /> : targetList}
-            </Row>
+            <Card bsPrefix="card-shadow card-round mb-4">
+                <Card.Body>
+                    <Row>
+                        <h2>Targets</h2>
+                    </Row>
+                    <Row sm={1} md={2} lg={2} xl={2} xxl={3} className="g-4">
+                        {isLoading ? <Loading height={'200px'} /> : targetList}
+                    </Row>
+                </Card.Body>
+            </Card>
         </div>
     )
 }

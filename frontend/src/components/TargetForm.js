@@ -4,6 +4,7 @@ import Col from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import Alert from 'react-bootstrap/Alert'
+import Card from 'react-bootstrap/Card'
 
 export default function IngestForm() {
     const [isFormLoading, setFormLoading] = useState(false)
@@ -61,147 +62,155 @@ export default function IngestForm() {
 
     return (
         <div>
-            <Row className="pb-1">
-                <Col sm={{ span: 10, offset: 1 }}>
-                    <h3>Add New Target</h3>
-                </Col>
-            </Row>
-            <Row className="pb-1">
-                <Col sm={{ span: 10, offset: 2 }}>
-                    {formError ? (
-                        <Alert
-                            variant="danger"
-                            onClose={() => setFormError(false)}
-                            dismissible
+            <Card bsPrefix="card-shadow card-round mb-4">
+                <Card.Body>
+                    <Row className="pb-1">
+                        <Col sm={{ span: 10, offset: 1 }}>
+                            <h3>Add New Target</h3>
+                        </Col>
+                    </Row>
+                    <Row className="pb-1">
+                        <Col sm={{ span: 10, offset: 2 }}>
+                            {formError ? (
+                                <Alert
+                                    variant="danger"
+                                    onClose={() => setFormError(false)}
+                                    dismissible
+                                >
+                                    {errorMessage}
+                                </Alert>
+                            ) : (
+                                ''
+                            )}
+                        </Col>
+                    </Row>
+                    <Form onSubmit={submitTarget}>
+                        <Form.Group
+                            as={Row}
+                            className="mb-3"
+                            controlId="formHorizontalEmail"
+                            required
                         >
-                            {errorMessage}
-                        </Alert>
-                    ) : (
-                        ''
-                    )}
-                </Col>
-            </Row>
-            <Form onSubmit={submitTarget}>
-                <Form.Group
-                    as={Row}
-                    className="mb-3"
-                    controlId="formHorizontalEmail"
-                    required
-                >
-                    <Form.Label column sm={1}>
-                        Server
-                    </Form.Label>
-                    <Col sm={5}>
-                        <Form.Control
-                            type="text"
-                            placeholder="Server Address"
-                            onChange={(e) => {
-                                setServer(e.target.value)
-                            }}
-                            value={server}
-                            required
-                        />
-                    </Col>
-                    <Form.Label column sm={1}>
-                        Key
-                    </Form.Label>
-                    <Col sm={5}>
-                        <Form.Control
-                            type="text"
-                            placeholder="Stream Key"
-                            onChange={(e) => {
-                                setStreamKey(e.target.value)
-                            }}
-                            value={streamKey}
-                            required
-                        />
-                    </Col>
-                </Form.Group>
+                            <Form.Label column sm={1}>
+                                Server
+                            </Form.Label>
+                            <Col sm={5}>
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Server Address"
+                                    onChange={(e) => {
+                                        setServer(e.target.value)
+                                    }}
+                                    value={server}
+                                    required
+                                />
+                            </Col>
+                            <Form.Label column sm={1}>
+                                Key
+                            </Form.Label>
+                            <Col sm={5}>
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Stream Key"
+                                    onChange={(e) => {
+                                        setStreamKey(e.target.value)
+                                    }}
+                                    value={streamKey}
+                                    required
+                                />
+                            </Col>
+                        </Form.Group>
 
-                <Form.Group
-                    as={Row}
-                    className="mb-3"
-                    controlId="formHorizontalPassword"
-                >
-                    <Form.Label column sm={1}>
-                        Desc.
-                    </Form.Label>
-                    <Col sm={5}>
-                        <Form.Control
-                            type="text"
-                            placeholder="Description"
-                            onChange={(e) => {
-                                setDescription(e.target.value)
-                            }}
-                            value={description}
-                            required
-                        />
-                    </Col>
-                    <Form.Label column sm={1}>
-                        Site
-                    </Form.Label>
-                    <Col sm={5}>
-                        <Form.Select
-                            aria-label="Floating label select example"
-                            onChange={(e) => {
-                                setPlatform(e.target.value)
-                            }}
-                            value={platform}
+                        <Form.Group
+                            as={Row}
+                            className="mb-3"
+                            controlId="formHorizontalPassword"
                         >
-                            <option>Select Platform</option>
-                            <option value="twitter">Twitter</option>
-                            <option value="youtube">YouTube</option>
-                            <option value="facebook">Facebook</option>
-                            <option value="twitch">Twitch</option>
-                            <option value="dailymotion">Dailymotion</option>
+                            <Form.Label column sm={1}>
+                                Desc.
+                            </Form.Label>
+                            <Col sm={5}>
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Description"
+                                    onChange={(e) => {
+                                        setDescription(e.target.value)
+                                    }}
+                                    value={description}
+                                    required
+                                />
+                            </Col>
+                            <Form.Label column sm={1}>
+                                Site
+                            </Form.Label>
+                            <Col sm={5}>
+                                <Form.Select
+                                    aria-label="Floating label select example"
+                                    onChange={(e) => {
+                                        setPlatform(e.target.value)
+                                    }}
+                                    value={platform}
+                                >
+                                    <option>Select Platform</option>
+                                    <option value="twitter">Twitter</option>
+                                    <option value="youtube">YouTube</option>
+                                    <option value="facebook">Facebook</option>
+                                    <option value="twitch">Twitch</option>
+                                    <option value="dailymotion">
+                                        Dailymotion
+                                    </option>
 
-                            <option value="custom">Other Platform</option>
-                        </Form.Select>
-                    </Col>
-                </Form.Group>
-                <Form.Group
-                    as={Row}
-                    className="mb-3"
-                    controlId="formHorizontalPassword"
-                >
-                    <Form.Label column sm={1}>
-                        URL
-                    </Form.Label>
-                    <Col sm={11}>
-                        <Form.Control
-                            type="text"
-                            placeholder="Public facing URL"
-                            onChange={(e) => {
-                                setPublicUrl(e.target.value)
-                            }}
-                            value={publicUrl}
-                            required
-                        />
-                    </Col>
-                </Form.Group>
-                <Form.Group as={Row} className="mb-3">
-                    <Col sm={{ span: 3, offset: 1 }}>
-                        <Button type="submit" disabled={isFormLoading}>
-                            {isFormLoading
-                                ? 'Adding target...'
-                                : 'Add target 🎃'}
-                        </Button>
-                    </Col>
-                    <Col sm={{ span: 8, offset: 0 }}>
-                        {formSuccess ? (
-                            <Alert
-                                variant="success"
-                                onClose={() => setFormSuccess(false)}
-                                dismissible
-                            >
-                                'Target added!'{' '}
-                            </Alert>
-                        ) : (
-                            ''
-                        )}
-                    </Col>
-                </Form.Group>
-            </Form>
+                                    <option value="custom">
+                                        Other Platform
+                                    </option>
+                                </Form.Select>
+                            </Col>
+                        </Form.Group>
+                        <Form.Group
+                            as={Row}
+                            className="mb-3"
+                            controlId="formHorizontalPassword"
+                        >
+                            <Form.Label column sm={1}>
+                                URL
+                            </Form.Label>
+                            <Col sm={11}>
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Public facing URL"
+                                    onChange={(e) => {
+                                        setPublicUrl(e.target.value)
+                                    }}
+                                    value={publicUrl}
+                                    required
+                                />
+                            </Col>
+                        </Form.Group>
+                        <Form.Group as={Row} className="mb-3">
+                            <Col sm={{ span: 3, offset: 1 }}>
+                                <Button type="submit" disabled={isFormLoading}>
+                                    {isFormLoading
+                                        ? 'Adding target...'
+                                        : 'Add target 🎃'}
+                                </Button>
+                            </Col>
+                            <Col sm={{ span: 8, offset: 0 }}>
+                                {formSuccess ? (
+                                    <Alert
+                                        variant="success"
+                                        onClose={() => setFormSuccess(false)}
+                                        dismissible
+                                    >
+                                        'Target added!'{' '}
+                                    </Alert>
+                                ) : (
+                                    ''
+                                )}
+                            </Col>
+                        </Form.Group>
+                    </Form>
+                </Card.Body>
+            </Card>
         </div>
     )
 }
