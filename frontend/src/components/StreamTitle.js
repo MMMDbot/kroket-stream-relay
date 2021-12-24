@@ -12,7 +12,7 @@ export default function StreamTitle(props) {
             >
                 {props.name}
             </h2>
-            <StatusBadge active={props.active} />
+            <StatusBadge active={props.active} featured={true} />
         </div>
     )
 }
