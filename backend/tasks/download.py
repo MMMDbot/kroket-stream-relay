@@ -6,6 +6,10 @@ def getDownloadUrl(source):
         "format": "best",
         "forceurl": "true",
         "simulate": "true",
+        "noplaylist": "true",
     }
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-        ydl.download(source)
+        try:
+            ydl.download(source)
+        except Exception as e:
+            print(e)

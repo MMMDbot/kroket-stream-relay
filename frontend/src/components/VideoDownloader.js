@@ -7,8 +7,7 @@ import Col from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
-
-//import Alert from 'react-bootstrap/Alert'
+import Alert from 'react-bootstrap/Alert'
 
 export default function VideoDownloader() {
     const [isFormLoading, setFormLoading] = useState(false)
@@ -59,6 +58,17 @@ export default function VideoDownloader() {
                         <Card bsPrefix="card-shadow card-round mb-4">
                             <Card.Body>
                                 <h1>Video Downloader</h1>
+                                {formError ? (
+                                    <Alert
+                                        variant="danger"
+                                        onClose={() => setFormError(false)}
+                                        dismissible
+                                    >
+                                        {errorMessage}
+                                    </Alert>
+                                ) : (
+                                    ''
+                                )}
                                 <Form onSubmit={submitVideoDownload}>
                                     <Form.Control
                                         type="text"
