@@ -4,6 +4,7 @@ import './index.css'
 import App from './App'
 import { BrowserRouter } from 'react-router-dom'
 import { UserProvider } from './components/context/UserState'
+import 'bootstrap-dark-5/dist/css/bootstrap-night.css'
 
 import { QueryClient, QueryClientProvider } from 'react-query'
 
