@@ -67,11 +67,42 @@ export default function MultiSelect(props) {
         })
     }
 
+    const customStyles = {
+        option: (provided, state) => ({
+            ...provided,
+            borderBottom: '1px dotted pink',
+            color: state.isSelected ? 'red' : 'white',
+            padding: 20,
+            backgroundColor: 'rgb(42, 43, 47)',
+            cursor: 'pointer',
+        }),
+        control: (styles) => ({
+            ...styles,
+            cursor: 'pointer',
+        }),
+        multiValue: (provided, state) => {
+            return { ...provided, color: 'red' }
+        },
+        menuList: (provided, state) => ({
+            ...provided,
+            backgroundColor: 'rgb(52, 53, 57)',
+        }),
+        valueContainer: (provided, state) => ({
+            ...provided,
+            backgroundColor: 'rgb(32, 33, 37)',
+        }),
+        multiValueLabel: (provided, state) => ({
+            ...provided,
+            backgroundColor: 'gray',
+        }),
+    }
+
     return (
         <div>
             <h4>Pick destinations for this stream</h4>
             <Form onSubmit={submitRelays}>
                 <Select
+                    styles={customStyles}
                     value={selection}
                     isMulti
                     isClearable
