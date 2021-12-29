@@ -70,19 +70,28 @@ export default function MultiSelect(props) {
     const customStyles = {
         option: (provided, state) => ({
             ...provided,
-            borderBottom: '1px dotted pink',
-            color: state.isSelected ? 'red' : 'white',
-            padding: 20,
-            backgroundColor: 'rgb(42, 43, 47)',
+            borderBottom: '1px dotted gray',
+            padding: 8,
             cursor: 'pointer',
+            backgroundColor: state.isFocused
+                ? 'rgb(32, 33, 37)'
+                : 'rgb(42, 43, 47)',
         }),
         control: (styles) => ({
             ...styles,
             cursor: 'pointer',
+            borderWidth: '2px',
+            borderColor: '#626262',
         }),
-        multiValue: (provided, state) => {
-            return { ...provided, color: 'red' }
-        },
+        multiValue: (provided, state) => ({
+            ...provided,
+            backgroundColor: 'rgb(55, 90, 127)',
+            borderRadius: '8px',
+        }),
+        multiValueLabel: (provided, state) => ({
+            ...provided,
+            color: 'white',
+        }),
         menuList: (provided, state) => ({
             ...provided,
             backgroundColor: 'rgb(52, 53, 57)',
@@ -91,9 +100,21 @@ export default function MultiSelect(props) {
             ...provided,
             backgroundColor: 'rgb(32, 33, 37)',
         }),
-        multiValueLabel: (provided, state) => ({
+        indicatorsContainer: (provided, state) => ({
             ...provided,
-            backgroundColor: 'gray',
+            backgroundColor: 'rgb(49, 50, 54)',
+        }),
+        dropdownIndicator: (provided, state) => ({
+            ...provided,
+            ':hover': {
+                color: 'white',
+            },
+        }),
+        clearIndicator: (provided, state) => ({
+            ...provided,
+            ':hover': {
+                color: 'white',
+            },
         }),
     }
 
