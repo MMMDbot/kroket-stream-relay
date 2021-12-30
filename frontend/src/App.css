@@ -151,3 +151,8 @@ button.btn {
     border: 2px solid;
     border-color: #626262;
 }
+
+input.form-control[readonly] {
+    color: rgb(155, 155, 155);
+    background-color: rgb(50, 50, 50);
+}
