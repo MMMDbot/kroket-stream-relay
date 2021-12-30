@@ -74,8 +74,11 @@ export default function MultiSelect(props) {
             padding: 8,
             cursor: 'pointer',
             backgroundColor: state.isFocused
-                ? 'rgb(32, 33, 37)'
-                : 'rgb(42, 43, 47)',
+                ? 'rgb(53, 53, 53)'
+                : 'rgb(40, 40, 40)',
+            color: state.isFocused
+                ? 'rgb(250, 250, 250)'
+                : 'rgb(168, 168, 168)',
         }),
         control: (styles) => ({
             ...styles,
@@ -94,7 +97,7 @@ export default function MultiSelect(props) {
         }),
         menuList: (provided, state) => ({
             ...provided,
-            backgroundColor: 'rgb(52, 53, 57)',
+            backgroundColor: 'rgb(43, 43, 43)',
         }),
         valueContainer: (provided, state) => ({
             ...provided,
