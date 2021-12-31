@@ -2,7 +2,7 @@ import React from 'react'
 
 const Footer = () => (
     <footer className="pt-4 text-white container-fluid-dark">
-        <div className="text-center text-md-left mb-1">
+        <div className="container-fluid container-fluid-dark text-center text-md-left mb-1">
             <div className="row">
                 <div className="col-md-6 mt-md-0 mt-1">
                     <h6 className="text-uppercase">Footer Content</h6>
