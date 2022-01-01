@@ -27,6 +27,16 @@ services:
     ports:
       - '5432:5432'
 
+  api:
+    image: node:16.13.1-alpine
+    build: ./backend
+    ports:
+      - '3001:3001'
+    depends_on:
+      - redis
+    networks:
+      - redis
+
 networks:
   redis:
     external: true

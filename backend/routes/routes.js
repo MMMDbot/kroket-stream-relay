@@ -25,7 +25,7 @@ const { downloadVideo } = require('../services/videoDownloader')
 const RedisStore = connectRedis(session)
 
 const redisClient = redis.createClient({
-    host: 'localhost',
+    host: 'kroket-stream-relay_redis_1',
     port: 6379,
 })
 
