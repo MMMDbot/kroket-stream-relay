@@ -1,12 +1,23 @@
 FROM node:16.13.1-alpine
 
+USER root
+
+# Install Python and pip
+RUN apk add --update python3 py3-pip make g++
+
 WORKDIR /app
 
-COPY package*.json ./
+# Copy only package files as user node
+COPY --chown=node:node package*.json ./
 
+# Use node user so it's not run as root
+USER node
+
+# Install production libraries
 RUN npm i
 
-COPY . .
+# Set copy app files as user node
+COPY --chown=node:node . .
 
 EXPOSE 3001
 
