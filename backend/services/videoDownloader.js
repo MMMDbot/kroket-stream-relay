@@ -8,8 +8,7 @@ const path = require('path')
 async function downloadVideo(source) {
     let options = {
         mode: 'text',
-        pythonPath:
-            '/home/square/.local/share/virtualenvs/backend-uA8zwRa8/bin/python3.9',
+        pythonPath: '/usr/bin/python3.9',
         pythonOptions: ['-u'], // get print results in real-time
         args: ['download', source],
     }

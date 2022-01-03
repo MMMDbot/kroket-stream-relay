@@ -3,9 +3,13 @@ FROM node:16.13.1-alpine
 USER root
 
 # Install Python and pip
-RUN apk add --update python3 py3-pip make g++
+RUN apk add --update python3 python3-dev py3-pip
 
 WORKDIR /app
+
+COPY requirements.txt ./
+
+RUN pip install -r requirements.txt --ignore-installed
 
 # Copy only package files as user node
 COPY --chown=node:node package*.json ./
