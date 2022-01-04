@@ -37,6 +37,19 @@ services:
     networks:
       - redis
 
+  ingest:
+    build:
+        context: ./backend
+        dockerfile: Dockerfile-ingest
+    image: ingest
+    depends_on:
+        - redis
+    restart: always
+    deploy:
+        replicas: 3
+    networks:
+        - redis
+
 networks:
   redis:
     external: true
