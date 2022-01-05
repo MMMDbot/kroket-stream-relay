@@ -25,4 +25,6 @@ COPY --chown=node:node . .
 
 EXPOSE 3001
 
-ENTRYPOINT ["node", "/app/app.js"]
+WORKDIR /app/tasks
+
+ENTRYPOINT ["rq", "worker", "relay", "--exception-handler", "'errorHandlers.relay_error_handler'"]

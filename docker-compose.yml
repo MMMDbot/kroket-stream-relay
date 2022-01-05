@@ -50,6 +50,19 @@ services:
     networks:
         - redis
 
+  relay:
+    build:
+        context: ./backend
+        dockerfile: Dockerfile-relay
+    image: relay
+    depends_on:
+        - redis
+    restart: always
+    deploy:
+        replicas: 1
+    networks:
+        - redis
+
 networks:
   redis:
     external: true
