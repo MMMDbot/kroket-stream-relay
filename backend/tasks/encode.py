@@ -255,7 +255,7 @@ def secondTask(arg):
 
 
 def startQueue(id, origin):
-    redis_conn = Redis("localhost", 6379)
+    redis_conn = Redis("kroket-stream-relay_redis_1", 6379)
     q = Queue("ingest", connection=redis_conn)  # no args implies the default queue
 
     # Delay execution of count_words_at_url('http://nvie.com')
@@ -272,7 +272,7 @@ def startQueue(id, origin):
 
 
 def startRelay(ingestId, relayId, server, streamKey):
-    redis_conn = Redis("localhost", 6379)
+    redis_conn = Redis("kroket-stream-relay_redis_1", 6379)
     q = Queue("relay", connection=redis_conn)  # no args implies the default queue
 
     # Delay execution of count_words_at_url('http://nvie.com')
@@ -288,7 +288,7 @@ def startRelay(ingestId, relayId, server, streamKey):
 
 
 def stop(id):
-    redis_conn = Redis("localhost", 6379)
+    redis_conn = Redis("kroket-stream-relay_redis_1", 6379)
     try:
         send_stop_job_command(redis_conn, id)
     except (NoSuchJobError, InvalidJobOperation) as e:

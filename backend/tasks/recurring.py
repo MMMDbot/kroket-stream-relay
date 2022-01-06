@@ -4,7 +4,7 @@ from rq_scheduler import Scheduler
 from datetime import datetime
 from thumbnails import thumbnail_generator
 
-redis_conn = Redis("localhost", 6379)
+redis_conn = Redis("kroket-stream-relay_redis_1", 6379)
 scheduler = Scheduler("recurring", connection=redis_conn)
 
 scheduler.schedule(
