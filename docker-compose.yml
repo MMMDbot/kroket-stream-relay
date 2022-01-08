@@ -50,18 +50,13 @@ services:
     networks:
         - redis
 
-  relay:
+  frontend:
     build:
-        context: ./backend
-        dockerfile: Dockerfile-relay
-    image: relay
-    depends_on:
-        - redis
+        context: ./frontend
+    image: frontend
     restart: always
-    deploy:
-        replicas: 1
-    networks:
-        - redis
+    ports:
+      - '80:80'
 
 networks:
   redis:
