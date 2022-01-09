@@ -17,9 +17,10 @@ export default function StreamRelays(props) {
             .then((response) => response.json())
             .then((data) => {
                 setRelays(data)
+                console.log(relays)
             })
     }, [props.reloader.value, props.streamId])
-
+    console.log(relays)
     const relaysList = relays.map((relay) => (
         <Relay key={relay.id} relay={relay} streamId={props.streamId} />
     ))

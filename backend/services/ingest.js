@@ -182,8 +182,7 @@ function deleteIngestFolder(id) {
 function encodeIngest(id, origin) {
     let options = {
         mode: 'text',
-        pythonPath:
-            '/home/square/.local/share/virtualenvs/backend-uA8zwRa8/bin/python3.9',
+        pythonPath: '/usr/bin/python3.9',
         pythonOptions: ['-u'], // get print results in real-time
         args: ['ingest', id, origin],
     }
@@ -208,8 +207,7 @@ function encodeIngest(id, origin) {
 function encodeRelay(ingestId, relayId, server, streamKey) {
     let options = {
         mode: 'text',
-        pythonPath:
-            '/home/square/.local/share/virtualenvs/backend-uA8zwRa8/bin/python3.9',
+        pythonPath: '/usr/bin/python3.9',
         pythonOptions: ['-u'], // get print results in real-time
         args: ['relay', ingestId, relayId, server, streamKey],
     }
@@ -233,8 +231,7 @@ function encodeRelay(ingestId, relayId, server, streamKey) {
 function stop(id) {
     let options = {
         mode: 'text',
-        pythonPath:
-            '/home/square/.local/share/virtualenvs/backend-uA8zwRa8/bin/python3.9',
+        pythonPath: '/usr/bin/python3.9',
         pythonOptions: ['-u'], // get print results in real-time
         args: ['stop', id],
     }

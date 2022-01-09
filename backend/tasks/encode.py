@@ -162,7 +162,7 @@ def streamHLS(id, origin):
     else:
         hls_playlist = origin
 
-    current_directory = "/home/square/kroket-stream-relay/backend/public/streams/"
+    current_directory = "/app/public/streams/"
     playlist_path = os.path.join(current_directory, id, "stream.m3u8")
     chunk_path = os.path.join(current_directory, id, "data%02d.ts")
 
@@ -221,7 +221,7 @@ def relay(ingestId, relayId, server, streamKey):
     VIDEO_URL = "https://d1qvkrpvk32u24.cloudfront.net/RL/smil:EU-a62d3276-f807-46e3-97b8-af4501d7f17a.smil/playlist.m3u8"
     RTMP_SERVER = "rtmp://publish.dailymotion.com/publish-dm/x7t01a2?auth=dIJL_2c32466412bd2c7dd5ba696eae070e1f3481b6e2"
 
-    current_directory = "/home/square/kroket-stream-relay/backend/public/streams/"
+    current_directory = "/app/public/streams/"
     playlist_path = os.path.join(current_directory, ingestId, "stream.m3u8")
     chunk_path = os.path.join(current_directory, ingestId, "data%02d.ts")
     target = server + streamKey
@@ -256,6 +256,10 @@ def secondTask(arg):
 
 def startQueue(id, origin):
     redis_conn = Redis("kroket-stream-relay_redis_1", 6379)
+    print("id is")
+    print(id)
+    print("origin is")
+    print(origin)
     q = Queue("ingest", connection=redis_conn)  # no args implies the default queue
 
     # Delay execution of count_words_at_url('http://nvie.com')

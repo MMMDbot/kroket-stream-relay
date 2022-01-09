@@ -48,7 +48,7 @@ services:
         - redis
     restart: always
     deploy:
-        replicas: 3
+        replicas: 1
     networks:
         - redis
 

@@ -261,10 +261,21 @@ router.get('/relay/:id', async (req, res) => {
 router.get('/ingestrelays/:id', async (req, res) => {
     const { id } = req.params
     const ingest = await db.getIngestByJobId(id)
-    const ingestId = ingest.rows[0].id
-    const { rows: relays } = await db.getIngestRelays(ingestId)
-    console.log(relays)
-    res.json(relays.sort((a, b) => b.active - a.active))
+    if (ingest.rows.length === 1) {
+        const ingestId = ingest.rows[0].id
+        const { rows: relays } = await db.getIngestRelays(ingestId)
+        console.log(relays)
+        res.json(relays.sort((a, b) => b.active - a.active))
+    } else {
+        res.json([
+            {
+                server: 'NO SERVER',
+                active: false,
+                stream_key: '0',
+                job_id: '0',
+            },
+        ])
+    }
 })
 
 router.post('/relay/add', async (req, res) => {
