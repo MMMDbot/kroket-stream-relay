@@ -3,7 +3,7 @@ FROM node:16.13.1-alpine
 USER root
 
 # Install Python and pip
-RUN apk add --update python3 python3-dev py3-pip
+RUN apk add --update python3 python3-dev py3-pip build-base
 
 WORKDIR /app
 

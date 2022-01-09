@@ -1,7 +1,7 @@
 # Build react app
 FROM node:16.13.1-alpine as build
 
-USER root
+RUN npm config set unsafe-perm true
 
 WORKDIR /app
 
@@ -12,9 +12,8 @@ COPY ./public ./public
 
 COPY ./src ./src
 
-
 # Install production libraries
-RUN npm i
+RUN npm i --force
 
 RUN npm run build
 
