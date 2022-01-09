@@ -26,6 +26,8 @@ services:
       - './DB_DATA:/var/lib/postgresql/data'
     ports:
       - '5432:5432'
+    networks:
+      - redis
 
   api:
     image: node:16.13.1-alpine

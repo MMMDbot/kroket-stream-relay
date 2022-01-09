@@ -11,7 +11,9 @@ COPY requirements.txt ./
 
 RUN pip install -r requirements.txt --ignore-installed
 
-RUN mkdir /app/node_modules
+WORKDIR /app/node_modules
+
+WORKDIR /app
 
 RUN chown -R node:node /app/node_modules
 
