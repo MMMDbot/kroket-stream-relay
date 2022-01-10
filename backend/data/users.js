@@ -36,7 +36,7 @@ module.exports = {
     getIngests: () => pool.query('SELECT * FROM ingests ORDER BY id DESC'),
     getIngest: (id) => pool.query('SELECT * FROM ingests WHERE id = $1', [id]),
     getIngestByJobId: (job_id) =>
-        pool.query('SELECT * FROM ingests WHERE job_id = $1', [job_id]),
+        pool.query('SELECT * FROM ingests WHERE folder = $1', [job_id]),
     getUserOrgIngests: (id) =>
         pool.query(
             'select i.* from Ingests I, Users u where u.id=i.user_id and u.organization_id in (select organization_id from Users where u.id=$1)',
