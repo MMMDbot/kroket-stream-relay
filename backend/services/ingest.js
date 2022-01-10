@@ -137,6 +137,7 @@ async function createIngestFolder() {
             )
             return id
         } catch (error) {
+            console.log(error)
             console.log('Server filesystem Error')
             return { message: 'Server filesystem error. Please try again.' }
         }

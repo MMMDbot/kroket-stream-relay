@@ -32,6 +32,8 @@ services:
   api:
     image: node:16.13.1-alpine
     build: ./backend
+    volumes:
+      - './STREAMS_DATA:/app/public/'
     ports:
       - '3001:3001'
     depends_on:
@@ -44,6 +46,8 @@ services:
         context: ./backend
         dockerfile: Dockerfile-ingest
     image: ingest
+    volumes:
+      - './STREAMS_DATA:/app/public'
     depends_on:
         - redis
     restart: always

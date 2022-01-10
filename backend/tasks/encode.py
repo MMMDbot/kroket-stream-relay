@@ -142,13 +142,13 @@ def retryTest():
 
 
 # @retry(stop=stop_after_attempt(4))
-@retry(
-    retry=(
-        retry_unless_exception_type(EncodingCatastrophe)
-        & retry_unless_exception_type(YtdlpError)
-    ),
-    wait=wait_random(min=5, max=10),
-)
+# @retry(
+#    retry=(
+#        retry_unless_exception_type(EncodingCatastrophe)
+#        & retry_unless_exception_type(YtdlpError)
+#    ),
+#    wait=wait_random(min=5, max=10),
+# )
 def streamHLS(id, origin):
     VIDEO_URL = origin
     RTMP_SERVER = "rtmp://publish.dailymotion.com/publish-dm/x7t01a2?auth=dIJL_2c32466412bd2c7dd5ba696eae070e1f3481b6e2"
@@ -165,6 +165,8 @@ def streamHLS(id, origin):
     current_directory = "/app/public/streams/"
     playlist_path = os.path.join(current_directory, id, "stream.m3u8")
     chunk_path = os.path.join(current_directory, id, "data%02d.ts")
+    print(playlist_path)
+    print(chunk_path)
 
     time_start = time.perf_counter()
     try:
@@ -196,7 +198,7 @@ def streamHLS(id, origin):
             bufsize="3M",
             channel_layout="stereo",
         )
-        subp = ffmpeg.run(stream)
+        subp = ffmpeg.run(stream, capture_stdout=True, capture_stderr=True)
 
     except ffmpeg.Error as e:
         elapsed_time = time.perf_counter() - time_start

@@ -158,6 +158,7 @@ sketch
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,node,react
 
 /DB_DATA
+/STREAMS_DATA
 __pycache__/
 
 # Directory with Organizations watermarks
