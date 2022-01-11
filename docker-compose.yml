@@ -23,7 +23,10 @@ services:
     environment:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
-      - './DB_DATA:/var/lib/postgresql/data'
+    # Enable if data is already present in local machine
+    #  - './DB_DATA:/var/lib/postgresql/data'
+    # Enable to automatically load sql backup. Beware: Changes will not be saved.
+      - '/Users/square/Bracero Dropbox/Arturo Bracero/backup2.sql:/docker-entrypoint-initdb.d/db.sql'
     ports:
       - '5432:5432'
     networks:
