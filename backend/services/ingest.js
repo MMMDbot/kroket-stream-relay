@@ -167,9 +167,8 @@ async function createIngestFolder() {
 function deleteIngestFolder(id) {
     const foldername = path.join(__dirname + '/../public/streams/' + id)
 
-    fs.rmdir(foldername, { recursive: true }, (err) => {
+    fs.rm(foldername, { recursive: true }, (err) => {
         if (err) {
-            console.log('error')
             throw err
         }
     })
@@ -229,7 +228,7 @@ function encodeRelay(ingestId, relayId, server, streamKey) {
  * @param  {String} server
  * @param  {String} streamKey
  */
-function stop(id) {
+async function stop(id) {
     let options = {
         mode: 'text',
         pythonPath: '/usr/bin/python3.9',

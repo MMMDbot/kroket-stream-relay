@@ -1,19 +1,23 @@
 # Build react app
 FROM node:16.13.1-alpine as build
 
-RUN npm config set unsafe-perm true
-
 WORKDIR /app
 
 # Copy only package files
-COPY ./package*.json .
+COPY --chown=node:node ./package*.json .
 
-COPY ./public ./public
+COPY --chown=node:node ./public ./public
 
-COPY ./src ./src
+COPY --chown=node:node ./src ./src
+
+RUN npm config set unsafe-perm true
 
 # Install production libraries
 RUN npm i --force
+
+USER root
+
+RUN mkdir ./build
 
 RUN npm run build
 
