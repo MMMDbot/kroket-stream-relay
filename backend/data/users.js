@@ -35,6 +35,8 @@ module.exports = {
         ),
     getIngests: () => pool.query('SELECT * FROM ingests ORDER BY id DESC'),
     getIngest: (id) => pool.query('SELECT * FROM ingests WHERE id = $1', [id]),
+    getAllActiveIngests: () =>
+        pool.query('SELECT * FROM ingests WHERE active = true'),
     getIngestByJobId: (job_id) =>
         pool.query('SELECT * FROM ingests WHERE folder = $1', [job_id]),
     getUserOrgIngests: (id) =>

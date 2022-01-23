@@ -221,6 +221,11 @@ router.get('/ingests', async (req, res) => {
     res.json(rows)
 })
 
+router.get('/ingests/active', async (req, res) => {
+    const { rows } = await db.getAllActiveIngests()
+    res.json(rows)
+})
+
 router.get('/ingest/:job_id', async (req, res) => {
     const { job_id } = req.params
     const { rows } = await db.getIngestByJobId(job_id)
