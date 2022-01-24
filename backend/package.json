@@ -23,7 +23,8 @@
         "python-shell": "^3.0.0",
         "redis": "^3.1.2",
         "simple-thumbnail": "^1.6.5",
-        "socket.io": "^4.3.1"
+        "socket.io": "^4.3.1",
+        "yt-dlp-wrap": "^2.3.5"
     },
     "devDependencies": {
         "jest": "^27.3.1"
