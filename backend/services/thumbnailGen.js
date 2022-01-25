@@ -15,17 +15,21 @@ async function doSomethingAsync() {
     //console.log(response)
     for (element of response) {
         if (element.origin.includes('m3u8')) {
-            console.log(element)
+            console.log(element.origin)
             //Try to generate thumbnail
             // Store thumbnail in corresponding folder
 
             // If the stream is not directly HLS
         } else {
             // Convert the video URL into an HLS url
-            const HLSUrl = await getHLSUrl(element.origin)
-            // Generate the thumbnail
-            console.log(HLSUrl)
-            // Store thumbnail in corresponding folder
+            try {
+                // Generate the thumbnail
+                const HLSUrl = await getHLSUrl(element.origin)
+                console.log(HLSUrl)
+                // Store thumbnail in corresponding folder
+            } catch (error) {
+                console.log('Error parsing the URL')
+            }
         }
     }
     /*     genThumbnail(
