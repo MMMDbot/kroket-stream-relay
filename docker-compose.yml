@@ -73,6 +73,21 @@ services:
         replicas: 1
     networks:
         - redis
+  
+  thumbnails:
+    build:
+        context: ./backend
+        dockerfile: Dockerfile-thumbnails
+    image: thumbnails
+    volumes:
+      - './STREAMS_DATA:/app/public'
+    depends_on:
+        - redis
+    restart: always
+    deploy:
+        replicas: 1
+    networks:
+        - redis
 
   frontend:
     build:
