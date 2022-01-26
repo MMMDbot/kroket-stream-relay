@@ -3,45 +3,41 @@ const genThumbnail = require('simple-thumbnail')
 const YTDlpWrap = require('yt-dlp-wrap').default
 const ytDlpWrap = new YTDlpWrap()
 
-console.log('hola')
+async function generateThumbnails() {
+    const activeIngests = await db.getAllActiveIngests()
 
-async function doSomethingAsync() {
-    const { rows } = await db.getAllActiveIngests()
-    return rows
-}
-
-;(async function () {
-    const response = await doSomethingAsync()
-    //console.log(response)
-    for (element of response) {
+    for (element of activeIngests.rows) {
         if (element.origin.includes('m3u8')) {
-            console.log(element.origin)
-            //Try to generate thumbnail
-            // Store thumbnail in corresponding folder
-
+            //Try to generate and store thumbnail
+            try {
+                genThumbnail(
+                    element.origin,
+                    `../public/streams/${element.folder}/thumbnail.jpeg`,
+                    '630x354'
+                )
+                    .then(() => console.log('Thumbnail generated'))
+                    .catch((err) => console.log('Error generating thumbnail'))
+            } catch (error) {
+                console.log('Error generating thumbnail')
+            }
             // If the stream is not directly HLS
         } else {
-            // Convert the video URL into an HLS url
             try {
-                // Generate the thumbnail
-                const HLSUrl = await getHLSUrl(element.origin)
-                console.log(HLSUrl)
-                // Store thumbnail in corresponding folder
+                // Convert the video URL into an HLS url
+                const { url } = await ytDlpWrap.getVideoInfo(element.origin)
+                // Generate and store the thumbnail
+                genThumbnail(
+                    url,
+                    `../public/streams/${element.folder}/thumbnail.jpeg`,
+                    '630x354'
+                )
+                    .then(() => console.log('Thumbnail generated'))
+                    .catch((err) => console.log('Error generating thumbnail'))
             } catch (error) {
                 console.log('Error parsing the URL')
             }
         }
     }
-    /*     genThumbnail(
-        'https://multiplatform-f.akamaihd.net/i/multi/will/bunny/big_buck_bunny_,640x360_400,640x360_700,640x360_1000,950x540_1500,.f4v.csmil/master.m3u8',
-        './img/hola.png',
-        '630x354'
-    )
-        .then(() => console.log('done!'))
-        .catch((err) => console.error(err)) */
-})()
-
-async function getHLSUrl(stream) {
-    let metadata = await ytDlpWrap.getVideoInfo(stream)
-    return metadata.url
 }
+
+setInterval(generateThumbnails, 300000)
