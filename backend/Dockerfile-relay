@@ -31,4 +31,4 @@ EXPOSE 3001
 
 WORKDIR /app/tasks
 
-ENTRYPOINT ["rq", "worker", "--url", "redis://kroket-stream-relay_redis_1:6379", "relay", "--exception-handler", "errorHandlers.relay_error_handler"]
+ENTRYPOINT ["rq", "worker", "--url", "redis://kroket-stream-relay-redis-1:6379", "relay", "--exception-handler", "errorHandlers.relay_error_handler"]
