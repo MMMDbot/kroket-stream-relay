@@ -11,7 +11,7 @@ const RedisStore = connectRedis(session)
 
 //Configure redis client
 const redisClient = redis.createClient({
-    host: 'kroket-stream-relay_redis_1',
+    host: 'kroket-stream-relay-redis-1',
     port: 6379,
 })
 
