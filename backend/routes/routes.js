@@ -21,6 +21,7 @@ const connectRedis = require('connect-redis')
 const authSession = require('../middlewares/auth-session')
 const multer = require('multer')
 const { downloadVideo } = require('../services/videoDownloader')
+const YTDlpWrap = require('yt-dlp-wrap').default
 
 const RedisStore = connectRedis(session)
 
@@ -379,14 +380,23 @@ router.get('/count', (req, res) => {
     res.json(count)
 })
 
-router.get('/thumbnail', (req, res) => {
-    genThumbnail(
-        'https://d1qvkrpvk32u24.cloudfront.net/RL/smil:EU-3019a4ce-2b76-4b01-8b0c-701257d4bac7.smil/playlist.m3u8',
-        res,
-        '630x354'
-    )
-        .then(() => console.log('done!'))
-        .catch((err) => console.error(err))
+router.get('/thumbnail/:job_id', async (req, res) => {
+    const ytDlpWrap = new YTDlpWrap()
+    const { job_id } = req.params
+    const { rows } = await db.getIngestByJobId(job_id)
+    if (rows.length === 1) {
+        const origin = rows[0].origin
+        const { url } = await ytDlpWrap.getVideoInfo(origin)
+        genThumbnail(
+            url,
+            `./public/streams/${job_id}/thumbnail.jpeg`,
+            '630x354'
+        )
+            .then(() => res.json({ message: 'Done!' }))
+            .catch((err) => console.error(err))
+    } else {
+        res.json({ message: 'Ingest not found' })
+    }
 })
 
 router.get('/multiselect', authSession, async (req, res) => {

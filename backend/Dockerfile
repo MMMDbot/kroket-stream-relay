@@ -11,6 +11,8 @@ COPY requirements.txt ./
 
 RUN pip install -r requirements.txt --ignore-installed
 
+RUN apk add ffmpeg
+
 WORKDIR /app/node_modules
 
 WORKDIR /app
