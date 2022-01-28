@@ -18,6 +18,7 @@ from tenacity import (
 )
 import sys
 from errorHandlers import ingest_error_handler, relay_error_handler
+import requests
 
 
 def yt(url):
@@ -170,6 +171,11 @@ def streamHLS(id, origin):
 
     time_start = time.perf_counter()
     try:
+        # Generate Thumbnail
+        url_thumbnail = "http://localhost:3001/api/thumbnail/" + id
+        r_thumbnail = requests.get(url=url_thumbnail)
+        r_thumbnail_json = r_thumbnail.json()
+        print(r_thumbnail_json)
         stream_map = None
         # Trying to fix playback issue 'Skipping fragments ahead' by removing re=None
         # stream1 = ffmpeg.input(hls_playlist re=None)
