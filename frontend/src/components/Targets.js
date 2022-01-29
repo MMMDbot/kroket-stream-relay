@@ -55,7 +55,7 @@ export default function Targets() {
                     <Row>
                         <h2>Targets</h2>
                     </Row>
-                    <Row sm={1} md={2} lg={2} xl={2} xxl={3} className="g-4">
+                    <Row className="g-4">
                         {isLoading ? <Loading height={'200px'} /> : targetList}
                     </Row>
                 </Card.Body>

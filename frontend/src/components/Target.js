@@ -6,11 +6,11 @@ export default function Target(props) {
     console.log(props.target)
     const address = props.target.server + props.target.stream_key
     return (
-        <div>
+        <div style={{ width: '16rem', height: '11.5rem' }}>
             <Card
                 bsPrefix="card-round"
                 border="secondary"
-                style={{ width: '18rem', height: '10rem' }}
+                style={{ width: '15rem', height: '11rem' }}
             >
                 <Card.Header>
                     <RelayPlatform platform={props.target.platform} />{' '}

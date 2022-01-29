@@ -156,3 +156,7 @@ input.form-control[readonly] {
     color: rgb(155, 155, 155);
     background-color: rgb(50, 50, 50);
 }
+
+.g-4 {
+    justify-content: center;
+}
