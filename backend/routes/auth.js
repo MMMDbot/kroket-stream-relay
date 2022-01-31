@@ -4,7 +4,7 @@ const router = express.Router()
 const validator = require('../middlewares/validator')
 const authorize = require('../middlewares/authorize')
 const { generateError } = require('../services/errors')
-const registerUser = require('../services/user')
+const { registerUser } = require('../services/user')
 
 router.get('/', (req, res) => {
     res.send(generateError(401))

@@ -43,7 +43,7 @@ async function registerUser(
         const jwtToken = jwtGenerator(newUser.rows[0].id)
         return jwtToken
     } catch (error) {
-        return generateError(500)
+        console.log(error)
     }
 }
 
