@@ -378,47 +378,49 @@ COPY public.migrations_state (key, value, run_on) FROM stdin;
 --
 -- Data for Name: organizations; Type: TABLE DATA; Schema: public; Owner: postgres
 --
-INSERT into public.organizations values (
-COPY public.organizations (id, orgname, address, phone, created_at) FROM stdin;
-1       Demo Organization       840 Middle Turnpike E, Manchester, CT 06040     8606494245      2022-01-31 00:03:53.472877
-\.
+INSERT into public.organizations values (1, 'Demo Organization', '840 Middle Turnpike E', '8606494245', '2022-01-31 00:03:53.472877');
+--COPY public.organizations (id, orgname, address, phone, created_at) FROM stdin;
+--1       Demo Organization       840 Middle Turnpike E, Manchester, CT 06040     8606494245      2022-01-31 00:03:53.472877
+--\.
 
 
 --
 -- Data for Name: relays; Type: TABLE DATA; Schema: public; Owner: postgres
 --
-
-COPY public.relays (id, description, active, user_id, target_id, ingest_id, created_at, stopped_at, job_id) FROM stdin;
-\.
+--INSERT into public.relays values )
+--COPY public.relays (id, description, active, user_id, target_id, ingest_id, created_at, stopped_at, job_id) FROM stdin;
+--\.
 
 
 --
 -- Data for Name: roles; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.roles (id, role_name, role_description) FROM stdin;
-1       admin   Administrator
-2       orgleader\n     Organization Manager
-3       user    User
-\.
+INSERT into public.roles values (1, 'admin', 'Administrator'), (2, 'orgleader', 'Organization Manager'), (3, 'user', 'User');
+--COPY public.roles (id, role_name, role_description) FROM stdin;
+--1       admin   Administrator
+--2       orgleader\n     Organization Manager
+--3       user    User
+--\.
 
 
 --
 -- Data for Name: targets; Type: TABLE DATA; Schema: public; Owner: postgres
 --
-
-COPY public.targets (id, server, stream_key, description, public_url, platform, user_id, created_at) FROM stdin;
-1       rtmp://a.rtmp.youtube.com/live2 4zz8-z91z-m1k7-5kth        YouTube Test    https://www.youtube.com/watch?v=E-chOPvxeB     youtube 2       2022-01-31 00:21:19.64061
-\.
+INSERT into public.targets values (1, 'rtmp://a.rtmp.youtube.com/live2', '4zz8-z91z-m1k7-5kth', 'YouTube Test', 'https://www.youtube.com/watch?v=E-chOPvxeB', 'youtube', 2, '2022-01-31 00:21:19.64061');
+--COPY public.targets (id, server, stream_key, description, public_url, platform, user_id, created_at) FROM stdin;
+--1       rtmp://a.rtmp.youtube.com/live2 4zz8-z91z-m1k7-5kth        YouTube Test    https://www.youtube.com/watch?v=E-chOPvxeB     youtube 2       2022-01-31 00:21:19.64061
+--\.
 
 
 --
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.users (id, username, password_hash, email, full_name, organization_id, created_at, role_id) FROM stdin;
-2       demo    $2b$10$UyC8tnAmno.fvOe8URTJSOiiXf5.lL.OXlotYhIUJyHCdgncMx4We    demo@demo.com   Demo User       1      2022-01-31 00:04:02.234686       3
-\.
+INSERT into public.users values (2, 'demo', '$2b$10$UyC8tnAmno.fvOe8URTJSOiiXf5.lL.OXlotYhIUJyHCdgncMx4We', 'demo@demo.com', 'Demo User', 1, '2022-01-31 00:04:02.234686', 3);
+--COPY public.users (id, username, password_hash, email, full_name, organization_id, created_at, role_id) FROM stdin;
+--2       demo    $2b$10$UyC8tnAmno.fvOe8URTJSOiiXf5.lL.OXlotYhIUJyHCdgncMx4We    demo@demo.com   Demo User       1      2022-01-31 00:04:02.234686       3
+--\.
 
 
 --
