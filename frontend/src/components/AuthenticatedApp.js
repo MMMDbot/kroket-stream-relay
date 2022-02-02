@@ -10,8 +10,10 @@ import MultiSelect from './MultiSelect'
 import SetPassword from './SetPassword'
 import VideoDownloader from './VideoDownloader'
 import Monitor from './Monitor'
+import useTitle from '../utils/useTitle'
 
 export default function AuthenticatedApp() {
+    useTitle('Kroket Stream Relay')
     return (
         <div>
             <Switch>
