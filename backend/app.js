@@ -16,8 +16,8 @@ app.use(express.urlencoded({ extended: true }))
 // CORS for calls from React app
 app.use(
     cors({
-        origin: ['http://192.168.1.200:8085/'],
-        methods: ['GET', 'POST'],
+        origin: process.env.CORS_ORIGINS.split(', '),
+        methods: ['GET', 'POST', 'OPTIONS'],
         credentials: true,
     })
 )

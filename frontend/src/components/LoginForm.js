@@ -29,7 +29,10 @@ export default function LoginForm() {
         const requestOptions = {
             method: 'POST',
             credentials: 'include',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                Origin: 'http://localhost',
+            },
             body: JSON.stringify({
                 username: name,
                 password: password,
