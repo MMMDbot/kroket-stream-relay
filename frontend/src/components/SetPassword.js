@@ -11,6 +11,7 @@ export default function SetPassword() {
     const [show, setShow] = useState(false)
     const [variant, setVariant] = useState('')
     const [alertMessage, setAlertMessage] = useState('')
+    const API_SERVER = process.env.REACT_APP_API_SERVER
 
     const submitPw = (e) => {
         e.preventDefault()
@@ -22,7 +23,7 @@ export default function SetPassword() {
                 password: password,
             }),
         }
-        fetch(`http://localhost:3001/api/user/setpw/${id}`, requestOptions)
+        fetch(`${API_SERVER}/api/user/setpw/${id}`, requestOptions)
             .then((response) => response.json())
             .then((data) => {
                 setAlertMessage(data.message)

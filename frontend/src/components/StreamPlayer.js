@@ -1,17 +1,18 @@
 import React from 'react'
 import ReactPlayer from 'react-player'
-import StatusBadge from './StatusBadge'
 
 export default function StreamPlayer(props) {
     // Test Stream
     // https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8
     // Real Stream
     // `http://localhost:3001/streams/${props.streamId}/stream.m3u8`
+    const API_SERVER = process.env.REACT_APP_API_SERVER
+
     return (
         <div>
             <ReactPlayer
                 className="react-player"
-                url={`http://localhost:3001/streams/${props.streamId}/stream.m3u8`}
+                url={`${API_SERVER}/streams/${props.streamId}/stream.m3u8`}
                 config={{
                     file: {
                         attributes: { controls: 1, preload: 'none' },

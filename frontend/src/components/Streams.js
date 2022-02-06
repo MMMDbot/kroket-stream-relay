@@ -13,20 +13,21 @@ import SkeletonCard from './SkeletonCard'
 export default function Streams() {
     const [streamList, setStreamList] = useState([])
     const [loading, setLoading] = useState(true)
+    const API_SERVER = process.env.REACT_APP_API_SERVER
 
     useEffect(() => {
         const requestOptions = {
             method: 'GET',
             credentials: 'include',
         }
-        fetch('http://localhost:3001/api/ingests', requestOptions)
+        fetch(`${API_SERVER}/api/ingests`, requestOptions)
             .then((response) => response.json())
             .then((data) => {
                 console.log(data)
                 setStreamList(data)
                 setLoading(false)
             })
-    }, [])
+    }, [API_SERVER])
 
     /*     const listItems = streamList.map((number) => (
         < key={number.job_id}>

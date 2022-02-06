@@ -94,6 +94,8 @@ services:
     build:
         context: ./frontend
     image: frontend
+    environment:
+      REACT_APP_API_SERVER: 'http://localhost:3001'
     restart: always
     ports:
       - '80:80'

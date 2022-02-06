@@ -7,6 +7,7 @@ import RelayStatus from './StatusBadge'
 export default function Relay(props) {
     const [status, setStatus] = useState(props.relay.active)
     const address = props.relay.server + props.relay.stream_key
+    const API_SERVER = process.env.REACT_APP_API_SERVER
 
     const stopRelay = (e) => {
         e.preventDefault()
@@ -16,10 +17,7 @@ export default function Relay(props) {
             credentials: 'include',
             headers: { 'Content-Type': 'application/json' },
         }
-        fetch(
-            `http://localhost:3001/api/stop/${props.relay.job_id}`,
-            requestOptions
-        )
+        fetch(`${API_SERVER}/api/stop/${props.relay.job_id}`, requestOptions)
             .then((response) => response.json())
             .then((data) => {
                 console.log('first fetch response:')

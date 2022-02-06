@@ -15,6 +15,7 @@ export default function IngestForm() {
     const [origin, setOrigin] = useState('')
     const [formError, setFormError] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')
+    const API_SERVER = process.env.REACT_APP_API_SERVER
 
     const history = useHistory()
 
@@ -38,7 +39,7 @@ export default function IngestForm() {
                 }),
             }
 
-            fetch('http://localhost:3001/api/ingest', requestOptions)
+            fetch(`${API_SERVER}/api/ingest`, requestOptions)
                 .then((response) => response.json())
                 .then((data) => {
                     if (data.streamId) {
@@ -125,7 +126,7 @@ export default function IngestForm() {
                                             HLS playlist (.m3u8 file) or a
                                             YouTube URL. Valid examples:
                                             https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8
-                                            https://www.youtube.com/watch?v=dQw4w9WgXcQ
+                                            https://www.youtube.com/watch?v=5qap5aO4i9A
                                         </Form.Text>
                                     </Col>
                                 </Form.Group>

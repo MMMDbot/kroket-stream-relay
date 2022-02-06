@@ -6,6 +6,7 @@ import { useQuery } from 'react-query'
 function useAuth(redirect) {
     const { dispatch } = useUser()
     const history = useHistory()
+    const API_SERVER = process.env.REACT_APP_API_SERVER
 
     useQuery(
         'checkSession',
@@ -14,10 +15,7 @@ function useAuth(redirect) {
                 method: 'GET',
                 credentials: 'include',
             }
-            fetch(
-                'http://localhost:3001/auth-session/check-session',
-                requestOptions
-            )
+            fetch(`${API_SERVER}/auth-session/check-session`, requestOptions)
                 .then((response) => response.json())
                 .then((data) => {
                     console.log(data)

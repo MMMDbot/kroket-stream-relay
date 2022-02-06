@@ -3,12 +3,12 @@ require('dotenv').config()
 
 const pool = new Pool({
     user: 'postgres',
-    host: 'kroket-stream-relay-postgres-1',
+    host: process.env.POSTGRES_HOST,
     //host: 'localhost',
     database: 'kroket',
     password: process.env.POSTGRES_PASSWORD,
     //password: 'pw',
-    port: 5432,
+    port: process.env.POSTGRES_PORT,
 })
 
 module.exports = {

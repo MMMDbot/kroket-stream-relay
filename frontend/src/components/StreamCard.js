@@ -12,6 +12,8 @@ export default function StreamCard({
 }) {
     const link = active ? `/stream/${job_id}` : null
     const timestamp = useTimestamp(created_at)
+    const API_SERVER = process.env.REACT_APP_API_SERVER
+
     return (
         <div className="p-2">
             <Card
@@ -23,8 +25,8 @@ export default function StreamCard({
                         variant="top"
                         src={
                             active
-                                ? `http://localhost:3001/streams/${job_id}/thumbnail.jpeg`
-                                : 'http://localhost:3001/img/thumbnail.jpeg'
+                                ? `${API_SERVER}/streams/${job_id}/thumbnail.jpeg`
+                                : `${API_SERVER}/img/thumbnail.jpeg`
                         }
                     />
                 </a>

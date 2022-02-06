@@ -10,19 +10,20 @@ export default function MultiSelect(props) {
     const [selection, setSelection] = useState([])
     const [options, setOptions] = useState([])
     const [reload, setReload] = useState({ value: false })
+    const API_SERVER = process.env.REACT_APP_API_SERVER
 
     useEffect(() => {
         const requestOptions = {
             method: 'GET',
             credentials: 'include',
         }
-        fetch('http://localhost:3001/api/multiselect', requestOptions)
+        fetch(`${API_SERVER}/api/multiselect`, requestOptions)
             .then((response) => response.json())
             .then((data) => {
                 console.log(data)
                 setOptions(data)
             })
-    }, [])
+    }, [API_SERVER])
 
     async function validateRelay(selection) {
         const res = await validateRelayForm(selection)
@@ -48,7 +49,7 @@ export default function MultiSelect(props) {
                     }),
                 }
 
-                fetch('http://localhost:3001/api/relay', requestOptions)
+                fetch(`${API_SERVER}/api/relay`, requestOptions)
                     .then((response) => response.json())
                     .then((data) => {
                         if (data.id) {

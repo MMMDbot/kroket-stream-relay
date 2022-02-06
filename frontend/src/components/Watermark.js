@@ -9,6 +9,7 @@ export default function Watermark() {
     const [watermark, setWatermark] = useState(false)
     const [isFormLoading, setFormLoading] = useState(false)
     const imageInputRef = useRef()
+    const API_SERVER = process.env.REACT_APP_API_SERVER
 
     const submitTarget = (e) => {
         e.preventDefault()
@@ -24,7 +25,7 @@ export default function Watermark() {
             body: data,
         }
 
-        fetch('http://localhost:3001/api/watermark', requestOptions)
+        fetch(`${API_SERVER}/api/watermark`, requestOptions)
             .then((response) => response.json())
             .then((data) => {
                 if (data.success) {

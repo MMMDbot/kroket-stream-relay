@@ -16,6 +16,7 @@ export default function VideoDownloader() {
     const [formError, setFormError] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')
     const [isLinkGenerated, setLinkGenerated] = useState(false)
+    const API_SERVER = process.env.REACT_APP_API_SERVER
 
     const submitVideoDownload = (e) => {
         e.preventDefault()
@@ -29,7 +30,7 @@ export default function VideoDownloader() {
                 url: originUrl,
             }),
         }
-        fetch('http://localhost:3001/api/download', requestOptions)
+        fetch(`${API_SERVER}/api/download`, requestOptions)
             .then((response) => response.json())
             .then((data) => {
                 if (data.url) {

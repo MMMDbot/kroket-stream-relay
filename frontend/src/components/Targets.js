@@ -9,6 +9,7 @@ export default function Targets() {
     const [isOnline, setOnline] = useState('offline')
     const [isLoading, setIsLoading] = useState(true)
     const [targetData, setTargetData] = useState([])
+    const API_SERVER = process.env.REACT_APP_API_SERVER
 
     const socket = io('http://localhost:8080')
     socket.on('receive-message', (message) => {
@@ -21,14 +22,14 @@ export default function Targets() {
             method: 'GET',
             credentials: 'include',
         }
-        fetch('http://localhost:3001/api/targets/org', requestOptions)
+        fetch(`${API_SERVER}/api/targets/org`, requestOptions)
             .then((response) => response.json())
             .then((data) => {
                 console.log(data)
                 setTargetData(data)
                 setIsLoading(false)
             })
-    }, [])
+    }, [API_SERVER])
 
     // Sort TargetData by platform
     targetData.sort(function (a, b) {

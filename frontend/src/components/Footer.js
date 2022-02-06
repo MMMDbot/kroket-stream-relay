@@ -41,7 +41,8 @@ const Footer = () => (
         </div>
 
         <div className="footer-copyright text-center pb-4">
-            © 2021-2022 🚀 <a href="https://lolailo.com/">Arturo Bracero</a>
+            © 2021-2022 🚀{' '}
+            <a href="https://cv.arturobracero.com/">Arturo Bracero</a>
         </div>
     </footer>
 )

@@ -17,6 +17,7 @@ export default function LoginForm() {
     const [password, setPassword] = useState('')
     const [isFormLoading, setFormLoading] = useState(false)
     const [formError, setFormError] = useState(false)
+    const API_SERVER = process.env.REACT_APP_API_SERVER
 
     const { dispatch } = useUser()
 
@@ -35,7 +36,7 @@ export default function LoginForm() {
             }),
         }
 
-        fetch('http://localhost:3001/auth-session/login', requestOptions)
+        fetch(`${API_SERVER}/auth-session/login`, requestOptions)
             .then((response) => response.json())
             .then((data) => {
                 if (data.username) {

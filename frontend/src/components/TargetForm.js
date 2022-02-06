@@ -16,6 +16,7 @@ export default function IngestForm() {
     const [formError, setFormError] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')
     const [formSuccess, setFormSuccess] = useState(false)
+    const API_SERVER = process.env.REACT_APP_API_SERVER
 
     const submitTarget = (e) => {
         e.preventDefault()
@@ -33,7 +34,7 @@ export default function IngestForm() {
             }),
         }
 
-        fetch('http://localhost:3001/api/target/add', requestOptions)
+        fetch(`${API_SERVER}/api/target/add`, requestOptions)
             .then((response) => response.json())
             .then((data) => {
                 if (data.success) {

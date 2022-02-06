@@ -13,18 +13,19 @@ function Profile() {
     } = useUser()
 
     const [user, setUser] = useState('')
+    const API_SERVER = process.env.REACT_APP_API_SERVER
 
     useEffect(() => {
         const requestOptions = {
             method: 'GET',
             credentials: 'include',
         }
-        fetch('http://localhost:3001/api/user/' + userId, requestOptions)
+        fetch(`${API_SERVER}/api/user/` + userId, requestOptions)
             .then((response) => response.json())
             .then((data) => {
                 setUser(data)
             })
-    }, [loggedIn, userId])
+    }, [loggedIn, userId, API_SERVER])
 
     return (
         <div>

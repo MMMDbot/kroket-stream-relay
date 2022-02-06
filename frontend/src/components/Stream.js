@@ -4,7 +4,6 @@ import Header from './Header'
 import Footer from './Footer'
 import StreamPlayer from './StreamPlayer'
 import MultiSelect from './MultiSelect'
-import StatusBadge from './StatusBadge'
 import StreamTitle from './StreamTitle'
 
 import Container from 'react-bootstrap/Container'
@@ -16,6 +15,7 @@ import Card from 'react-bootstrap/Card'
 export default function Stream() {
     const [active, setActive] = useState(false)
     const [name, setName] = useState('Title')
+    const API_SERVER = process.env.REACT_APP_API_SERVER
 
     const { id } = useParams()
 
@@ -24,7 +24,7 @@ export default function Stream() {
             method: 'GET',
             credentials: 'include',
         }
-        fetch(`http://localhost:3001/api/ingest/${id}`, requestOptions)
+        fetch(`${API_SERVER}/api/ingest/${id}`, requestOptions)
             .then((response) => response.json())
             .then((data) => {
                 if (data.active) {
@@ -34,14 +34,14 @@ export default function Stream() {
                     setActive(false)
                 }
             })
-    }, [id])
+    }, [id, API_SERVER])
 
     const stopStream = () => {
         const requestOptions = {
             method: 'GET',
             credentials: 'include',
         }
-        fetch(`http://localhost:3001/api/stop/${id}`, requestOptions)
+        fetch(`${API_SERVER}/api/stop/${id}`, requestOptions)
             .then((response) => response.json())
             .then((data) => {
                 setActive(true)

@@ -18,6 +18,7 @@ function StateTest() {
 
 function StateSetter() {
     const { dispatch } = useUser()
+    const API_SERVER = process.env.REACT_APP_API_SERVER
 
     const {
         state: { loggedIn },
@@ -29,10 +30,7 @@ function StateSetter() {
             credentials: 'include',
         }
         if (!loggedIn) {
-            fetch(
-                'http://localhost:3001/auth-session/check-session',
-                requestOptions
-            )
+            fetch(`${API_SERVER}/auth-session/check-session`, requestOptions)
                 .then((response) => response.json())
                 .then((data) => {
                     console.log(data)
@@ -46,7 +44,7 @@ function StateSetter() {
                     })
                 })
         }
-    }, [dispatch, loggedIn])
+    }, [dispatch, loggedIn, API_SERVER])
     return (
         <div>
             <button onClick={() => dispatch({ type: 'increment' })}>

@@ -19,12 +19,13 @@ function selectionInAvailable(selectionIds, availableTargetsIds) {
 }
 
 async function validateRelayForm(selection) {
+    const API_SERVER = process.env.REACT_APP_API_SERVER
     const requestOptions = {
         method: 'GET',
         credentials: 'include',
     }
     const newTargets = await fetch(
-        'http://localhost:3001/api/targets/org/available',
+        `${API_SERVER}/api/targets/org/available`,
         requestOptions
     )
     const newTargetsJSON = await newTargets.json()

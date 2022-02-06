@@ -10,6 +10,8 @@ COPY --chown=node:node ./public ./public
 
 COPY --chown=node:node ./src ./src
 
+COPY --chown=node:node ./.env ./.env
+
 RUN npm config set unsafe-perm true
 
 # Install production libraries

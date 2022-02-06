@@ -4,6 +4,7 @@ import Row from 'react-bootstrap/Row'
 
 export default function StreamRelays(props) {
     const [relays, setRelays] = useState([])
+    const API_SERVER = process.env.REACT_APP_API_SERVER
 
     useEffect(() => {
         const requestOptions = {
@@ -11,14 +12,14 @@ export default function StreamRelays(props) {
             credentials: 'include',
         }
         fetch(
-            `http://localhost:3001/api/ingestrelays/${props.streamId}`,
+            `${API_SERVER}/api/ingestrelays/${props.streamId}`,
             requestOptions
         )
             .then((response) => response.json())
             .then((data) => {
                 setRelays(data)
             })
-    }, [props.reloader.value, props.streamId])
+    }, [props.reloader.value, props.streamId, API_SERVER])
     console.log(relays)
     const relaysList = relays.map((relay) => (
         <Relay key={relay.id} relay={relay} streamId={props.streamId} />
