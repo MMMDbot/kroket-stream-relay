@@ -6,7 +6,7 @@ const auth = require('./routes/auth')
 const dashboard = require('./routes/dashboard')
 const auth_session = require('./routes/auth-session')
 const io = require('socket.io')(8080, {
-    cors: { origin: ['http://localhost'] },
+    cors: { origin: ['*'] },
 })
 
 // BodyParser
@@ -16,7 +16,7 @@ app.use(express.urlencoded({ extended: true }))
 // CORS for calls from React app
 app.use(
     cors({
-        origin: ['http://localhost'],
+        origin: ['*'],
         methods: ['GET', 'POST'],
         credentials: true,
     })
