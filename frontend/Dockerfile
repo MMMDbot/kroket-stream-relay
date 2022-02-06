@@ -4,7 +4,7 @@ FROM node:16.13.1-alpine as build
 WORKDIR /app
 
 # Copy only package files
-COPY --chown=node:node ./package*.json .
+COPY --chown=node:node ./package*.json ./
 
 COPY --chown=node:node ./public ./public
 
