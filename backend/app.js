@@ -51,7 +51,7 @@ const server = app.listen(3001, () => {
 
 // SOCKET IO TEST AREA
 // tread carefully
-//
+// spooky
 
 //io.once instead of io.on to avoid repetition in logging
 io.once('connection', (socket) => {
