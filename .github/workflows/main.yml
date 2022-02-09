@@ -84,6 +84,12 @@ jobs:
           push: true
           tags: karratu/kroket-stream-relay:thumbnails
 
+      - name: Create env file for frontend
+        run: |
+          touch ./frontend/.env
+          echo REACT_APP_API_SERVER=${{ secrets.REACT_APP_API_SERVER }} >> .env
+          cat .env
+
       - name: Build and push Frontend
         uses: docker/build-push-action@v2
         with:
