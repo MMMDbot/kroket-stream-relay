@@ -1,4 +1,6 @@
-Diagram for light mode
+# Kroket Stream Relay
+
+## Application Diagram
+
 ![GitHub Light](/.github/diagram.png#gh-light-mode-only)
-Diagram for dark mode
 ![GitHub Dark](/.github/diagram.png#gh-dark-mode-only)
