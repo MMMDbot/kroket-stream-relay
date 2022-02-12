@@ -1,4 +1,5 @@
-FROM node:16.13.1-alpine
+# -- BASE --
+FROM node:16.13.1-alpine AS base
 
 USER root
 
@@ -28,6 +29,8 @@ USER node
 # Install production libraries
 RUN npm i
 
+# -- RELEASE -- 
+FROM base AS release
 # Set copy app files as user node
 COPY --chown=node:node . .
 

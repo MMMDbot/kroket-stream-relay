@@ -1,4 +1,5 @@
-FROM node:16.13.1-alpine
+# -- BASE --
+FROM node:16.13.1-alpine AS base
 
 USER root
 
@@ -26,6 +27,8 @@ RUN npm install typescript
 
 RUN npm i
 
+# -- RELEASE -- 
+FROM base AS release
 # Set copy app files as user node
 COPY --chown=node:node . .
 
