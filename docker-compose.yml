@@ -102,5 +102,4 @@ services:
 
 networks:
   redis:
-    external: true
     name: redis
