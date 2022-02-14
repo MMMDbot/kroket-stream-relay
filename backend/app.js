@@ -8,6 +8,7 @@ const auth_session = require('./routes/auth-session')
 const io = require('socket.io')(8080, {
     cors: { origin: ['*'] },
 })
+require('dotenv').config()
 
 // BodyParser
 app.use(express.json())
