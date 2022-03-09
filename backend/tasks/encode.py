@@ -172,7 +172,7 @@ def streamHLS(id, origin):
     time_start = time.perf_counter()
     try:
         # Generate Thumbnail
-        url_thumbnail = "http://localhost:3001/api/thumbnail/" + id
+        url_thumbnail = "http://kroket-stream-relay_api_1:3001/api/thumbnail/" + id
         r_thumbnail = requests.get(url=url_thumbnail)
         r_thumbnail_json = r_thumbnail.json()
         print(r_thumbnail_json)
