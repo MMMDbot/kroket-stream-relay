@@ -407,7 +407,7 @@ INSERT into public.roles values (1, 'admin', 'Administrator'), (2, 'orgleader', 
 --
 -- Data for Name: targets; Type: TABLE DATA; Schema: public; Owner: postgres
 --
-INSERT into public.targets values (1, 'rtmp://a.rtmp.youtube.com/live2', '4zz8-z91z-m1k7-5kth', 'YouTube Test', 'https://www.youtube.com/watch?v=E-chOPvxeB', 'youtube', 2, '2022-01-31 00:21:19.64061');
+INSERT into public.targets values (1, 'rtmp://stream1.kroket.demo.arturobracero.com:1936/show/', 'test', 'Test 1', 'https://player1.kroket.demo.arturobracero.com/player.html', 'custom', 2, '2022-01-31 00:21:19.64061'), (2, 'rtmp://stream2.kroket.demo.arturobracero.com:1937/show/', 'test', 'Test 2', 'https://player2.kroket.demo.arturobracero.com/player.html', 'custom', 2, '2022-01-31 00:21:19.64061');
 --COPY public.targets (id, server, stream_key, description, public_url, platform, user_id, created_at) FROM stdin;
 --1       rtmp://a.rtmp.youtube.com/live2 4zz8-z91z-m1k7-5kth        YouTube Test    https://www.youtube.com/watch?v=E-chOPvxeB     youtube 2       2022-01-31 00:21:19.64061
 --\.
