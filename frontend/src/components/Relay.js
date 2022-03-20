@@ -41,7 +41,24 @@ export default function Relay(props) {
                 <Card.Body>
                     <Card.Title>{props.relay.target_description}</Card.Title>
                     <Card.Text>
-                        <a href={address}>{address}</a>
+                        <ul>
+                            <li>
+                                <a href={address}>Stream Link</a>
+                            </li>
+                            <li>
+                                {props.relay.public_url.length > 0 ? (
+                                    <a
+                                        target="_blank"
+                                        rel="noreferrer noopener"
+                                        href={props.relay.public_url}
+                                    >
+                                        Preview Link
+                                    </a>
+                                ) : (
+                                    ''
+                                )}
+                            </li>
+                        </ul>
                     </Card.Text>
                     <Button
                         variant="primary"

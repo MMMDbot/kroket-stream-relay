@@ -183,7 +183,6 @@ export default function IngestForm() {
                                         setPublicUrl(e.target.value)
                                     }}
                                     value={publicUrl}
-                                    required
                                 />
                             </Col>
                         </Form.Group>
