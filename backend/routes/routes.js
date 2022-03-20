@@ -450,7 +450,7 @@ router.get('/multiselect', authSession, async (req, res) => {
         } else if (element.platform === 'dailymotion') {
             groupedOptions[4].options.push(element)
         } else if (element.platform === 'custom') {
-            groupedOptions[4].options.push(element)
+            groupedOptions[5].options.push(element)
         }
     })
     res.json(groupedOptions)
