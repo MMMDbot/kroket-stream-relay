@@ -26,15 +26,15 @@ pipeline {
                     echo 'Building images...'
                             dir('backend') {
                                 script {
-                                    dockerApi = docker.build(imageName, "-f Dockerfile .")
-                                    dockerIngest = docker.build(imageName, "-f Dockerfile-ingest ." )
-                                    dockerRelay = docker.build(imageName, "-f Dockerfile-relay .")
-                                    dockerThumbnails = docker.build(imageName, "-f Dockerfile-thumbnails .")
+                                    dockerApi = docker.build("${imageName}:api")
+                                    dockerIngest = docker.build("${imageName}:ingest", "-f Dockerfile-ingest ." )
+                                    dockerRelay = docker.build("${imageName}:relay", "-f Dockerfile-relay .")
+                                    dockerThumbnails = docker.build("${imageName}:thumbnails", "-f Dockerfile-thumbnails .")
                                 }
                             }
                             dir('frontend') {
                                 script {
-                                    dockerFrontend = docker.build(imageName)
+                                    dockerFrontend = docker.build("${imageName}:frontend")
                                 }
                             }
                     }
@@ -44,11 +44,11 @@ pipeline {
                     echo 'Publishing images...'
                     script {
                         docker.withRegistry(registryUri, registryCredentialSet) {
-                            dockerApi.push('api')
-                            dockerIngest.push('ingest')
-                            dockerRelay.push('relay')
-                            dockerThumbnails.push('thumbnails')
-                            dockerFrontend.push('frontend')
+                            dockerApi.push()
+                            dockerIngest.push()
+                            dockerRelay.push()
+                            dockerThumbnails.push()
+                            dockerFrontend.push()
                         }
                     }    
                     }
