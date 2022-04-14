@@ -21,22 +21,34 @@ pipeline {
         stage('Build and Publish') {
             agent any
             stages {
-                stage('Build') {
+                stage('Build images') {
                     steps {
-                    echo 'Building backend image...'
+                    echo 'Building images...'
                             dir('backend') {
                                 script {
-                                    dockerInstance = docker.build(imageName)
+                                    dockerApi = docker.build(imageName)
+                                    dockerIngest = docker.build(imageName, "-f Dockerfile-ingest ." )
+                                    dockerRelay = docker.build(imageName, "-f Dockerfile-relay .")
+                                    dockerThumbnails = docker.build(imageName, "-f Dockerfile-thumbnails .")
+                                }
+                            }
+                            dir('frontend') {
+                                script {
+                                    dockerFrontend = docker.build(imageName)
                                 }
                             }
                     }
                 }
                 stage('Publish') {
                     steps {
-                    echo 'Publishing image...'
+                    echo 'Publishing images...'
                     script {
                         docker.withRegistry(registryUri, registryCredentialSet) {
-                            dockerInstance.push('latest')
+                            dockerApi.push('api')
+                            dockerIngest.push('ingest')
+                            dockerRelay.push('relay')
+                            dockerThumbnails.push('thumbnails')
+                            dockerFrontend.push('frontend')
                         }
                     }    
                     }
