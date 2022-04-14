@@ -64,6 +64,7 @@ router.post('/login', async (req, res) => {
             sess.username = username
             sess.userid = user.id
             sess.orgid = user.organization_id
+            sess.cookie.maxAge = 365 * 24 * 60 * 60 * 1000
             res.send(sess)
         } else {
             res.json({ message: 'Incorrect user or password' })
