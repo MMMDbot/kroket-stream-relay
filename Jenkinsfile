@@ -26,7 +26,7 @@ pipeline {
                     echo 'Building images...'
                             dir('backend') {
                                 script {
-                                    dockerApi = docker.build(imageName)
+                                    dockerApi = docker.build(imageName, "-f Dockerfile .")
                                     dockerIngest = docker.build(imageName, "-f Dockerfile-ingest ." )
                                     dockerRelay = docker.build(imageName, "-f Dockerfile-relay .")
                                     dockerThumbnails = docker.build(imageName, "-f Dockerfile-thumbnails .")
