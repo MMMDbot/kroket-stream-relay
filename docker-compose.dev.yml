@@ -1,0 +1,29 @@
+---
+version: '3.8'
+services:
+  api:
+    image: api
+    build: ./backend
+
+  ingest:
+    build:
+        context: ./backend
+        dockerfile: Dockerfile-ingest
+    image: ingest
+
+  relay:
+    build:
+        context: ./backend
+        dockerfile: Dockerfile-relay
+    image: relay
+
+  thumbnails:
+    build:
+        context: ./backend
+        dockerfile: Dockerfile-thumbnails
+    image: thumbnails
+
+  frontend:
+    build:
+        context: ./frontend
+    image: frontend

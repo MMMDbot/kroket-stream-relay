@@ -1,0 +1,17 @@
+---
+version: '3.8'
+services:
+  api:
+    image: registry.arturobracero.com/square/kroket-stream-relay:api 
+
+  ingest:
+    image: registry.arturobracero.com/square/kroket-stream-relay:ingest
+
+  relay:
+    image: registry.arturobracero.com/square/kroket-stream-relay:relay
+
+  thumbnails:
+    image: registry.arturobracero.com/square/kroket-stream-relay:thumbnails 
+
+  frontend:
+    image: registry.arturobracero.com/square/kroket-stream-relay:frontend 
