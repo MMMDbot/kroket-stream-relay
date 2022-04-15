@@ -3,7 +3,7 @@ pipeline {
         imageName = 'square/kroket-stream-relay'
         registryCredentialSet = 'registry'
         registryUri = 'https://registry.arturobracero.com'
-        TAG = env.GIT_COMMIT[0..7]
+        TAG = GIT_COMMIT.take(7)
     }
     agent none
     stages {
