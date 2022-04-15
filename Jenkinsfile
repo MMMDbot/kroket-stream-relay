@@ -55,5 +55,11 @@ pipeline {
                 }
             }
         }
+        stage('Deploy') {
+            agent any
+            steps {
+                sshPublisher(publishers: [sshPublisherDesc(configName: 'nagrand', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: 'docker pull && touch pitos.py', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '/home/square/kroket-stream-relay', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+            }
+        }
     }
 }
