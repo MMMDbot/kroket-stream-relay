@@ -4,6 +4,7 @@ pipeline {
         registryCredentialSet = 'registry'
         registryUri = 'https://registry.arturobracero.com'
         pullRegistry = 'registry.arturobracero.com'
+        commitShortHash = "${GIT_COMMIT[0..7]}"
     }
     agent none
     stages {
@@ -35,7 +36,7 @@ pipeline {
                             }
                             dir('frontend') {
                                 script {
-                                    dockerFrontend = docker.build("${imageName}-frontend:${GIT_COMMIT[0..7]}")
+                                    dockerFrontend = docker.build("${imageName}-frontend:${commitShortHash}")
                                 }
                             }
                     }
