@@ -3,6 +3,7 @@ pipeline {
         imageName = 'square/kroket-stream-relay'
         registryCredentialSet = 'registry'
         registryUri = 'https://registry.arturobracero.com'
+        shortCommit = "${GIT_COMMIT[0..7]}"
     }
     agent none
     stages {
@@ -26,15 +27,15 @@ pipeline {
                     echo 'Building images...'
                             dir('backend') {
                                 script {
-                                    dockerApi = docker.build("${imageName}:api")
-                                    dockerIngest = docker.build("${imageName}:ingest", "-f Dockerfile-ingest ." )
-                                    dockerRelay = docker.build("${imageName}:relay", "-f Dockerfile-relay .")
-                                    dockerThumbnails = docker.build("${imageName}:thumbnails", "-f Dockerfile-thumbnails .")
+                                    dockerApi = docker.build("${imageName}-api:${shortCommit}")
+                                    dockerIngest = docker.build("${imageName}-ingest:${shortCommit}", "-f Dockerfile-ingest ." )
+                                    dockerRelay = docker.build("${imageName}-relay:${shortCommit}", "-f Dockerfile-relay .")
+                                    dockerThumbnails = docker.build("${imageName}-thumbnails:${shortCommit}", "-f Dockerfile-thumbnails .")
                                 }
                             }
                             dir('frontend') {
                                 script {
-                                    dockerFrontend = docker.build("${imageName}:frontend")
+                                    dockerFrontend = docker.build("${imageName}-frontend:${shortCommit}")
                                 }
                             }
                     }
