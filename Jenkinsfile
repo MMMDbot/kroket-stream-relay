@@ -57,19 +57,21 @@ pipeline {
         }
         stage('Deploy') {
             agent any
-            script {
-                def remote = [:]
-                remote.name = "nagrand"
-                remote.host = "192.168.1.200"
-                remote.allowAnyHosts = true
+            steps {
+                script {
+                    def remote = [:]
+                    remote.name = "nagrand"
+                    remote.host = "192.168.1.200"
+                    remote.allowAnyHosts = true
 
-                node {
-                    withCredentials([sshUserPrivateKey(credentialsId: 'ssh-deploy', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'userName')]) {
-                        remote.user = userName
-                        remote.identityFile = identity
-                        stage("SSH Steps Rocks!") {
-                            writeFile file: '/home/square/jenkins/abc.sh', text: 'ls'
-                            sshCommand remote: remote, command: 'for i in {1..5}; do echo -n \"Loop \$i \"; date ; sleep 1; done'
+                    node {
+                        withCredentials([sshUserPrivateKey(credentialsId: 'ssh-deploy', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'userName')]) {
+                            remote.user = userName
+                            remote.identityFile = identity
+                            stage("SSH Steps Rocks!") {
+                                writeFile file: '/home/square/jenkins/abc.sh', text: 'ls'
+                                sshCommand remote: remote, command: 'for i in {1..5}; do echo -n \"Loop \$i \"; date ; sleep 1; done'
+                            }
                         }
                     }
                 }
