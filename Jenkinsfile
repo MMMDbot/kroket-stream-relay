@@ -4,7 +4,6 @@ pipeline {
         registryCredentialSet = 'registry'
         registryUri = 'https://registry.arturobracero.com'
         pullRegistry = 'registry.arturobracero.com'
-        commitShortHash = "${GIT_COMMIT[0..7]}"
     }
     agent none
     stages {
@@ -36,7 +35,7 @@ pipeline {
                             }
                             dir('frontend') {
                                 script {
-                                    dockerFrontend = docker.build("${imageName}-frontend:${commitShortHash}")
+                                    dockerFrontend = docker.build("${imageName}-frontend:${GIT_COMMIT[0..7]}")
                                 }
                             }
                     }
@@ -71,7 +70,7 @@ pipeline {
                             remote.user = userName
                             remote.identityFile = identity
 
-                            writeFile file: 'abc.sh', text: "ls ${GIT_COMMIT[0..7]}"
+                            writeFile file: 'hash.sh', text: "Commit shorthand hash is ${GIT_COMMIT[0..7]}"
                             sshPut remote: remote, from: 'abc.sh', into: '/home/square/jenkins/'
                             sshCommand remote: remote, command: "cd /home/square/kroket-stream-relay/ && docker pull ${pullRegistry}/${imageName}-api:${GIT_COMMIT[0..7]} && docker pull ${pullRegistry}/${imageName}-ingest:${GIT_COMMIT[0..7]} && docker pull ${pullRegistry}/${imageName}-relay:${GIT_COMMIT[0..7]} && docker pull ${pullRegistry}/${imageName}-thumbnails:${GIT_COMMIT[0..7]} && docker pull ${pullRegistry}/${imageName}-frontend:${GIT_COMMIT[0..7]} && TAG=${GIT_COMMIT[0..7]} docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d"
                         }
