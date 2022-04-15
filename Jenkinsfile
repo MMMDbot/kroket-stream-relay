@@ -71,7 +71,7 @@ pipeline {
 
                             writeFile file: 'abc.sh', text: 'ls'
                             sshPut remote: remote, from: 'abc.sh', into: '/home/square/jenkins/'
-                            sshCommand remote: remote, command: 'for i in {1..5}; do echo -n \"Loop \$i \"; date ; sleep 1; done'
+                            sshCommand remote: remote, command: 'cd /home/square/kroket-stream-relay/ && docker pull ${registryUri}/${imageName}-api:${GIT_COMMIT[0..7]} && docker pull ${registryUri}/${imageName}-ingest:${GIT_COMMIT[0..7]} && docker pull ${registryUri}/${imageName}-relay:${GIT_COMMIT[0..7]} && docker pull ${registryUri}/${imageName}-thumbnails:${GIT_COMMIT[0..7]} && docker pull ${registryUri}/${imageName}-frontend:${GIT_COMMIT[0..7]} && TAG=${GIT_COMMIT[0..7]} docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d'
                         }
                     }
                 }
