@@ -66,7 +66,7 @@ pipeline {
 
                     node {
                         withCredentials([sshUserPrivateKey(credentialsId: 'ssh-deploy', keyFileVariable: 'identity')]) {
-                            remote.user = userName
+                            remote.user = 'square'
                             remote.identityFile = identity
                             stage("SSH Steps Rocks!") {
                                 writeFile file: '/home/square/jenkins/abc.sh', text: 'ls'
