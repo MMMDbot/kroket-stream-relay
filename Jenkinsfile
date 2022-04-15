@@ -58,7 +58,7 @@ pipeline {
         stage('Deploy') {
             agent any
             steps {
-                sshPublisher(publishers: [sshPublisherDesc(configName: 'nagrand', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: "echo 'hola';touch hola.txt", execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '/home/square/kroket-stream-relay', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+                sshPublisher(publishers: [sshPublisherDesc(configName: 'nagrand', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: "touch hola.txt", execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '/home/square/kroket-stream-relay', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
             }
         }
     }
