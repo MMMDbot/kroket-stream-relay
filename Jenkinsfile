@@ -3,7 +3,7 @@ pipeline {
         imageName = 'square/kroket-stream-relay'
         registryCredentialSet = 'registry'
         registryUri = 'https://registry.arturobracero.com'
-        shortCommit = "${GIT_COMMIT[0..7]}"
+        shortCommit = GIT_COMMIT[0..7]
     }
     agent none
     stages {
