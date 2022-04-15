@@ -3,6 +3,7 @@ pipeline {
         imageName = 'square/kroket-stream-relay'
         registryCredentialSet = 'registry'
         registryUri = 'https://registry.arturobracero.com'
+        pullRegistry = 'registry.arturobracero.com'
     }
     agent none
     stages {
@@ -71,7 +72,7 @@ pipeline {
 
                             writeFile file: 'abc.sh', text: "ls ${GIT_COMMIT[0..7]}"
                             sshPut remote: remote, from: 'abc.sh', into: '/home/square/jenkins/'
-                            sshCommand remote: remote, command: "cd /home/square/kroket-stream-relay/ && docker pull ${registryUri}/${imageName}-api:${GIT_COMMIT} && docker pull ${registryUri}/${imageName}-ingest:${GIT_COMMIT} && docker pull ${registryUri}/${imageName}-relay:${GIT_COMMIT} && docker pull ${registryUri}/${imageName}-thumbnails:${GIT_COMMIT} && docker pull ${registryUri}/${imageName}-frontend:${GIT_COMMIT} && TAG=${GIT_COMMIT} docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d"
+                            sshCommand remote: remote, command: "cd /home/square/kroket-stream-relay/ && docker pull ${pullRegistry}/${imageName}-api:${GIT_COMMIT[0..7]} && docker pull ${pullRegistry}/${imageName}-ingest:${GIT_COMMIT[0..7]} && docker pull ${pullRegistry}/${imageName}-relay:${GIT_COMMIT[0..7]} && docker pull ${pullRegistry}/${imageName}-thumbnails:${GIT_COMMIT[0..7]} && docker pull ${pullRegistry}/${imageName}-frontend:${GIT_COMMIT[0..7]} && TAG=${GIT_COMMIT[0..7]} docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d"
                         }
                     }
                 }
