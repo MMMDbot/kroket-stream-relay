@@ -3,7 +3,6 @@ pipeline {
         imageName = 'square/kroket-stream-relay'
         registryCredentialSet = 'registry'
         registryUri = 'https://registry.arturobracero.com'
-        TAG = "${GIT_COMMIT[0..7]}"
     }
     agent none
     stages {
@@ -72,7 +71,7 @@ pipeline {
 
                             writeFile file: 'abc.sh', text: 'ls'
                             sshPut remote: remote, from: 'abc.sh', into: '/home/square/jenkins/'
-                            sshCommand remote: remote, command: 'cd /home/square/kroket-stream-relay/ && docker pull ${registryUri}/${imageName}-api:${TAG} && docker pull ${registryUri}/${imageName}-ingest:${TAG} && docker pull ${registryUri}/${imageName}-relay:${TAG} && docker pull ${registryUri}/${imageName}-thumbnails:${TAG} && docker pull ${registryUri}/${imageName}-frontend:${TAG} && TAG=${TAG} docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d'
+                            sshCommand remote: remote, command: 'cd /home/square/kroket-stream-relay/ && docker pull ${registryUri}/${imageName}-api:${GIT_COMMIT} && docker pull ${registryUri}/${imageName}-ingest:${GIT_COMMIT} && docker pull ${registryUri}/${imageName}-relay:${GIT_COMMIT} && docker pull ${registryUri}/${imageName}-thumbnails:${GIT_COMMIT} && docker pull ${registryUri}/${imageName}-frontend:${GIT_COMMIT} && TAG=${GIT_COMMIT} docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d'
                         }
                     }
                 }
