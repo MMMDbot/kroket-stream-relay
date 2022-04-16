@@ -7,25 +7,32 @@ export default function WatermarkPreview(props) {
         state: { userId },
     } = useUser()
 
-    console.log(props.watermark)
-
     useEffect(() => {
+        let imageLoadedCounter = 0
+        function onLoadCallback() {
+            imageLoadedCounter++
+            if (imageLoadedCounter === 2) {
+                drawImages()
+            } else {
+                return
+            }
+        }
+        function drawImages() {
+            ctx.drawImage(background, 0, 0, 640, 360)
+            ctx.drawImage(foreground, 555, 10)
+        }
         let canvas = document.getElementById('canvas')
         let ctx = canvas.getContext('2d')
         let background = new Image()
         background.src = `${API_SERVER}/img/canvasbg.jpg`
         let foreground = new Image()
         foreground.src = `${API_SERVER}/img/watermarks/${userId}.png?v=${Date.now()}`
-        background.onload = function () {
-            ctx.drawImage(background, 0, 0, 640, 360)
-        }
-        foreground.onload = function () {
-            ctx.drawImage(foreground, 555, 10)
-        }
+        background.onload = () => onLoadCallback()
+        foreground.onload = () => onLoadCallback()
     }, [props.watermark, userId, API_SERVER])
     return (
         <div>
-            <div class="image-watermark">
+            <div className="image-watermark">
                 <canvas
                     crossOrigin="Anonymous"
                     width="640"
