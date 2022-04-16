@@ -27,3 +27,5 @@ services:
     build:
         context: ./frontend
     image: frontend
+    environment:
+      NODE_ENV: development

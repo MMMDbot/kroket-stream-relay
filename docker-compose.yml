@@ -85,8 +85,6 @@ services:
         - redis
 
   frontend:
-    environment:
-      REACT_APP_API_SERVER: 'https://api.kroket.demo.arturobracero.com'
     labels:
         - "traefik.enable=true"
         - "traefik.http.routers.kroket-demo.rule=Host(`kroket.demo.arturobracero.com`)"

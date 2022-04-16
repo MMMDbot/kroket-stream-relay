@@ -14,4 +14,6 @@ services:
     image: registry.arturobracero.com/square/kroket-stream-relay-thumbnails:${TAG}
 
   frontend:
+    environment:
+      NODE_ENV: production
     image: registry.arturobracero.com/square/kroket-stream-relay-frontend:${TAG}
