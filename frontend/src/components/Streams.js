@@ -57,6 +57,8 @@ export default function Streams() {
                             <Card.Body>
                                 {loading ? (
                                     <SkeletonCard />
+                                ) : streamList.length === 0 ? (
+                                    <h2>No streams currently ingested</h2>
                                 ) : (
                                     <CardGroup>{listItems}</CardGroup>
                                 )}
