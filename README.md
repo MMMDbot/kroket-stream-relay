@@ -34,4 +34,4 @@ Kroket Stream Studio is a PERN application with the following components:
 
 ## Installation
 
-Clone the repository and run it locally using `docker-compose up`. Visit the frontend on `http://localhost/`. Please note that RQ workers [require](https://python-rq.org/docs/#limitations) `fork()` and thus will only work on Windows under WSL.
+Clone the repository and run it locally using `docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d`. Visit the frontend on `http://localhost:8085/`. Please note that RQ workers [require](https://python-rq.org/docs/#limitations) `fork()` and thus will only work on Linux, OSX and Windows under WSL.
