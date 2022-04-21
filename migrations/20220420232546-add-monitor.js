@@ -15,31 +15,17 @@ exports.setup = function (options, seedLink) {
 }
 
 exports.up = function (db) {
-    return db.createTable('ingests', {
+    return db.createTable('monitor', {
         id: { type: 'int', primaryKey: true, autoIncrement: true },
-        folder: { type: 'string', notNull: true },
-        job_id: { type: 'string', notNull: true, unique: true },
-        description: { type: 'string' },
-        active: 'boolean',
+        name: { type: 'string' },
+        url: { type: 'string' },
+        source: { type: 'string' },
         user_id: {
             type: 'int',
             notNull: true,
             foreignKey: {
-                name: 'ingests_user_id_fk',
+                name: 'monitor_user_id_fk',
                 table: 'users',
-                rules: {
-                    onDelete: 'CASCADE',
-                    onUpdate: 'RESTRICT',
-                },
-                mapping: 'id',
-            },
-        },
-        organization_id: {
-            type: 'int',
-            notNull: true,
-            foreignKey: {
-                name: 'ingests_organization_id_fk',
-                table: 'organizations',
                 rules: {
                     onDelete: 'CASCADE',
                     onUpdate: 'RESTRICT',
@@ -52,14 +38,11 @@ exports.up = function (db) {
             notNull: 'true',
             defaultValue: new String('now()'),
         },
-        stopped_at: {
-            type: 'timestamp',
-        },
     })
 }
 
 exports.down = function (db) {
-    db.dropTable('ingests')
+    db.dropTable('monitor')
 }
 
 exports._meta = {

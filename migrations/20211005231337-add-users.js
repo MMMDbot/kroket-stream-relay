@@ -43,7 +43,7 @@ exports.up = function (db) {
 }
 
 exports.down = function (db) {
-    return null
+    db.dropTable('users')
 }
 
 exports._meta = {

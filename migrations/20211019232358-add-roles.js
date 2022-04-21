@@ -24,7 +24,7 @@ exports.up = function (db) {
 }
 
 exports.down = function (db) {
-    return null
+    db.dropTable('roles')
 }
 
 exports._meta = {
