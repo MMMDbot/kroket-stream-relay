@@ -11,7 +11,9 @@ export default function Targets() {
     const [targetData, setTargetData] = useState([])
     const API_SERVER = process.env.REACT_APP_API_SERVER
 
-    const socket = io('http://localhost:8080')
+    const socket = io('http://localhost:3001', {
+        transports: ['websocket', 'polling', 'flashsocket'],
+    })
     socket.on('receive-message', (message) => {
         console.log(isOnline)
         setOnline(message)

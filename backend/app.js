@@ -5,9 +5,9 @@ const routes = require('./routes/routes')
 const auth = require('./routes/auth')
 const dashboard = require('./routes/dashboard')
 const auth_session = require('./routes/auth-session')
-const io = require('socket.io')(8080, {
-    cors: { origin: ['*'] },
-})
+const { createServer } = require('http')
+const { Server } = require('socket.io')
+const httpServer = createServer(app)
 require('dotenv').config()
 
 // BodyParser
@@ -38,21 +38,34 @@ app.use('/auth-session', auth_session)
 // Dashboard routes
 app.use('/dashboard', dashboard)
 
+// Socket.io routes
+//app.use('/socket', socket)
+
 // Simple test route
 app.get('/test', (req, res) => {
     res.json({ message: 'Welcome to the application.' })
 })
 
-const server = app.listen(3001, () => {
+const server = httpServer.listen(3001, () => {
+    console.log(`Server listening on port 3001`)
+})
+
+/* const server = app.listen(3001, () => {
     const host = server.address().address
     const port = server.address().port
 
     console.log('Listening on %s port %s', host, port)
-})
+}) */
 
 // SOCKET IO TEST AREA
 // tread carefully
 // spooky
+
+const io = new Server(httpServer, {
+    cors: {
+        origin: ['http://localhost:3001'],
+    },
+})
 
 //io.once instead of io.on to avoid repetition in logging
 io.once('connection', (socket) => {
